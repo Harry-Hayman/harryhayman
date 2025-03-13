@@ -1,24 +1,162 @@
-*, *::after, *::before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body::-webkit-scrollbar {
-  width: 0.4rem;
-}
+@layer base {
+  /* Typography */
+  body {
+    font-family: "Poppins", sans-serif;
+  }
 
-body::-webkit-scrollbar-track {
-  background: #181818;
-}
+  .font-serif {
+    font-family: "Playfair Display", Georgia, serif;
+  }
 
-body::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #4e00cc30, #1e80ff60);
-  transition: background 0.4s;
-}
+  /* Hero Text Stroke */
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+    text-stroke: 1px rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.8;
+  }
 
-body::-webkit-scrollbar-thumb:hover {
-    transition: background 0.4s;
-  background: linear-gradient(180deg, #4e00cc70, #1e80ff70);
+  /* Text Gradient */
+  .text-gradient {
+    background: linear-gradient(to right, theme('colors.purple.400'), theme('colors.purple.600'));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Prose Customization */
+  .prose {
+    max-width: none;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    font-family: "Playfair Display", Georgia, serif;
+    color: theme('colors.zinc.100');
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
+  .prose h1 {
+    font-size: 2.5em;
+  }
+
+  .prose h2 {
+    font-size: 2em;
+  }
+
+  .prose h3 {
+    font-size: 1.5em;
+  }
+
+  .prose p {
+    color: theme('colors.zinc.300');
+    line-height: 1.8;
+    margin-bottom: 1.5em;
+  }
+
+  .prose a {
+    color: theme('colors.purple.400');
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .prose a:hover {
+    color: theme('colors.purple.300');
+  }
+
+  .prose ul,
+  .prose ol {
+    color: theme('colors.zinc.300');
+    margin-bottom: 1.5em;
+  }
+
+  .prose li {
+    margin-bottom: 0.5em;
+  }
+
+  .prose blockquote {
+    border-left-color: theme('colors.purple.600');
+    background-color: theme('colors.zinc.800');
+    padding: 1.5em;
+    border-radius: 0.5em;
+    margin: 2em 0;
+  }
+
+  .prose blockquote p {
+    color: theme('colors.zinc.200');
+    font-style: italic;
+    margin: 0;
+  }
+
+  .prose img {
+    border-radius: 1em;
+    margin: 2em 0;
+  }
+
+  .prose code {
+    background-color: theme('colors.zinc.800');
+    color: theme('colors.zinc.200');
+    padding: 0.2em 0.4em;
+    border-radius: 0.3em;
+    font-size: 0.9em;
+  }
+
+  .prose pre {
+    background-color: theme('colors.zinc.800');
+    padding: 1.5em;
+    border-radius: 0.5em;
+    margin: 2em 0;
+    overflow-x: auto;
+  }
+
+  .prose pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: theme('colors.zinc.200');
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: theme('colors.zinc.900');
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.zinc.700');
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.zinc.600');
+  }
+
+  /* Page Transitions */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
 }

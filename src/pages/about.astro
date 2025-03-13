@@ -1,0 +1,109 @@
+---
+import AppLayout from "@layouts/AppLayout.astro";
+import { Image } from "astro:assets";
+import portraitImage from "../assets/data/harryhayman images/harry-hayman-hands-folding.jpg";
+import teamImage from "../assets/data/supporting images/A diverse group of professionals collaborating around a conference table, symbolizing the teamwork at Gemini Hospitality Consultants.png";
+---
+
+<AppLayout title="About Harry Hayman - Philadelphia Business Leader & Philanthropist">
+  <div class="max-w-4xl mx-auto">
+    <!-- Hero Section -->
+    <section class="mb-16">
+      <div class="relative h-[60vh] rounded-2xl overflow-hidden mb-8">
+        <Image
+          src={portraitImage}
+          alt="Harry Hayman"
+          class="w-full h-full object-cover"
+          width={1200}
+          height={800}
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
+        <h1 class="absolute bottom-8 left-8 text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight max-w-2xl">
+          Transforming Philadelphia Through Innovation & Impact
+        </h1>
+      </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="mb-16">
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <p class="text-xl text-zinc-300 leading-relaxed mb-6">
+          Harry Hayman is a dynamic leader and influential figure in Philadelphia's restaurant and hospitality industries, with an entrepreneurial spirit that has fueled numerous successful ventures. From his early days at The Capital Management & Development Corporation to his current role as CEO of Gemini Hospitality Consultants, Harry's career reflects a deep commitment to innovation and excellence in hospitality.
+        </p>
+        <p class="text-zinc-400 leading-relaxed">
+          Beyond his business endeavors, Harry is passionate about giving back to the community. He is the founder of both the Feed Philly Coalition, a movement dedicated to combating food insecurity, and The Philadelphia Jazz Experience, an initiative aimed at preserving and celebrating Philadelphia's rich jazz heritage. Harry also currently serves as the Sr. Fellow to Food Economy & Policy at The Economy League of Greater Philadelphia.
+        </p>
+      </div>
+    </section>
+
+    <!-- Background -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-serif mb-8 text-zinc-100">Early Life & Background</h2>
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <p class="text-zinc-400 leading-relaxed">
+          Born in Washington DC to Robin and Harry III, young Harry grew up with a global perspective thanks to his father's career as an international banker. His early years were marked by extensive travel, living in various locations from Maryland to Venezuela, Mexico to London, and Germany to New York City.
+        </p>
+        <p class="text-zinc-400 leading-relaxed mt-4">
+          Harry's entrepreneurial journey began at age 17 as a dishwasher in Washington, DC. Within two years, he had worked nearly every position in the bar business and started Presto! Design, marketing special events at local bars and restaurants. His formal education includes attendance at Radnor High School and The American University, where he earned a B.A. in International Business and Finance, followed by acceptance into the prestigious Wharton School of Business in Philadelphia.
+        </p>
+      </div>
+    </section>
+
+    <!-- Professional Journey -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-serif mb-8 text-zinc-100">Professional Journey</h2>
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div>
+          <Image
+            src={teamImage}
+            alt="Gemini Hospitality Consultants Team"
+            class="rounded-xl"
+            width={600}
+            height={400}
+          />
+        </div>
+        <div class="flex flex-col justify-center">
+          <h3 class="text-2xl font-serif mb-4 text-zinc-200">Leadership & Innovation</h3>
+          <p class="text-zinc-400 leading-relaxed">
+            As CEO of Gemini Hospitality Consultants, Harry leads a team dedicated to helping Philadelphia startups, investors, and operators in the restaurant and foodservice industries achieve success. His comprehensive approach includes financial analysis, website design, and strategic growth planning.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Speaking & Community Involvement -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-serif mb-8 text-zinc-100">Speaking & Community Involvement</h2>
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <p class="text-zinc-400 leading-relaxed">
+          Harry is a frequent keynote speaker at various educational institutions and organizations, including Temple University, Drexel University, and the Community College of Philadelphia. His speaking engagements cover topics ranging from business management and entrepreneurship to community involvement and making a positive impact.
+        </p>
+      </div>
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
+        <div class="bg-zinc-800 p-6 rounded-xl">
+          <h3 class="text-xl font-serif mb-2 text-zinc-200">Education</h3>
+          <p class="text-zinc-400">Speaking at universities and colleges about hospitality management and entrepreneurship</p>
+        </div>
+        <div class="bg-zinc-800 p-6 rounded-xl">
+          <h3 class="text-xl font-serif mb-2 text-zinc-200">Community</h3>
+          <p class="text-zinc-400">Engaging with local organizations to address food insecurity and community development</p>
+        </div>
+        <div class="bg-zinc-800 p-6 rounded-xl">
+          <h3 class="text-xl font-serif mb-2 text-zinc-200">Industry</h3>
+          <p class="text-zinc-400">Sharing insights on restaurant management and hospitality innovation</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="text-center py-16 bg-zinc-800 rounded-2xl mb-16">
+      <h2 class="text-3xl font-serif mb-4 text-zinc-100">Get in Touch</h2>
+      <p class="text-zinc-400 mb-8 max-w-xl mx-auto">
+        Interested in speaking engagements, business opportunities, or learning more about Harry's community initiatives?
+      </p>
+      <a href="/contact" class="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors inline-block">
+        Contact Harry
+      </a>
+    </section>
+  </div>
+</AppLayout>

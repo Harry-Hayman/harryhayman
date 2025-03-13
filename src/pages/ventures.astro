@@ -1,0 +1,154 @@
+---
+import AppLayout from "@layouts/AppLayout.astro";
+import { Image } from "astro:assets";
+import geminiImage from "../assets/data/supporting images/A diverse group of professionals collaborating around a conference table, symbolizing the teamwork at Gemini Hospitality Consultants.png";
+import jazzImage from "../assets/data/supporting images/A lively jazz band performing on stage in a cozy Philadelphia jazz club, capturing the essence of the Philadelphia Jazz Experience.png";
+import farmImage from "../assets/data/supporting images/Close-up of fresh microgreens being artfully plated by a chef in a modern kitchen, representing Veggie Graffiti's offerings.png";
+import communityImage from "../assets/data/supporting images/Volunteers organizing donated food items in a community center, embodying the spirit of local philanthropic efforts, no face visible.png";
+---
+
+<AppLayout title="Ventures & Initiatives - Harry Hayman">
+  <div class="max-w-4xl mx-auto">
+    <!-- Hero Section -->
+    <section class="mb-12 md:mb-16 text-center px-4">
+      <h1 class="text-3xl md:text-5xl lg:text-6xl font-serif mb-6 text-zinc-100">Ventures & Initiatives</h1>
+      <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto">
+        From hospitality consulting to community development, each venture represents a commitment to innovation and positive impact in Philadelphia.
+      </p>
+    </section>
+
+    <!-- Business Ventures -->
+    <section class="mb-16 md:mb-20">
+      <h2 class="text-2xl md:text-3xl font-serif mb-8 md:mb-12 text-zinc-100 px-4">Business Ventures</h2>
+      
+      <!-- Gemini Hospitality Consultants -->
+      <div class="bg-zinc-800 rounded-2xl overflow-hidden mb-8 md:mb-12">
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div class="order-2 md:order-1 p-6 md:p-8 flex flex-col justify-center">
+            <h3 class="text-xl md:text-2xl font-serif mb-4 text-zinc-100">Gemini Hospitality Consultants</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6 text-sm md:text-base">
+              A premier consulting firm helping Philadelphia startups, investors, and operators in the restaurant and foodservice industries achieve success through comprehensive analysis and strategic planning.
+            </p>
+            <ul class="text-zinc-400 space-y-2 text-sm md:text-base">
+              <li>• Financial Analysis & Planning</li>
+              <li>• Operations Optimization</li>
+              <li>• Brand Development</li>
+              <li>• Strategic Growth Consulting</li>
+            </ul>
+          </div>
+          <div class="order-1 md:order-2">
+            <Image
+              src={geminiImage}
+              alt="Gemini Hospitality Consultants"
+              class="w-full h-48 md:h-full object-cover"
+              width={600}
+              height={400}
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Veggie Graffiti -->
+      <div class="bg-zinc-800 rounded-2xl overflow-hidden">
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div class="p-6 md:p-8 flex flex-col justify-center">
+            <h3 class="text-xl md:text-2xl font-serif mb-4 text-zinc-100">Veggie Graffiti</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6 text-sm md:text-base">
+              An innovative urban farming initiative combining sustainable agriculture with culinary excellence, providing fresh, locally-grown produce to Philadelphia restaurants.
+            </p>
+            <ul class="text-zinc-400 space-y-2 text-sm md:text-base">
+              <li>• Hydroponic Farming</li>
+              <li>• Restaurant Partnerships</li>
+              <li>• Sustainable Practices</li>
+              <li>• Local Food Movement</li>
+            </ul>
+          </div>
+          <div>
+            <Image
+              src={farmImage}
+              alt="Veggie Graffiti"
+              class="w-full h-48 md:h-full object-cover"
+              width={600}
+              height={400}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Non-Profit Initiatives -->
+    <section class="mb-16 md:mb-20">
+      <h2 class="text-2xl md:text-3xl font-serif mb-8 md:mb-12 text-zinc-100 px-4">Non-Profit Initiatives</h2>
+      
+      <!-- Philadelphia Jazz Experience -->
+      <div class="bg-zinc-800 rounded-2xl overflow-hidden mb-8 md:mb-12">
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div class="order-2 md:order-1 p-6 md:p-8 flex flex-col justify-center">
+            <h3 class="text-xl md:text-2xl font-serif mb-4 text-zinc-100">Philadelphia Jazz Experience</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6 text-sm md:text-base">
+              A cultural initiative dedicated to preserving and celebrating Philadelphia's rich jazz heritage through education, performance, and community engagement.
+            </p>
+            <ul class="text-zinc-400 space-y-2 text-sm md:text-base">
+              <li>• Youth Education Programs</li>
+              <li>• Live Performance Series</li>
+              <li>• Artist Residencies</li>
+              <li>• Community Workshops</li>
+            </ul>
+          </div>
+          <div class="order-1 md:order-2">
+            <Image
+              src={jazzImage}
+              alt="Philadelphia Jazz Experience"
+              class="w-full h-48 md:h-full object-cover"
+              width={600}
+              height={400}
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed Philly Coalition -->
+      <div class="bg-zinc-800 rounded-2xl overflow-hidden">
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div class="p-6 md:p-8 flex flex-col justify-center">
+            <h3 class="text-xl md:text-2xl font-serif mb-4 text-zinc-100">Feed Philly Coalition</h3>
+            <p class="text-zinc-400 leading-relaxed mb-6 text-sm md:text-base">
+              A collaborative initiative working to combat food insecurity in Philadelphia through partnerships with restaurants, farms, and community organizations.
+            </p>
+            <ul class="text-zinc-400 space-y-2 text-sm md:text-base">
+              <li>• Food Distribution Programs</li>
+              <li>• Restaurant Partnerships</li>
+              <li>• Community Gardens</li>
+              <li>• Nutrition Education</li>
+            </ul>
+          </div>
+          <div>
+            <Image
+              src={communityImage}
+              alt="Feed Philly Coalition"
+              class="w-full h-48 md:h-full object-cover"
+              width={600}
+              height={400}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Get Involved -->
+    <section class="text-center py-12 md:py-16 px-4 bg-zinc-800 rounded-2xl mb-8 md:mb-16">
+      <h2 class="text-2xl md:text-3xl font-serif mb-4 text-zinc-100">Get Involved</h2>
+      <p class="text-zinc-400 mb-8 max-w-xl mx-auto text-sm md:text-base">
+        Whether you're looking to start a business, support community initiatives, or contribute to Philadelphia's cultural landscape, we'd love to hear from you.
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="/about" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">
+          Learn More
+        </a>
+        <a href="/blog" class="border border-zinc-700 text-zinc-300 px-6 py-3 rounded-lg hover:bg-zinc-700 transition-colors text-sm md:text-base">
+          Read Our Stories
+        </a>
+      </div>
+    </section>
+  </div>
+</AppLayout>

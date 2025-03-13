@@ -1,13 +1,13 @@
-export const tag = "@cojocaru-david";
-export const author = "David Cojocaru";
+export const tag = "@harryhayman";
+export const author = "Harry Hayman";
 
 export const defaultMeta = {
-  title: "David Cojocaru - Home",
+  title: "Harry Hayman - Philadelphia Business Leader & Philanthropist",
   description:
-    "Discover the portfolio and blog of David Cojocaru, a 16-year-old software developer and cybersecurity enthusiast from Romania. Explore his expertise in web development, programming languages, and more.",
-  keywords: ["david cojocaru", "junior software developer", "junior", "cybersecurity enthusiast", "web development", "programming", "portfolio", "blog", "romania"],
+    "Harry Hayman is a prominent figure in Philadelphia's restaurant and hospitality industries, known for his entrepreneurial ventures and philanthropic work through Feed Philly Coalition and The Philadelphia Jazz Experience.",
+  keywords: ["harry hayman", "philadelphia", "hospitality", "restaurant industry", "gemini hospitality consultants", "feed philly coalition", "philadelphia jazz experience", "philanthropist", "business leader"],
   ogImage: {
     src: "/banner.png",
-    alt: "David Cojocaru - Home",
+    alt: "Harry Hayman - Philadelphia Business Leader",
   },
 };

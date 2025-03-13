@@ -3,20 +3,56 @@ import { Icon } from "astro-icon";
 ---
 
 <script>
-    const currentYear = new Date().getFullYear();
+    const currentYear = new Date().getFullYear().toString();
     const yearElement = document.getElementById('year');
-    yearElement.innerText = currentYear;
+    if (yearElement) {
+        yearElement.innerText = currentYear;
+    }
 </script>
 
-<footer class="flex items-center text-zinc-400 mt-7 justify-center h-16 w-full flex-col gap-2">
-    <div class="text-sm text-center cursor-default">
-        2021 - <span id="year"></span>
-        &copy;&nbsp;<a href="https://github.com/cojocaru-david" class="text-zinc-200 hover:text-zinc-500">David Cojocaru</a>
+<footer class="border-t border-zinc-800 mt-12 py-8 md:py-12">
+    <div class="container mx-auto px-4 md:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div>
+                <h3 class="text-lg font-serif mb-4 text-zinc-100">Connect</h3>
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://facebook.com/" class="text-zinc-400 hover:text-purple-400 transition-colors" title="Facebook" rel="noopener noreferrer">
+                        <Icon name="mdi:facebook" class="w-6 h-6" />
+                    </a>
+                    <a href="https://instagram.com/" class="text-zinc-400 hover:text-purple-400 transition-colors" title="Instagram" rel="noopener noreferrer">
+                        <Icon name="mdi:instagram" class="w-6 h-6" />
+                    </a>
+                    <a href="https://twitter.com/" class="text-zinc-400 hover:text-purple-400 transition-colors" title="Twitter" rel="noopener noreferrer">
+                        <Icon name="mdi:twitter" class="w-6 h-6" />
+                    </a>
+                    <a href="https://linkedin.com/" class="text-zinc-400 hover:text-purple-400 transition-colors" title="LinkedIn" rel="noopener noreferrer">
+                        <Icon name="mdi:linkedin" class="w-6 h-6" />
+                    </a>
+                    <a href="https://youtube.com/" class="text-zinc-400 hover:text-purple-400 transition-colors" title="YouTube" rel="noopener noreferrer">
+                        <Icon name="mdi:youtube" class="w-6 h-6" />
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-lg font-serif mb-4 text-zinc-100">Quick Links</h3>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/ventures" class="text-zinc-400 hover:text-purple-400 transition-colors">Feed Philly Coalition</a></li>
+                    <li><a href="/ventures" class="text-zinc-400 hover:text-purple-400 transition-colors">Philadelphia Jazz Experience</a></li>
+                    <li><a href="/ventures" class="text-zinc-400 hover:text-purple-400 transition-colors">Gemini Hospitality</a></li>
+                    <li><a href="/about" class="text-zinc-400 hover:text-purple-400 transition-colors">About Harry</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-serif mb-4 text-zinc-100">Contact</h3>
+                <p class="text-zinc-400 mb-2 text-sm">For speaking engagements or business inquiries:</p>
+                <a href="mailto:contact@harryhayman.com" class="text-zinc-400 hover:text-purple-400 transition-colors flex items-center gap-2 text-sm">
+                    <Icon name="mdi:email" class="w-5 h-5 flex-shrink-0" />
+                    contact@harryhayman.com
+                </a>
+            </div>
+        </div>
+        <div class="text-center mt-8 pt-8 border-t border-zinc-800">
+            <p class="text-zinc-400 text-sm">&copy; <span id="year"></span> Harry Hayman. All Rights Reserved.</p>
+        </div>
     </div>
-    <p class="text-sm text-center flex flex-col items-center justify-center mt-1 gap-1">
-        <a href="mailto:contact@cojocarudavid.me" class="text-zinc-200 hover:text-zinc-500" title="Email" rel="noopener noreferrer">
-            <Icon name="mdi:email" class="w-4 h-4" />
-        </a>
-        All rights reserved.
-    </p>
 </footer>

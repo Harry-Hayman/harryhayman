@@ -4,17 +4,15 @@
     "text": "Home"
   },
   {
-    "href": "/projects/",
-    "text": "Projects"
+    "href": "/about",
+    "text": "About"
   },
   {
-    "href": "/blog/",
+    "href": "/ventures",
+    "text": "Ventures"
+  },
+  {
+    "href": "/blog",
     "text": "Blog"
-  },
-  {
-    "href": "https://github.com/cojocaru-david/cojocarudavid.me",
-    "target": "_blank",
-    "rel": "noopener noreferrer",
-    "text": "GitHub"
   }
 ]

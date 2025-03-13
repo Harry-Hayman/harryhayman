@@ -1,43 +1,55 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,astro}"],
-  darkMode: "class",
-  
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  darkMode: 'class',
   theme: {
+    screens: {
+      'xs': '380px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       fontFamily: {
-        sans: ["InterVariable", "Inter", ...defaultTheme.fontFamily.sans],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
       },
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            "code::before": {
-              content: '""',
+            color: theme('colors.zinc.900'),
+            a: {
+              color: theme('colors.purple.600'),
+              '&:hover': {
+                color: theme('colors.purple.500'),
+              },
             },
-            "code::after": {
-              content: '""',
-            },
-            ":not(pre) > code": {
-              backgroundColor: theme("colors.neutral.200"),
-              border: "1px solid",
-              borderColor: theme("colors.zinc.300"),
-              padding: "0.250rem 0.4rem",
-              borderRadius: "0.250rem",
-              fontWeight: "400",
+            'h1,h2,h3,h4': {
+              fontFamily: 'Playfair Display',
+              color: theme('colors.zinc.900'),
             },
           },
         },
-        invert: {
+        dark: {
           css: {
-            ":not(pre) > code": {
-              backgroundColor: theme("colors.neutral.800"),
-              borderColor: theme("colors.zinc.700"),
+            color: theme('colors.zinc.300'),
+            a: {
+              color: theme('colors.purple.400'),
+              '&:hover': {
+                color: theme('colors.purple.300'),
+              },
+            },
+            'h1,h2,h3,h4': {
+              color: theme('colors.zinc.100'),
             },
           },
         },
       }),
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };

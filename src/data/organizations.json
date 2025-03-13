@@ -1,0 +1,72 @@
+{
+  "Non-Profit Organizations": [
+    {
+      "text": "Alex's Lemonade Stand",
+      "image": "/src/assets/data/company_works_with/alexLemonadeLOGO.png"
+    },
+    {
+      "text": "Special Olympics",
+      "image": "/src/assets/data/company_works_with/Special_Olympics_logo.svg-1024x365.png"
+    },
+    {
+      "text": "Philadelphia Jazz Experience",
+      "image": "/src/assets/data/company_works_with/philadelphia-jazz-experience-foundation-768x160-1-300x63.png"
+    }
+  ],
+  "Professional Organizations": [
+    {
+      "text": "Alpha Kappa Psi",
+      "image": "/src/assets/data/company_works_with/AlphaKappaPsi_AI.png"
+    },
+    {
+      "text": "Center City District",
+      "image": "/src/assets/data/company_works_with/centerCityDistrict-e1583871942520.png"
+    },
+    {
+      "text": "City of Philadelphia",
+      "image": "/src/assets/data/company_works_with/cityOfPhilly-300x78.png"
+    }
+  ],
+  "Business Ventures": [
+    {
+      "text": "Food Connect",
+      "image": "/src/assets/data/company_works_with/foodConnect.png"
+    },
+    {
+      "text": "H3",
+      "image": "/src/assets/data/company_works_with/h3-logo.png"
+    },
+    {
+      "text": "Renegade Tacos",
+      "image": "/src/assets/data/company_works_with/renegade-tacos-300x170.jpg"
+    }
+  ],
+  "Community Organizations": [
+    {
+      "text": "Hayman Family Fund",
+      "image": "/src/assets/data/company_works_with/hhFamilyFund.png"
+    },
+    {
+      "text": "North Broad",
+      "image": "/src/assets/data/company_works_with/northbroad-logo-large.png"
+    },
+    {
+      "text": "SCORE Philadelphia",
+      "image": "/src/assets/data/company_works_with/scorePhilly.png"
+    }
+  ],
+  "Professional Services": [
+    {
+      "text": "ServSafe",
+      "image": "/src/assets/data/company_works_with/serveSafe-300x135.png"
+    },
+    {
+      "text": "University of Pennsylvania",
+      "image": "/src/assets/data/company_works_with/uPenn.png"
+    },
+    {
+      "text": "RAMP",
+      "image": "/src/assets/data/company_works_with/ramp.png"
+    }
+  ]
+}

@@ -1,71 +1,151 @@
 ---
 import AppLayout from "@layouts/AppLayout.astro";
 import { Image } from "astro:assets";
-import authorImage from "../assets/me.png";
-import technologies from "@data/technologies.json";
-import Skill from "@components/Skill.astro";
-import { author } from "@data/socials";
+import authorImage from "../assets/data/harryhayman images/harryhayman_bg_removed.png";
+import jazzImage from "../assets/data/supporting images/A lively jazz band performing on stage in a cozy Philadelphia jazz club, capturing the essence of the Philadelphia Jazz Experience.png";
+import hospitalityImage from "../assets/data/supporting images/A chef crafting a gourmet dish in a contemporary kitchen, highlighting creativity in the culinary arts, no face visible.png";
+import sustainabilityImage from "../assets/data/supporting images/An indoor vertical farm with lush green plants, showcasing innovative urban agriculture practices.png";
+import communityImage from "../assets/data/supporting images/A vibrant mural depicting Philadelphia's cultural diversity, highlighting the city's rich artistic heritage, philadelphia city, america.png";
 ---
 
-<AppLayout title="David Cojocaru - Junior Software Developer & Cybersecurity Enthusiast">
-  <header class="sm:flex sm:items-center sm:justify-between">
-    <div class="rounded aspect-square w-40 overflow-hidden inline-flex drop-shadow-none lg:drop-shadow-[0px_0px_35px_rgba(83,70,250,0.90)]">
-      <Image
-        src={authorImage}
-        alt="Image of the author"
-        loading="eager"
-        width={320}
-        height={320}
-      />
-    </div>
-    <div class="mt-8 max-w-lg 2xl:max-w-xl sm:my-0 sm:order-first">
-      <h1
-        class="mb-2 text-3xl font-bold tracking-tight dark:text-white text-zinc-900 sm:text-4xl"
-      >
-        {author}
-      </h1>
-      <p class="mb-4 dark:text-zinc-300 text-zinc-700 flex items-center">
-        Full Stack Developer from Romania <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51.18 38.4" class="inline-block w-6 h-6 ml-2">
-          <path d="M17.75 0v38.4H3.03C1.37 38.4 0 37.04 0 35.37V3.03C0 1.36 1.37 0 3.03 0h14.72z" fill="#002b7f"/>
-          <path fill="#fcd116" d="M37.45 0v38.4h-19.7V0h19.7z"/>
-          <path d="M37.45 38.4V0h14.72c1.67 0 3.03 1.36 3.03 3.03v32.33c0 1.67-1.37 3.03-3.03 3.03H37.45v.01z" fill="#ce1126"/>
-        </svg>
+<AppLayout title="Harry Hayman - Philadelphia Business Leader & Philanthropist">
+  <!-- Hero Section -->
+  <div class="max-w-[100vw] overflow-x-hidden">
+    <section class="min-h-[80vh] flex items-center -mt-4 sm:mt-0">
+      <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center w-full">
+        <div class="order-2 lg:order-1 px-4">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 leading-tight text-zinc-100">
+            Inspiring Change Through
+            <span class="text-purple-500">Innovation</span>
+          </h1>
+          <p class="text-base sm:text-lg md:text-xl text-zinc-400 leading-relaxed mb-8 max-w-lg">
+            From revolutionizing Philadelphia's hospitality scene to fostering community through jazz and sustainable initiatives.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/ventures" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors">
+              Explore Ventures
+            </a>
+            <a href="/about" class="border border-zinc-700 text-zinc-300 px-6 py-3 rounded-lg hover:bg-zinc-800 transition-colors">
+              Learn More
+            </a>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2 flex justify-center lg:justify-end relative px-4">
+          <div class="relative w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[320px] sm:h-[320px] md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px]">
+            <!-- SVG Container -->
+            <div class="relative w-full h-full">
+              <!-- White Blob with Masked Image -->
+              <div class="absolute -inset-4 xs:-inset-6 sm:-inset-8 md:-inset-12 lg:-inset-16">
+                <svg viewBox="0 0 200 200" class="w-full h-full">
+                  <defs>
+                    <mask id="image-mask">
+                      <path
+                        fill="white"
+                        d="M50.1,-51.5C62.8,-37.4,69.5,-18.7,71.8,2.3C74.1,23.4,72.1,46.7,59.4,62.2C46.7,77.7,23.4,85.2,0.9,84.4C-21.6,83.5,-43.2,74.1,-58.6,58.7C-74.1,43.2,-83.3,21.6,-82.6,0.7C-81.9,-20.1,-71.1,-40.3,-55.7,-54.3C-40.3,-68.3,-20.1,-76.2,-0.7,-75.5C18.7,-74.8,37.4,-65.5,50.1,-51.5Z"
+                        transform="translate(100 100)"
+                      />
+                    </mask>
+                  </defs>
+                  <!-- Colored Background Blob -->
+                  <path
+                    fill="rgb(233, 215, 241)"
+                    d="M50.1,-51.5C62.8,-37.4,69.5,-18.7,71.8,2.3C74.1,23.4,72.1,46.7,59.4,62.2C46.7,77.7,23.4,85.2,0.9,84.4C-21.6,83.5,-43.2,74.1,-58.6,58.7C-74.1,43.2,-83.3,21.6,-82.6,0.7C-81.9,-20.1,-71.1,-40.3,-55.7,-54.3C-40.3,-68.3,-20.1,-76.2,-0.7,-75.5C18.7,-74.8,37.4,-65.5,50.1,-51.5Z"
+                    transform="translate(100 100)"
+                  />
+                  <!-- Masked Image -->
+                  <image
+                    href={authorImage.src}
+                    x="20"
+                    y="30"
+                    width="160"
+                    height="160"
+                    preserveAspectRatio="xMidYMid meet"
+                    mask="url(#image-mask)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Areas of Impact -->
+    <section class="py-12 sm:py-16 md:py-20 px-4">
+      <h2 class="text-2xl md:text-3xl font-serif mb-8 md:mb-12 text-center text-zinc-100">Areas of Impact</h2>
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        <!-- Jazz & Arts -->
+        <div class="group relative overflow-hidden rounded-2xl">
+          <Image
+            src={jazzImage}
+            alt="Philadelphia Jazz Experience"
+            class="w-full h-64 md:h-80 object-cover transition-transform group-hover:scale-105"
+            width={800}
+            height={600}
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent p-6 md:p-8 flex flex-col justify-end">
+            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">Philadelphia Jazz Experience</h3>
+            <p class="text-sm md:text-base text-zinc-300">Preserving and celebrating Philadelphia's rich jazz heritage through education and performance.</p>
+          </div>
+        </div>
+
+        <!-- Hospitality -->
+        <div class="group relative overflow-hidden rounded-2xl">
+          <Image
+            src={hospitalityImage}
+            alt="Hospitality Innovation"
+            class="w-full h-64 md:h-80 object-cover transition-transform group-hover:scale-105"
+            width={800}
+            height={600}
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent p-6 md:p-8 flex flex-col justify-end">
+            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">Culinary Innovation</h3>
+            <p class="text-sm md:text-base text-zinc-300">Transforming Philadelphia's dining scene through creative concepts and sustainable practices.</p>
+          </div>
+        </div>
+
+        <!-- Sustainability -->
+        <div class="group relative overflow-hidden rounded-2xl">
+          <Image
+            src={sustainabilityImage}
+            alt="Sustainable Agriculture"
+            class="w-full h-64 md:h-80 object-cover transition-transform group-hover:scale-105"
+            width={800}
+            height={600}
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent p-6 md:p-8 flex flex-col justify-end">
+            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">Sustainable Agriculture</h3>
+            <p class="text-sm md:text-base text-zinc-300">Pioneering urban farming solutions with hydroponic technology and sustainable practices.</p>
+          </div>
+        </div>
+
+        <!-- Community Impact -->
+        <div class="group relative overflow-hidden rounded-2xl">
+          <Image
+            src={communityImage}
+            alt="Community Impact"
+            class="w-full h-64 md:h-80 object-cover transition-transform group-hover:scale-105"
+            width={800}
+            height={600}
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent p-6 md:p-8 flex flex-col justify-end">
+            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">Community Impact</h3>
+            <p class="text-sm md:text-base text-zinc-300">Building stronger communities through initiatives like Feed Philly Coalition and local art programs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-12 sm:py-16 md:py-20 text-center px-4">
+      <h2 class="text-2xl md:text-3xl font-serif mb-4 md:mb-6 text-zinc-100">Join the Movement</h2>
+      <p class="text-lg md:text-xl text-zinc-400 mb-8 max-w-2xl mx-auto">
+        Whether you're passionate about arts, sustainability, or community development,
+        there's a place for you in our initiatives.
       </p>
-      <p
-        class="max-w-prose font-normal text-sm md:text-lg dark:text-zinc-400 text-zinc-600 sm:max-w-sm md:max-w-xl leading-relaxed"
-      >
-        I am a self-taught developer who loves to build things for the web. I
-        have been coding for 3 years now and I am always looking to learn new
-        things. I am currently working on a few projects, but I am always open
-        to new opportunities.
-      </p>
-    </div>
-  </header>
-  <section class="mt-10 sm:mt-28" aria-labelledby="section-title">
-    <h2
-      class="dark:text-zinc-300 text-zinc-700 mb-4 text-2xl font-bold tracking-tight"
-      id="section-title"
-    >
-      About Me
-    </h2>
-    <p
-      class="max-w-prose mb-8 font-normal text-sm md:text-lg dark:text-zinc-400 text-zinc-600 leading-relaxed"
-    >
-      Here are some of the technologies I have been working with:
-    </p>
-    <ul>
-      {Object.entries(technologies).map(([category, techList]) => (
-        <li class="flex flex-col mb-8 last:mb-0" key={category} id={category}>
-          <h3 class="dark:text-zinc-300 text-zinc-700 mb-4 text-lg font-semibold tracking-tight">
-            {category}
-          </h3>
-          <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3">
-            {techList.map((tech, index) => (
-              <Skill key={index} {...tech} />
-            ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
-  </section>
+      <a href="/blog" class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors">
+        Read Our Stories
+      </a>
+    </section>
+  </div>
 </AppLayout>
