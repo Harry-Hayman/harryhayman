@@ -1,0 +1,49 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: {
+    src: ImageMetadata;
+    alt: string;
+  };
+  index: number;
+}
+
+const { title, description, image, index } = Astro.props;
+
+import { Image } from "astro:assets";
+---
+
+<div
+  class={`group relative overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 hover:-translate-y-2 md:flex ${
+    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+  } bg-[rgb(var(--card-bg))] border border-[rgb(var(--nav-border))]`}
+>
+  <div class="relative h-64 md:h-auto md:w-1/2">
+    <Image
+      src={image.src}
+      alt={image.alt}
+      class="w-full h-full object-cover"
+      width={600}
+      height={400}
+    />
+    <div
+      class="absolute inset-0 bg-purple-900/40 group-hover:bg-purple-900/50 transition-all duration-300"
+    >
+    </div>
+  </div>
+  <div
+    class="relative p-6 md:w-1/2 md:flex md:flex-col md:justify-center"
+  >
+    <h3
+      class="text-xl font-serif font-bold mb-3 text-[rgb(var(--text-primary))]"
+    >
+      {title}
+    </h3>
+    <p
+      class="text-sm font-sans text-[rgb(var(--text-secondary))] md:line-clamp-none"
+    >
+      {description}
+    </p>
+  </div>
+</div>
