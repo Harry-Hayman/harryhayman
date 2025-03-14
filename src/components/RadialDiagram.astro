@@ -10,90 +10,157 @@ import jazzLogo from "../assets/data/business_logo/philadelphia_jazz_experience.
 import veggieGraffitiLogo from "../assets/data/business_logo/veggie_graffiti.jpeg";
 
 const businesses = [
-  { name: "Another Three Hearts Experience", logo: anotherThreeHeartsLogo },
-  { name: "Feed Philly Coalition", logo: feedPhillyLogo },
-  { name: "Gemini Hospitality Consulting", logo: geminiLogo },
-  { name: "Harry Hayman Creative", logo: creativelogo },
-  { name: "I Am Hungry in Philly", logo: iAmHungryLogo },
-  { name: "Philadelphia Jazz Experience", logo: jazzLogo },
-  { name: "Veggie Graffiti", logo: veggieGraffitiLogo },
+  {
+    name: "Another Three Hearts Experience",
+    logo: anotherThreeHeartsLogo,
+    url: "https://another3heartsexperience.com",
+  },
+  {
+    name: "Feed Philly Coalition",
+    logo: feedPhillyLogo,
+    url: "https://feedphillycoalition.org",
+  },
+  {
+    name: "Gemini Hospitality Consulting",
+    logo: geminiLogo,
+    url: "https://geminihospitalityconsultants.com",
+  },
+  {
+    name: "Harry Hayman Creative",
+    logo: creativelogo,
+    url: "https://harryhaymancreative.com",
+  },
+  {
+    name: "I Am Hungry in Philly",
+    logo: iAmHungryLogo,
+    url: "https://iamhungryinphilly.com",
+  },
+  {
+    name: "Philadelphia Jazz Experience",
+    logo: jazzLogo,
+    url: "https://philadelphiajazzexperience.org",
+  },
+  {
+    name: "Veggie Graffiti",
+    logo: veggieGraffitiLogo,
+    url: "https://veggiegraffiti.com",
+  },
 ];
+
+// Calculate position based on index
+const getCoordinates = (index: number, radius: number) => {
+  const angle = (index * (360 / businesses.length) * Math.PI) / 180;
+  return {
+    x: 50 + Math.cos(angle) * radius,
+    y: 50 + Math.sin(angle) * radius,
+  };
+};
 ---
 
-<div class="relative w-full h-[600px] my-12">
-  <!-- Center Image -->
-  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full overflow-hidden border-4 border-purple-600 z-10 bg-white">
-    <Image
-      src={harryImage}
-      alt="Harry Hayman"
-      class="w-full h-full object-cover"
-      width={192}
-      height={192}
-    />
-  </div>
+<div class="relative overflow-hidden my0 md:my0">
+  <!-- Fixed aspect ratio container -->
+  <div class="mx-auto" style="width: min(100%, 800px);">
+    <div class="relative" style="padding-bottom: 100%;">
+      <!-- Content container -->
+      <div class="absolute inset-0">
+        <!-- Connecting Lines -->
+        <div class="absolute inset-0" style="transform: scale(0.85);">
+          <style>
+            @keyframes dash {
+              to {
+                stroke-dashoffset: -20;
+              }
+            }
+            .animated-line {
+              animation: dash 1.5s linear infinite;
+            }
+          </style>
+          {
+            businesses.map((_, index) => {
+              const inner = getCoordinates(index, 15);
+              const outer = getCoordinates(index, 40);
 
-  <!-- Business Logos -->
-  <div class="absolute inset-0">
-    {
-      businesses.map((business, index) => {
-        const angle = (index * (360 / businesses.length) * Math.PI) / 180;
-        const radius = 240; // Distance from center
-        const left = `calc(50% + ${Math.cos(angle) * radius}px - 48px)`;
-        const top = `calc(50% + ${Math.sin(angle) * radius}px - 48px)`;
+              return (
+                <svg class="absolute inset-0 w-full h-full overflow-visible pointer-events-none">
+                  <line
+                    x1={`${inner.x}%`}
+                    y1={`${inner.y}%`}
+                    x2={`${outer.x}%`}
+                    y2={`${outer.y}%`}
+                    stroke="rgb(147, 51, 234)"
+                    stroke-width="2"
+                    stroke-dasharray="6,6"
+                    class="animated-line opacity-60"
+                  />
+                </svg>
+              );
+            })
+          }
+        </div>
 
-        return (
-          <div
-            class="absolute w-24 h-24 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-125 group"
-            style={`left: ${left}; top: ${top};`}
-          >
-            <div class="relative">
-              <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-600 bg-white">
-                <Image
-                  src={business.logo}
-                  alt={business.name}
-                  class="w-full h-full object-contain p-2"
-                  width={96}
-                  height={96}
-                />
-              </div>
-              <div class="absolute left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-2 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12">
-                {business.name}
-              </div>
+        <!-- Center Image -->
+        <div
+          class="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 w-[25%] aspect-square z-20"
+        >
+          <div class="relative w-full h-full">
+            <div
+              class="absolute inset-0 rounded-full overflow-hidden border-4 border-purple-600 bg-white shadow-lg"
+            >
+              <Image
+                src={harryImage}
+                alt="Harry Hayman"
+                class="w-full h-full object-cover"
+                width={192}
+                height={192}
+              />
             </div>
           </div>
-        )
-      })
-    }
-  </div>
+          <!-- Harry's Name -->
+          <div
+            class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-max text-center"
+          >
+            <h2
+              class="text-base md:text-xl font-serif font-bold text-purple-600 whitespace-nowrap"
+            >
+              Harry Hayman
+            </h2>
+          </div>
+        </div>
 
-  <!-- Connecting Lines -->
-  <div class="absolute inset-0">
-    {
-      businesses.map((_, index) => {
-        const angle = (index * (360 / businesses.length) * Math.PI) / 180;
-        const innerRadius = 80; // Distance from center to start of line
-        const outerRadius = 200; // Distance from center to end of line
-        
-        const x1 = 300 + Math.cos(angle) * innerRadius;
-        const y1 = 300 + Math.sin(angle) * innerRadius;
-        const x2 = 300 + Math.cos(angle) * outerRadius;
-        const y2 = 300 + Math.sin(angle) * outerRadius;
+        <!-- Business Logos -->
+        <div class="absolute inset-0" style="transform: scale(0.85);">
+          {
+            businesses.map((business, index) => {
+              const pos = getCoordinates(index, 42);
 
-        return (
-          <svg class="absolute inset-0 w-full h-full">
-            <line
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="rgb(147, 51, 234)"
-              stroke-width="2"
-              stroke-dasharray="4"
-              class="opacity-50"
-            />
-          </svg>
-        )
-      })
-    }
+              return (
+                <a
+                  href={business.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="absolute w-[18%] aspect-square transition-all duration-300 hover:scale-125 hover:z-20 group cursor-pointer"
+                  style={`left: ${pos.x}%; top: ${pos.y}%; transform: translate(-50%, -50%);`}
+                >
+                  <div class="relative w-full h-full">
+                    <div class="w-full h-full rounded-full overflow-hidden border-2 border-purple-600 bg-white shadow-lg hover:shadow-xl transition-shadow">
+                      <Image
+                        src={business.logo}
+                        alt={business.name}
+                        class="w-full h-full object-contain p-2"
+                        width={80}
+                        height={80}
+                      />
+                    </div>
+                    <div class="absolute left-1/2 -translate-x-1/2 bg-purple-600 text-white px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12 shadow-lg z-30 text-xs md:text-sm max-w-[200px] text-center">
+                      {business.name}
+                    </div>
+                  </div>
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </div>
