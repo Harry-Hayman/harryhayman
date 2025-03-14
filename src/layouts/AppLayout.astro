@@ -2,6 +2,7 @@
 import Link from "@components/Link.astro";
 import { author, defaultMeta } from "@data/socials";
 import navigation from "@data/navigation.json";
+import ThemeToggle from "@components/ThemeToggle.astro";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/500.css";
 import "@fontsource/playfair-display/600.css";
@@ -42,9 +43,7 @@ const keywordsString = Array.isArray(tags) ? tags.join(', ') : tags;
 ---
 
 <!doctype html>
-<html lang="en"
-      class="overflow-x-hidden break-words text-zinc-900 dark:text-zinc-100 dark scroll-smooth"
->
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -52,6 +51,8 @@ const keywordsString = Array.isArray(tags) ? tags.join(', ') : tags;
     <link rel="canonical" href={canonicalURL} />
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <!-- SEO Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
@@ -70,25 +71,10 @@ const keywordsString = Array.isArray(tags) ? tags.join(', ') : tags;
     <meta name="twitter:domain" content="harryhayman.com" />
     <meta name="theme-color" content="#7C3AED" />
     <meta name="msapplication-TileColor" content="#7C3AED">
-    <meta name="color-scheme" content="light dark" />
     <meta name="apple-mobile-web-app-title" content={title} />
     <meta name="application-name" content={title} />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="follow, index" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
     {
       tags && tags.map((tag) => ( <meta property="article:tag" content={tag} /> ))
     }
@@ -96,43 +82,53 @@ const keywordsString = Array.isArray(tags) ? tags.join(', ') : tags;
     <meta name="pubdate" content={formattedDate} />
     <meta name="date" content={formattedDate} /> 
     <meta name="keywords" content={keywordsString} />
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body
-    class="dark:bg-zinc-900 bg-zinc-100 antialiased selection:bg-purple-300 selection:text-zinc-900 dark:selection:bg-purple-600 dark:selection:text-white 2xl:text-lg font-normal"
-  >
-    <nav
-      class="sticky top-0 z-50 backdrop-blur-lg bg-zinc-900/95 border-b border-zinc-800"
-    >
-      <div class="max-w-6xl mx-auto px-4">
-        <div class="py-3">
-          <ul class="flex justify-center space-x-4 md:space-x-8">
-            {
-              navigation.map((item) => (
-                <li>
-                  <Link {...item} addClass="font-medium text-zinc-400 hover:text-zinc-100 transition-colors text-sm md:text-base" />
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <main class="px-4 md:px-6 lg:px-0 mx-auto max-w-4xl flex flex-col min-h-screen" id="main-content">
-      <slot />
-      <Footer />
-    </main>
 
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
+    <!-- Theme initialization -->
+    <script is:inline>
+      (function() {
+        // Check for system preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        // Use system preference or fallback to stored preference
+        const theme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+        
+        // Apply theme immediately
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.style.colorScheme = theme;
+        document.documentElement.dataset.theme = theme;
+      })();
     </script>
+  </head>
+  <body>
+    <div class="flex flex-col min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--text-primary))]">
+      <!-- Navigation -->
+      <nav class="sticky top-0 z-50 backdrop-blur-lg bg-[rgb(var(--background))]/80">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="py-3 flex justify-center">
+            <ul class="flex space-x-4 md:space-x-8">
+              {
+                navigation.map((item) => (
+                  <li>
+                    <Link {...item} addClass="font-medium text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--text-primary))] text-sm md:text-base" />
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Theme Toggle -->
+      <ThemeToggle />
+
+      <!-- Main Content -->
+      <main class="flex-grow">
+        <div class="px-4 md:px-6 lg:px-0 mx-auto max-w-4xl py-8">
+          <slot />
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <Footer />
+    </div>
   </body>
 </html>

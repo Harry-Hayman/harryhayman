@@ -1,122 +1,73 @@
 ---
-import AppLayout from "../../../layouts/AppLayout.astro";
-import { Image } from "astro:assets";
-import { getCollection, type CollectionEntry } from "astro:content";
+import AppLayout from "@layouts/AppLayout.astro";
+import { getCollection } from "astro:content";
+import BlogCard from "@components/BlogCard.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  const categories = [...new Set(posts.map((post: CollectionEntry<"blog">) => post.data.category).filter(Boolean))] as string[];
-  
-  return categories.map((category: string) => ({
-    params: { category: category.toLowerCase() },
+  const categories = [...new Set(posts.map((post) => post.data.category))].filter(
+    (category): category is string => typeof category === 'string'
+  );
+
+  return categories.map((category) => ({
+    params: { category },
     props: { 
-      category,
-      posts: posts.filter((post: CollectionEntry<"blog">) => post.data.category?.toLowerCase() === category.toLowerCase())
+      posts: posts.filter(post => post.data.category === category),
+      category 
     },
   }));
 }
 
 interface Props {
+  posts: any[];
   category: string;
-  posts: CollectionEntry<"blog">[];
 }
 
-const { category, posts } = Astro.props;
-
-// Format date helper
-function formatDate(date: Date) {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-}
+const { posts, category } = Astro.props;
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<AppLayout 
-  title={`${category} - Blog - Harry Hayman`}
-  description={`Articles about ${category.toLowerCase()} from Harry Hayman`}
->
-  <div class="max-w-4xl mx-auto">
-    <!-- Hero Section -->
-    <section class="mb-16">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif mb-6 text-zinc-100">
+<AppLayout title={`${category} - Blog - Harry Hayman`}>
+  <div class="py-12 sm:py-16">
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
         {category}
       </h1>
-      <p class="text-xl text-zinc-400">
+      <p class="text-[rgb(var(--text-primary))] text-lg">
         Articles and insights about {category.toLowerCase()}
       </p>
-    </section>
-
-    <!-- Categories -->
-    <div class="mb-12">
-      <div class="flex flex-wrap gap-3">
-        <a
-          href="/blog"
-          class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-300 hover:bg-blue-600 hover:text-white transition-colors"
-        >
-          All Posts
-        </a>
-        {category && (
-          <span class="px-4 py-2 rounded-full bg-blue-600 text-white">
-            {category}
-          </span>
-        )}
-      </div>
-    </div>
+      <a 
+        href="/blog" 
+        class="inline-block mt-4 text-[rgb(var(--text-primary))] hover:text-purple-600"
+      >
+        ← Back to all posts
+      </a>
+    </header>
 
     <!-- Blog Posts Grid -->
-    <div class="grid gap-12">
-      {posts.map((post: CollectionEntry<"blog">) => (
-        <article class="grid md:grid-cols-5 gap-8">
-          {post.data.heroImage && (
-            <div class="md:col-span-2">
-              <a href={`/blog/${post.slug}`} class="block aspect-[4/3] overflow-hidden rounded-2xl">
-                <Image
-                  src={post.data.heroImage}
-                  alt={post.data.imageAlt || post.data.title}
-                  class="w-full h-full object-cover transition-transform hover:scale-105"
-                  width={800}
-                  height={600}
-                />
-              </a>
-            </div>
-          )}
-          <div class={post.data.heroImage ? "md:col-span-3" : "md:col-span-5"}>
-            {post.data.tags && post.data.tags.length > 0 && (
-              <div class="flex flex-wrap gap-3 mb-4">
-                {post.data.tags.map((tag: string) => (
-                  <span class="px-3 py-1 text-sm bg-zinc-800 text-zinc-300 rounded-full">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
-            <h2 class="text-2xl md:text-3xl font-serif mb-4">
-              <a href={`/blog/${post.slug}`} class="text-zinc-100 hover:text-blue-400 transition-colors">
-                {post.data.title}
-              </a>
-            </h2>
-            <p class="text-zinc-400 mb-4 line-clamp-2">
-              {post.data.description}
-            </p>
-            <div class="flex items-center gap-4 text-sm text-zinc-500">
-              <time datetime={post.data.pubDate.toISOString()}>
-                {formatDate(post.data.pubDate)}
-              </time>
-              {post.data.lastmod && (
-                <span>Updated: {formatDate(post.data.lastmod)}</span>
-              )}
-            </div>
-          </div>
-        </article>
-      ))}
+    <div class="grid md:grid-cols-2 gap-8">
+      {
+        sortedPosts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            image={post.data.image}
+            category={post.data.category}
+            href={`/blog/${post.slug}`}
+          />
+        ))
+      }
     </div>
 
-    {posts.length === 0 && (
-      <div class="text-center py-12">
-        <p class="text-zinc-400">No posts found in this category.</p>
-      </div>
-    )}
+    <!-- Empty State -->
+    {
+      sortedPosts.length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-[rgb(var(--text-primary))] text-lg">No posts found in this category.</p>
+        </div>
+      )
+    }
   </div>
 </AppLayout>

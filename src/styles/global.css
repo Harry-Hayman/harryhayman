@@ -3,160 +3,106 @@
 @tailwind utilities;
 
 @layer base {
-  /* Typography */
+  :root {
+    --background: 255, 255, 255;
+    --text-primary: 0, 0, 0;
+    --text-secondary: 51, 51, 51;
+    --card-bg: 255, 255, 255;
+    --button-primary: 124, 58, 237;
+    --button-hover: 109, 40, 217;
+    --nav-border: 229, 231, 235;
+  }
+
+  :root.dark {
+    --background: 24, 24, 27;
+    --text-primary: 255, 255, 255;
+    --text-secondary: 255, 255, 255;  /* Changed to white for better visibility */
+    --card-bg: 39, 39, 42;
+    --button-primary: 147, 51, 234;
+    --button-hover: 168, 85, 247;
+    --nav-border: 39, 39, 42;
+  }
+
+  /* Apply theme to html and body */
+  html,
   body {
-    font-family: "Poppins", sans-serif;
+    background-color: rgb(var(--background)) !important;
+    color: rgb(var(--text-primary)) !important;
   }
 
-  .font-serif {
-    font-family: "Playfair Display", Georgia, serif;
-  }
-
-  /* Hero Text Stroke */
-  .text-stroke {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
-    text-stroke: 1px rgba(255, 255, 255, 0.15);
-    color: transparent;
-    text-fill-color: transparent;
-    -webkit-text-fill-color: transparent;
-    opacity: 0.8;
-  }
-
-  /* Text Gradient */
-  .text-gradient {
-    background: linear-gradient(to right, theme('colors.purple.400'), theme('colors.purple.600'));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* Prose Customization */
+  /* Prose styles for blog content */
   .prose {
-    max-width: none;
-    font-family: "Poppins", sans-serif;
+    color: rgb(var(--text-primary)) !important;
+    max-width: none !important;
   }
 
   .prose h1,
   .prose h2,
   .prose h3,
-  .prose h4 {
-    font-family: "Playfair Display", Georgia, serif;
-    color: theme('colors.zinc.100');
-    margin-top: 2em;
-    margin-bottom: 1em;
+  .prose h4,
+  .prose h5,
+  .prose h6,
+  .prose strong,
+  .prose b {
+    color: rgb(var(--text-primary)) !important;
   }
 
-  .prose h1 {
-    font-size: 2.5em;
-  }
-
-  .prose h2 {
-    font-size: 2em;
-  }
-
-  .prose h3 {
-    font-size: 1.5em;
-  }
-
-  .prose p {
-    color: theme('colors.zinc.300');
-    line-height: 1.8;
-    margin-bottom: 1.5em;
+  .prose p,
+  .prose ul,
+  .prose ol,
+  .prose li,
+  .prose blockquote {
+    color: rgb(var(--text-primary)) !important;
   }
 
   .prose a {
-    color: theme('colors.purple.400');
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .prose a:hover {
-    color: theme('colors.purple.300');
-  }
-
-  .prose ul,
-  .prose ol {
-    color: theme('colors.zinc.300');
-    margin-bottom: 1.5em;
-  }
-
-  .prose li {
-    margin-bottom: 0.5em;
-  }
-
-  .prose blockquote {
-    border-left-color: theme('colors.purple.600');
-    background-color: theme('colors.zinc.800');
-    padding: 1.5em;
-    border-radius: 0.5em;
-    margin: 2em 0;
-  }
-
-  .prose blockquote p {
-    color: theme('colors.zinc.200');
-    font-style: italic;
-    margin: 0;
-  }
-
-  .prose img {
-    border-radius: 1em;
-    margin: 2em 0;
+    color: rgb(var(--button-primary));
   }
 
   .prose code {
-    background-color: theme('colors.zinc.800');
-    color: theme('colors.zinc.200');
-    padding: 0.2em 0.4em;
-    border-radius: 0.3em;
-    font-size: 0.9em;
+    color: rgb(var(--text-primary)) !important;
+    background-color: rgb(var(--card-bg));
   }
 
-  .prose pre {
-    background-color: theme('colors.zinc.800');
-    padding: 1.5em;
-    border-radius: 0.5em;
-    margin: 2em 0;
-    overflow-x: auto;
+  /* Theme Classes */
+  .text-\[rgb\(var\(--text-primary\)\)\] {
+    color: rgb(var(--text-primary)) !important;
   }
 
-  .prose pre code {
-    background-color: transparent;
-    padding: 0;
-    border-radius: 0;
-    color: theme('colors.zinc.200');
+  .text-\[rgb\(var\(--text-secondary\)\)\] {
+    color: rgb(var(--text-secondary)) !important;
   }
 
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  .bg-\[rgb\(var\(--background\)\)\] {
+    background-color: rgb(var(--background)) !important;
   }
 
-  ::-webkit-scrollbar-track {
-    background: theme('colors.zinc.900');
+  .bg-\[rgb\(var\(--card-bg\)\)\] {
+    background-color: rgb(var(--card-bg)) !important;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: theme('colors.zinc.700');
-    border-radius: 4px;
+  /* Cards */
+  .card {
+    background-color: rgb(var(--card-bg));
+    border-color: rgb(var(--nav-border));
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: theme('colors.zinc.600');
+  /* Footer */
+  footer {
+    background-color: rgb(var(--background));
+    border-top: 1px solid rgb(var(--nav-border));
+    padding: 2rem 0;
+    margin-top: auto;
   }
 
-  /* Page Transitions */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Navigation */
+  nav {
+    background-color: rgb(var(--background));
+    border-color: rgb(var(--nav-border));
   }
 
-  .animate-fadeIn {
-    animation: fadeIn 0.5s ease-out forwards;
+  /* Container */
+  .container {
+    @apply max-w-screen-xl mx-auto px-4;
   }
 }

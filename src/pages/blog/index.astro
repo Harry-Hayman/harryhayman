@@ -1,140 +1,67 @@
 ---
 import AppLayout from "@layouts/AppLayout.astro";
-import { Image } from "astro:assets";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import BlogCard from "@components/BlogCard.astro";
 
-// Get all blog posts
-const posts = await getCollection("blog");
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-// Sort posts by date
-const sortedPosts = posts.sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => 
-  b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-
-// Get unique categories
-const categories = [
-  ...new Set(
-    posts
-      .map((post: CollectionEntry<"blog">) => post.data.category)
-      .filter(Boolean)
-  ),
-] as string[];
-
-// Format date
-function formatDate(date: Date) {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-}
+const categories = [...new Set(posts.map((post) => post.data.category))].filter(Boolean);
 ---
 
-<AppLayout 
-  title="Blog - Harry Hayman"
-  description="Insights on hospitality, jazz, community development, and sustainable initiatives in Philadelphia"
->
-  <div class="max-w-4xl mx-auto">
-    <!-- Hero Section -->
-    <section class="mb-16 text-center">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif mb-6 text-zinc-100">Stories & Insights</h1>
-      <p class="text-xl text-zinc-400 max-w-2xl mx-auto">
-        Exploring the intersection of hospitality, arts, sustainability, and community development in Philadelphia.
+<AppLayout title="Blog - Harry Hayman">
+  <div class="py-12 sm:py-16">
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
+        Blog & Insights
+      </h1>
+      <p class="text-[rgb(var(--text-primary))] text-lg max-w-2xl mx-auto">
+        Thoughts and insights on hospitality, philanthropy, and community development.
       </p>
-    </section>
+    </header>
 
     <!-- Categories -->
-    {categories.length > 0 && (
-      <div class="mb-12">
-        <div class="flex flex-wrap gap-3">
-          <a
-            href="/blog"
-            class="px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-          >
-            All Posts
-          </a>
-          {categories.map((category) => (
-            <a
-              href={`/blog/category/${category?.toLowerCase()}`}
-              class="px-4 py-2 rounded-full bg-zinc-800 text-zinc-300 hover:bg-blue-600 hover:text-white transition-colors"
-            >
-              {category}
-            </a>
-          ))}
+    {
+      categories.length > 0 && (
+        <div class="mb-12">
+          <div class="flex flex-wrap justify-center gap-3">
+            {categories.map((category) => (
+              <a
+                href={`/blog/category/${category}`}
+                class="px-4 py-1 text-sm font-medium rounded-full border border-[rgb(var(--nav-border))] bg-[rgb(var(--card-bg))] text-[rgb(var(--text-primary))] hover:bg-purple-600 hover:text-white hover:border-purple-600"
+              >
+                {category}
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
 
     <!-- Blog Posts Grid -->
-    <div class="grid gap-12">
-      {sortedPosts.map((post: CollectionEntry<"blog">) => (
-        <article class="grid md:grid-cols-5 gap-8">
-          {post.data.heroImage && (
-            <div class="md:col-span-2">
-              <a href={`/blog/${post.slug}`} class="block aspect-[4/3] overflow-hidden rounded-2xl">
-                <Image
-                  src={post.data.heroImage}
-                  alt={post.data.imageAlt || post.data.title}
-                  class="w-full h-full object-cover transition-transform hover:scale-105"
-                  width={800}
-                  height={600}
-                />
-              </a>
-            </div>
-          )}
-          <div class={post.data.heroImage ? "md:col-span-3" : "md:col-span-5"}>
-            {post.data.category && (
-              <span class="inline-block px-3 py-1 text-sm font-medium bg-blue-600 text-white rounded-full mb-4">
-                {post.data.category}
-              </span>
-            )}
-            <h2 class="text-2xl md:text-3xl font-serif mb-4">
-              <a href={`/blog/${post.slug}`} class="text-zinc-100 hover:text-blue-400 transition-colors">
-                {post.data.title}
-              </a>
-            </h2>
-            <p class="text-zinc-400 mb-4 line-clamp-2">
-              {post.data.description}
-            </p>
-            <div class="flex items-center gap-4 text-sm text-zinc-500">
-              <time datetime={post.data.pubDate.toISOString()}>
-                {formatDate(post.data.pubDate)}
-              </time>
-              {post.data.lastmod && (
-                <span>Updated: {formatDate(post.data.lastmod)}</span>
-              )}
-            </div>
-          </div>
-        </article>
-      ))}
+    <div class="grid md:grid-cols-2 gap-8">
+      {
+        posts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            image={post.data.image}
+            category={post.data.category ?? undefined}
+            href={`/blog/${post.slug}`}
+          />
+        ))
+      }
     </div>
 
-    {sortedPosts.length === 0 && (
-      <div class="text-center py-12">
-        <p class="text-zinc-400">No posts found.</p>
-      </div>
-    )}
-
-    <!-- Newsletter Signup -->
-    <section class="mt-20 text-center py-16 bg-zinc-800 rounded-2xl">
-      <h2 class="text-3xl font-serif mb-4 text-zinc-100">Stay Updated</h2>
-      <p class="text-zinc-400 mb-8 max-w-xl mx-auto">
-        Subscribe to receive the latest insights on Philadelphia's hospitality, arts, and community development scene.
-      </p>
-      <form class="flex gap-4 justify-center max-w-md mx-auto">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          class="flex-1 px-4 py-3 rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-100 focus:outline-none focus:border-blue-500"
-          required
-        />
-        <button
-          type="submit"
-          class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          Subscribe
-        </button>
-      </form>
-    </section>
+    <!-- Empty State -->
+    {
+      posts.length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-[rgb(var(--text-primary))] text-lg">No posts found.</p>
+        </div>
+      )
+    }
   </div>
 </AppLayout>
