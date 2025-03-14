@@ -2,14 +2,20 @@
 import AppLayout from "@layouts/AppLayout.astro";
 import { Image } from "astro:assets";
 import authorImage from "../assets/data/harryhayman images/harryhayman_bg_removed.png";
-import jazzImage from "../assets/data/supporting images/A lively jazz band performing on stage in a cozy Philadelphia jazz club, capturing the essence of the Philadelphia Jazz Experience.png";
-import hospitalityImage from "../assets/data/supporting images/A chef crafting a gourmet dish in a contemporary kitchen, highlighting creativity in the culinary arts, no face visible.png";
-import sustainabilityImage from "../assets/data/supporting images/An indoor vertical farm with lush green plants, showcasing innovative urban agriculture practices.png";
-import communityImage from "../assets/data/supporting images/A vibrant mural depicting Philadelphia's cultural diversity, highlighting the city's rich artistic heritage, philadelphia city, america.png";
+import jazzImage from "../assets/data/homepage_images/playing_jazz_instrument.jpg";
+import hospitalityImage from "../assets/data/homepage_images/hospitality.jpg";
+import philanthropyImage from "../assets/data/homepage_images/donating_food_to_hungry.jpg";
+import creativeImage from "../assets/data/homepage_images/creative_aspect.jpg";
+import sustainabilityImage from "../assets/data/homepage_images/controlled_environmental_agriculture.jpg";
+import scriptImage from "../assets/data/homepage_images/writing_script_movies.jpg";
+import skylineImage from "../assets/data/homepage_images/looking_at_philadelphia_skyline.jpg";
+import musicSymbol1 from "../assets/data/homepage_images/music_symbol_1.png";
+import musicSymbol2 from "../assets/data/homepage_images/music_symbol_2.png";
 ---
 
 <AppLayout title="Harry Hayman - Philadelphia Business Leader & Philanthropist">
   <div class="max-w-[100vw] overflow-x-hidden py-6">
+    <!-- Hero Section -->
     <section class="min-h-[80vh] flex items-center -mt-4 sm:mt-0">
       <div class="container mx-auto">
         <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center w-full">
@@ -17,8 +23,9 @@ import communityImage from "../assets/data/supporting images/A vibrant mural dep
             <h1
               class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 leading-tight text-[rgb(var(--text-primary))]"
             >
-              Inspiring Change Through
-              <span class="text-purple-600">Innovation</span>
+              Inspiring Change Through <span class="text-purple-600"
+                >Innovation</span
+              >
             </h1>
             <p
               class="text-base sm:text-lg md:text-xl text-[rgb(var(--text-primary))] leading-relaxed mb-8 max-w-lg"
@@ -82,107 +89,242 @@ import communityImage from "../assets/data/supporting images/A vibrant mural dep
       </div>
     </section>
 
-    <!-- Areas of Impact -->
-    <section class="py-12 sm:py-16 md:py-20 px-4">
-      <h2
-        class="text-2xl md:text-3xl font-serif mb-8 md:mb-12 text-center text-[rgb(var(--text-primary))]"
-      >
-        Areas of Impact
-      </h2>
-      <div class="grid md:grid-cols-2 gap-6 md:gap-8 container mx-auto">
-        <!-- Jazz & Arts -->
-        <div
-          class="group relative overflow-hidden rounded-2xl bg-[rgb(var(--card-bg))]"
+    <!-- Harry's Passions -->
+    <section class="relative py-16 md:py-24">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-3xl md:text-4xl font-serif text-center mb-16 text-[rgb(var(--text-primary))]"
         >
+          Harry's Passions
+        </h2>
+
+        <!-- Jazz Music -->
+        <div class="relative mb-24">
           <Image
-            src={jazzImage}
-            alt="Philadelphia Jazz Experience"
-            class="w-full h-64 md:h-80 object-cover"
-            width={800}
-            height={600}
+            src={musicSymbol1}
+            alt="Musical Note"
+            class="absolute -top-12 right-1/4 w-16 h-16 opacity-30 animate-float"
+            width={64}
+            height={64}
           />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 md:p-8 flex flex-col justify-end"
-          >
-            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">
-              Philadelphia Jazz Experience
-            </h3>
-            <p class="text-sm md:text-base text-zinc-100">
-              Preserving and celebrating Philadelphia's rich jazz heritage
-              through education and performance.
-            </p>
+          <Image
+            src={musicSymbol2}
+            alt="Musical Note"
+            class="absolute top-1/3 left-1/4 w-12 h-12 opacity-30 animate-float-delayed"
+            width={48}
+            height={48}
+          />
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="relative overflow-hidden rounded-2xl h-[400px]">
+              <Image
+                src={jazzImage}
+                alt="Jazz Performance"
+                class="w-full h-full object-cover"
+                width={800}
+                height={800}
+              />
+              <div class="absolute inset-0 bg-purple-900/40"></div>
+            </div>
+            <div class="space-y-6">
+              <h3
+                class="text-2xl md:text-3xl font-serif text-[rgb(var(--text-primary))]"
+              >
+                Jazz & Music
+              </h3>
+              <p class="text-lg text-[rgb(var(--text-secondary))]">
+                Harry's love for jazz music blossomed during his early career as
+                a bartender in a jazz club. This passion led him to establish
+                the Philadelphia Jazz Experience, an initiative that not only
+                preserves the city's rich jazz heritage but also educates young
+                people about the transformative power of music.
+              </p>
+            </div>
           </div>
         </div>
 
         <!-- Hospitality -->
-        <div
-          class="group relative overflow-hidden rounded-2xl bg-[rgb(var(--card-bg))]"
-        >
-          <Image
-            src={hospitalityImage}
-            alt="Hospitality Innovation"
-            class="w-full h-64 md:h-80 object-cover"
-            width={800}
-            height={600}
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 md:p-8 flex flex-col justify-end"
-          >
-            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">
-              Culinary Innovation
-            </h3>
-            <p class="text-sm md:text-base text-zinc-100">
-              Transforming Philadelphia's dining scene through creative concepts
-              and sustainable practices.
-            </p>
+        <div class="relative mb-24">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="order-2 md:order-1 space-y-6">
+              <h3
+                class="text-2xl md:text-3xl font-serif text-[rgb(var(--text-primary))]"
+              >
+                Hospitality Innovation
+              </h3>
+              <p class="text-lg text-[rgb(var(--text-secondary))]">
+                As a pioneer in Philadelphia's hospitality scene, Harry has
+                transformed the industry through ventures like the Bynum
+                Hospitality Group and Gemini Hospitality Consultants. His
+                innovative approach combines exceptional service with
+                sustainable practices, setting new standards in the culinary
+                world.
+              </p>
+            </div>
+            <div
+              class="order-1 md:order-2 relative overflow-hidden rounded-2xl h-[400px]"
+            >
+              <Image
+                src={hospitalityImage}
+                alt="Hospitality"
+                class="w-full h-full object-cover"
+                width={800}
+                height={800}
+              />
+              <div class="absolute inset-0 bg-purple-900/40"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Sustainability -->
-        <div
-          class="group relative overflow-hidden rounded-2xl bg-[rgb(var(--card-bg))]"
-        >
-          <Image
-            src={sustainabilityImage}
-            alt="Sustainable Agriculture"
-            class="w-full h-64 md:h-80 object-cover"
-            width={800}
-            height={600}
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 md:p-8 flex flex-col justify-end"
-          >
-            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">
-              Sustainable Agriculture
-            </h3>
-            <p class="text-sm md:text-base text-zinc-100">
-              Pioneering urban farming solutions with hydroponic technology and
-              sustainable practices.
-            </p>
+        <!-- Philanthropy -->
+        <div class="relative mb-24">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="relative overflow-hidden rounded-2xl h-[400px]">
+              <Image
+                src={philanthropyImage}
+                alt="Community Service"
+                class="w-full h-full object-cover"
+                width={800}
+                height={800}
+              />
+              <div class="absolute inset-0 bg-purple-900/40"></div>
+            </div>
+            <div class="space-y-6">
+              <h3
+                class="text-2xl md:text-3xl font-serif text-[rgb(var(--text-primary))]"
+              >
+                Community Service
+              </h3>
+              <p class="text-lg text-[rgb(var(--text-secondary))]">
+                Through initiatives like the Feed Philly Coalition, Harry
+                demonstrates his deep commitment to community service. His
+                philanthropic work extends beyond food security to include
+                support for the arts, education, and local development, making a
+                lasting impact on Philadelphia's communities.
+              </p>
+            </div>
           </div>
         </div>
 
-        <!-- Community Impact -->
-        <div
-          class="group relative overflow-hidden rounded-2xl bg-[rgb(var(--card-bg))]"
-        >
-          <Image
-            src={communityImage}
-            alt="Community Impact"
-            class="w-full h-64 md:h-80 object-cover"
-            width={800}
-            height={600}
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 md:p-8 flex flex-col justify-end"
-          >
-            <h3 class="text-xl md:text-2xl font-serif mb-2 text-white">
-              Community Impact
-            </h3>
-            <p class="text-sm md:text-base text-zinc-100">
-              Building stronger communities through initiatives like Feed Philly
-              Coalition and local art programs.
-            </p>
+        <!-- Creative Ventures -->
+        <div class="relative mb-24">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="order-2 md:order-1 space-y-6">
+              <h3
+                class="text-2xl md:text-3xl font-serif text-[rgb(var(--text-primary))]"
+              >
+                Creative Innovation
+              </h3>
+              <p class="text-lg text-[rgb(var(--text-secondary))]">
+                Harry's creative spirit drives initiatives like Veggie Graffiti
+                and Harry Hayman Creative, where he explores innovative
+                solutions to urban farming and sustainable food practices while
+                promoting artistic expression in Philadelphia's culinary scene.
+              </p>
+            </div>
+            <div
+              class="order-1 md:order-2 relative overflow-hidden rounded-2xl h-[400px]"
+            >
+              <Image
+                src={creativeImage}
+                alt="Creative Innovation"
+                class="w-full h-full object-cover"
+                width={800}
+                height={800}
+              />
+              <div class="absolute inset-0 bg-purple-900/40"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Script Writing & Film -->
+        <div class="relative mb-24">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="relative overflow-hidden rounded-2xl h-[400px]">
+              <Image
+                src={scriptImage}
+                alt="Script Writing"
+                class="w-full h-full object-cover"
+                width={800}
+                height={800}
+              />
+              <div class="absolute inset-0 bg-purple-900/40"></div>
+            </div>
+            <div class="space-y-6">
+              <h3
+                class="text-2xl md:text-3xl font-serif text-[rgb(var(--text-primary))]"
+              >
+                Storytelling Through Film
+              </h3>
+              <p class="text-lg text-[rgb(var(--text-secondary))]">
+                Harry's creative vision extends into the world of storytelling
+                and film production. Through Harry Hayman Creative, he
+                transforms imaginative concepts into compelling narratives,
+                contributing to Philadelphia's vibrant arts and entertainment
+                scene while nurturing local talent and creative expression.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Environmental Initiatives -->
+        <div class="relative mb-24">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="order-2 md:order-1 space-y-6">
+              <h3
+                class="text-2xl md:text-3xl font-serif text-[rgb(var(--text-primary))]"
+              >
+                Environmental Innovation
+              </h3>
+              <p class="text-lg text-[rgb(var(--text-secondary))]">
+                Through controlled environmental agriculture and sustainable
+                practices, Harry is pioneering innovative solutions for urban
+                farming and food security. His commitment to environmental
+                stewardship embraces cutting-edge technologies and practices,
+                working towards a more sustainable future for Philadelphia.
+              </p>
+            </div>
+            <div
+              class="order-1 md:order-2 relative overflow-hidden rounded-2xl h-[400px]"
+            >
+              <Image
+                src={sustainabilityImage}
+                alt="Environmental Agriculture"
+                class="w-full h-full object-cover"
+                width={800}
+                height={800}
+              />
+              <div class="absolute inset-0 bg-purple-900/40"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision for Philadelphia -->
+    <section class="relative h-[90vh] sm:h-[80vh] overflow-hidden">
+      <Image
+        src={skylineImage}
+        alt="Philadelphia Skyline"
+        class="w-full h-full object-cover"
+        width={1600}
+        height={900}
+      />
+      <div class="absolute inset-0 bg-purple-900/60"></div>
+      <div class="absolute inset-0 flex items-center">
+        <div class="container mx-auto px-6 py-8 text-center">
+          <div class="max-w-4xl mx-auto">
+            <h2
+              class="text-3xl sm:text-3xl md:text-5xl font-serif font-bold mb-4 sm:mb-6 text-white"
+            >
+              Shaping Philadelphia’s future, one step at a time.
+            </h2>
+            <!-- <p class="text-base sm:text-lg md:text-xl text-white leading-relaxed px-4 sm:px-0">
+              Through his diverse initiatives in hospitality, arts,
+              sustainability, and community service, Harry continues to shape
+              Philadelphia's future. His commitment to the city goes beyond
+              business success, focusing on creating lasting positive impact and
+              making Philadelphia a better place for all its residents.
+            </p> -->
           </div>
         </div>
       </div>
@@ -204,9 +346,39 @@ import communityImage from "../assets/data/supporting images/A vibrant mural dep
       <a
         href="/blog"
         class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors"
+        >Read Our Stories</a
       >
-        Read Our Stories
-      </a>
     </section>
   </div>
+
+  <style>
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes float-delayed {
+      0%,
+      100% {
+        transform: translateY(-20px);
+      }
+      50% {
+        transform: translateY(0);
+      }
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+      animation: float-delayed 6s ease-in-out infinite;
+      animation-delay: 2s;
+    }
+  </style>
 </AppLayout>
