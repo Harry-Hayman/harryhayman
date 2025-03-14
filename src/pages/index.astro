@@ -190,15 +190,19 @@ const passions = [
     </section>
 
     <!-- Vision for Philadelphia -->
-      <section class="relative h-[90vh] sm:h-[80vh] overflow-hidden">
-        <Image
-          src={skylineImage}
-          alt="Philadelphia Skyline"
-          class="w-full h-full object-cover brightness-75"
-          width={1600}
-          height={900}
-        />
-        <div class="absolute inset-0 bg-purple-900/80"></div>
+      <section class="relative h-[90vh] sm:h-[80vh] overflow-hidden group">
+        <div class="relative w-full h-full transform transition-transform duration-[2s] ease-out group-hover:scale-110">
+          <div class="absolute inset-0 w-full h-[120%] -top-[10%] motion-safe:animate-subtle-scroll">
+            <Image
+              src={skylineImage}
+              alt="Philadelphia Skyline"
+              class="w-full h-full object-cover brightness-75 transition-all duration-1000"
+              width={1600}
+              height={900}
+            />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-b from-purple-900/90 to-purple-900/60 transition-all duration-1000"></div>
+        </div>
         <div class="absolute inset-0 flex items-center">
           <div class="container mx-auto px-6 py-8 text-center">
             <div class="max-w-4xl mx-auto">
@@ -268,6 +272,19 @@ const passions = [
       .animate-float-delayed {
         animation: float-delayed 6s ease-in-out infinite;
         animation-delay: 2s;
+      }
+
+      @keyframes subtle-scroll {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-10%);
+        }
+      }
+
+      .motion-safe\:animate-subtle-scroll {
+        animation: subtle-scroll 15s ease-in-out infinite alternate;
       }
     </style>
   </div>
