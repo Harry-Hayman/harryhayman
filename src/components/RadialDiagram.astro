@@ -7,7 +7,7 @@ import geminiLogo from "../assets/data/business_logo/gemini_hospitality_consulti
 import creativelogo from "../assets/data/business_logo/harry_hayman_creative.png";
 import iAmHungryLogo from "../assets/data/business_logo/i_am_hungry.jpg";
 import jazzLogo from "../assets/data/business_logo/philadelphia_jazz_experience.png";
-import veggieGraffitiLogo from "../assets/data/business_logo/veggie_graffiti.jpeg";
+import veggieGraffitiLogo from "../assets/data/business_logo/veggie_graffiti.png";
 
 const businesses = [
   {
@@ -57,7 +57,7 @@ const getCoordinates = (index: number, radius: number) => {
 };
 ---
 
-<div class="relative overflow-hidden my0 md:my0">
+<div class="relative overflow-hidden">
   <!-- Fixed aspect ratio container -->
   <div class="mx-auto" style="width: min(100%, 800px);">
     <div class="relative" style="padding-bottom: 100%;">
@@ -109,7 +109,7 @@ const getCoordinates = (index: number, radius: number) => {
               <Image
                 src={harryImage}
                 alt="Harry Hayman"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-contain"
                 width={192}
                 height={192}
               />
