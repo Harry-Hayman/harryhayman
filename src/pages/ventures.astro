@@ -1,6 +1,7 @@
 ---
 import AppLayout from "@layouts/AppLayout.astro";
 import { Image } from "astro:assets";
+import RadialDiagram from "@components/RadialDiagram.astro";
 import hospitalityImage from "../assets/data/supporting images/A diverse group of professionals collaborating around a conference table, symbolizing the teamwork at Gemini Hospitality Consultants.png";
 import jazzImage from "../assets/data/supporting images/A lively jazz band performing on stage in a cozy Philadelphia jazz club, capturing the essence of the Philadelphia Jazz Experience.png";
 import veggieImage from "../assets/data/supporting images/Close-up of fresh microgreens being artfully plated by a chef in a modern kitchen, representing Veggie Graffiti's offerings.png";
@@ -12,18 +13,28 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
     <div class="container mx-auto px-4">
       <!-- Header -->
       <header class="max-w-3xl mx-auto text-center mb-16">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]">
+        <h1
+          class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]"
+        >
           Ventures & Initiatives
         </h1>
-        <p class="text-lg sm:text-xl text-[rgb(var(--text-primary))] leading-relaxed">
-          Exploring innovative solutions across hospitality, culture, and community development.
+        <p
+          class="text-lg sm:text-xl text-[rgb(var(--text-primary))] leading-relaxed"
+        >
+          Exploring innovative solutions across hospitality, culture, and
+          community development.
         </p>
       </header>
+
+      <!-- Radial Diagram -->
+      <RadialDiagram />
 
       <!-- Ventures Grid -->
       <div class="grid gap-8 md:grid-cols-2">
         <!-- Gemini Hospitality -->
-        <div class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]">
+        <div
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+        >
           <div class="relative h-64">
             <Image
               src={hospitalityImage}
@@ -34,17 +45,23 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
             />
           </div>
           <div class="p-8">
-            <h2 class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
+            <h2
+              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
+            >
               Gemini Hospitality Consultants
             </h2>
             <p class="text-[rgb(var(--text-primary))] mb-6">
-              Strategic consulting services for restaurants and hospitality businesses, focusing on innovative solutions and sustainable growth.
+              Strategic consulting services for restaurants and hospitality
+              businesses, focusing on innovative solutions and sustainable
+              growth.
             </p>
           </div>
         </div>
 
         <!-- Philadelphia Jazz Experience -->
-        <div class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]">
+        <div
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+        >
           <div class="relative h-64">
             <Image
               src={jazzImage}
@@ -55,17 +72,22 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
             />
           </div>
           <div class="p-8">
-            <h2 class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
+            <h2
+              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
+            >
               Philadelphia Jazz Experience
             </h2>
             <p class="text-[rgb(var(--text-primary))] mb-6">
-              Preserving and promoting Philadelphia's rich jazz heritage through education, performance, and community engagement.
+              Preserving and promoting Philadelphia's rich jazz heritage through
+              education, performance, and community engagement.
             </p>
           </div>
         </div>
 
         <!-- Veggie Graffiti -->
-        <div class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]">
+        <div
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+        >
           <div class="relative h-64">
             <Image
               src={veggieImage}
@@ -76,17 +98,22 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
             />
           </div>
           <div class="p-8">
-            <h2 class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
+            <h2
+              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
+            >
               Veggie Graffiti
             </h2>
             <p class="text-[rgb(var(--text-primary))] mb-6">
-              Urban farming initiative combining hydroponic technology with sustainable practices to provide fresh, local produce.
+              Urban farming initiative combining hydroponic technology with
+              sustainable practices to provide fresh, local produce.
             </p>
           </div>
         </div>
 
         <!-- Feed Philly Coalition -->
-        <div class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]">
+        <div
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+        >
           <div class="relative h-64">
             <Image
               src={feedPhillyImage}
@@ -97,11 +124,14 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
             />
           </div>
           <div class="p-8">
-            <h2 class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
+            <h2
+              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
+            >
               Feed Philly Coalition
             </h2>
             <p class="text-[rgb(var(--text-primary))] mb-6">
-              Community initiative addressing food insecurity through partnerships with local restaurants and organizations.
+              Community initiative addressing food insecurity through
+              partnerships with local restaurants and organizations.
             </p>
           </div>
         </div>
@@ -109,11 +139,14 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
 
       <!-- Call to Action -->
       <div class="text-center mt-16">
-        <h2 class="text-2xl sm:text-3xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
+        <h2
+          class="text-2xl sm:text-3xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
+        >
           Get Involved
         </h2>
         <p class="text-[rgb(var(--text-primary))] mb-8 max-w-2xl mx-auto">
-          Interested in collaborating or learning more about our initiatives? Let's connect and explore opportunities together.
+          Interested in collaborating or learning more about our initiatives?
+          Let's connect and explore opportunities together.
         </p>
         <a
           href="/blog"

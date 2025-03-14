@@ -1,0 +1,99 @@
+---
+import { Image } from "astro:assets";
+import harryImage from "../assets/data/harryhayman images/harryhayman_bg_removed.png";
+import anotherThreeHeartsLogo from "../assets/data/business_logo/another_three_hearts_experience.png";
+import feedPhillyLogo from "../assets/data/business_logo/feed_philly_coalition.png";
+import geminiLogo from "../assets/data/business_logo/gemini_hospitality_consulting.png";
+import creativelogo from "../assets/data/business_logo/harry_hayman_creative.png";
+import iAmHungryLogo from "../assets/data/business_logo/i_am_hungry.jpg";
+import jazzLogo from "../assets/data/business_logo/philadelphia_jazz_experience.png";
+import veggieGraffitiLogo from "../assets/data/business_logo/veggie_graffiti.jpeg";
+
+const businesses = [
+  { name: "Another Three Hearts Experience", logo: anotherThreeHeartsLogo },
+  { name: "Feed Philly Coalition", logo: feedPhillyLogo },
+  { name: "Gemini Hospitality Consulting", logo: geminiLogo },
+  { name: "Harry Hayman Creative", logo: creativelogo },
+  { name: "I Am Hungry in Philly", logo: iAmHungryLogo },
+  { name: "Philadelphia Jazz Experience", logo: jazzLogo },
+  { name: "Veggie Graffiti", logo: veggieGraffitiLogo },
+];
+---
+
+<div class="relative w-full h-[600px] my-12">
+  <!-- Center Image -->
+  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full overflow-hidden border-4 border-purple-600 z-10 bg-white">
+    <Image
+      src={harryImage}
+      alt="Harry Hayman"
+      class="w-full h-full object-cover"
+      width={192}
+      height={192}
+    />
+  </div>
+
+  <!-- Business Logos -->
+  <div class="absolute inset-0">
+    {
+      businesses.map((business, index) => {
+        const angle = (index * (360 / businesses.length) * Math.PI) / 180;
+        const radius = 240; // Distance from center
+        const left = `calc(50% + ${Math.cos(angle) * radius}px - 48px)`;
+        const top = `calc(50% + ${Math.sin(angle) * radius}px - 48px)`;
+
+        return (
+          <div
+            class="absolute w-24 h-24 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 hover:scale-125 group"
+            style={`left: ${left}; top: ${top};`}
+          >
+            <div class="relative">
+              <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-purple-600 bg-white">
+                <Image
+                  src={business.logo}
+                  alt={business.name}
+                  class="w-full h-full object-contain p-2"
+                  width={96}
+                  height={96}
+                />
+              </div>
+              <div class="absolute left-1/2 -translate-x-1/2 bg-purple-600 text-white px-4 py-2 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12">
+                {business.name}
+              </div>
+            </div>
+          </div>
+        )
+      })
+    }
+  </div>
+
+  <!-- Connecting Lines -->
+  <div class="absolute inset-0">
+    {
+      businesses.map((_, index) => {
+        const angle = (index * (360 / businesses.length) * Math.PI) / 180;
+        const innerRadius = 80; // Distance from center to start of line
+        const outerRadius = 200; // Distance from center to end of line
+        
+        const x1 = 300 + Math.cos(angle) * innerRadius;
+        const y1 = 300 + Math.sin(angle) * innerRadius;
+        const x2 = 300 + Math.cos(angle) * outerRadius;
+        const y2 = 300 + Math.sin(angle) * outerRadius;
+
+        return (
+          <svg class="absolute inset-0 w-full h-full">
+            <line
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+              stroke="rgb(147, 51, 234)"
+              stroke-width="2"
+              stroke-dasharray="4"
+              class="opacity-50"
+            />
+          </svg>
+        )
+      })
+    }
+  </div>
+</div>
