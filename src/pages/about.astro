@@ -8,7 +8,7 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
   <div class="py-12 sm:py-16">
     <div class="container mx-auto px-4">
       <!-- Header -->
-      <header class="max-w-3xl mx-auto text-center mb-12">
+      <header class="max-w-3xl mx-auto text-center mb-12" data-aos="fade" data-aos-duration="800">
         <h1
           class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]"
         >
@@ -16,6 +16,9 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
         </h1>
         <p
           class="text-lg sm:text-xl text-[rgb(var(--text-primary))] leading-relaxed"
+          data-aos="fade"
+          data-aos-offset="10"
+          data-aos-duration="600"
         >
           A visionary entrepreneur and community leader dedicated to
           transforming Philadelphia's hospitality and philanthropic landscape.
@@ -24,20 +27,25 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
 
       <!-- Image Section -->
       <div class="mb-16">
-        <div class="rounded-2xl overflow-hidden">
+        <div class="rounded-2xl overflow-hidden" data-aos="fade" data-aos-duration="1200">
           <Image
             src={aboutImage}
             alt="Harry Hayman"
-            class="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
+            class="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover transform transition-all duration-700 hover:scale-105 motion-safe:hover:blur-[1px] lazyload"
             width={1200}
             height={600}
+            loading="lazy"
           />
         </div>
       </div>
 
       <!-- Content Sections -->
       <div class="max-w-3xl mx-auto space-y-12">
-        <section>
+        <section
+          data-aos="fade"
+          data-aos-duration="600"
+          class="transform transition-all duration-300 hover:translate-x-1 motion-safe:hover:blur-[0.5px]"
+        >
           <h2
             class="text-2xl sm:text-3xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
           >
@@ -52,7 +60,12 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
           </p>
         </section>
 
-        <section>
+        <section
+          data-aos="fade"
+          data-aos-duration="600"
+          data-aos-delay="100"
+          class="transform transition-all duration-300 hover:translate-x-1 motion-safe:hover:blur-[0.5px]"
+        >
           <h2
             class="text-2xl sm:text-3xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
           >
@@ -67,7 +80,12 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
           </p>
         </section>
 
-        <section>
+        <section
+          data-aos="fade"
+          data-aos-duration="600"
+          data-aos-delay="200"
+          class="transform transition-all duration-300 hover:translate-x-1 motion-safe:hover:blur-[0.5px]"
+        >
           <h2
             class="text-2xl sm:text-3xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
           >

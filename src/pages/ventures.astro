@@ -15,7 +15,7 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
       <RadialDiagram />
 
       <!-- Header -->
-      <header class="max-w-3xl mx-auto text-center mb-16">
+      <header class="max-w-3xl mx-auto text-center mb-16" data-aos="fade-down">
         <h1
           class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]"
         >
@@ -23,6 +23,8 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
         </h1>
         <p
           class="text-lg sm:text-xl text-[rgb(var(--text-primary))] leading-relaxed"
+          data-aos="fade-up"
+          data-aos-delay="200"
         >
           Exploring innovative solutions across hospitality, culture, and
           community development.
@@ -33,13 +35,15 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
       <div class="grid gap-8 md:grid-cols-2">
         <!-- Gemini Hospitality -->
         <div
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+          data-aos="fade"
+          data-aos-delay="0"
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
         >
           <div class="relative h-64">
             <Image
               src={hospitalityImage}
               alt="Gemini Hospitality Consultants"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               width={800}
               height={600}
             />
@@ -60,13 +64,15 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
 
         <!-- Philadelphia Jazz Experience -->
         <div
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+          data-aos="fade"
+          data-aos-delay="100"
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
         >
-          <div class="relative h-64">
+          <div class="relative h-64 overflow-hidden">
             <Image
               src={jazzImage}
               alt="Philadelphia Jazz Experience"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               width={800}
               height={600}
             />
@@ -86,13 +92,15 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
 
         <!-- Veggie Graffiti -->
         <div
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+          data-aos="fade"
+          data-aos-delay="200"
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
         >
-          <div class="relative h-64">
+          <div class="relative h-64 overflow-hidden">
             <Image
               src={veggieImage}
               alt="Veggie Graffiti"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               width={800}
               height={600}
             />
@@ -112,13 +120,15 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
 
         <!-- Feed Philly Coalition -->
         <div
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))]"
+          data-aos="fade"
+          data-aos-delay="300"
+          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
         >
-          <div class="relative h-64">
+          <div class="relative h-64 overflow-hidden">
             <Image
               src={feedPhillyImage}
               alt="Feed Philly Coalition"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               width={800}
               height={600}
             />

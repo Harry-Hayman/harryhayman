@@ -57,7 +57,46 @@ const getCoordinates = (index: number, radius: number) => {
 };
 ---
 
-<div class="relative overflow-hidden">
+<div class="relative overflow-hidden radial-diagram" data-aos="zoom-in" data-aos-duration="1000">
+  <script>
+    declare const gsap: any;
+    
+    window.addEventListener('load', () => {
+      // Initialize all business logos at once
+      const logos = document.querySelectorAll('.business-logo');
+      logos.forEach((logo, index) => {
+        gsap.fromTo(logo,
+          { scale: 0.8, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.4,
+            delay: index * 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: ".radial-diagram",
+              start: "top center+=100",
+            }
+          }
+        );
+      });
+
+      // Center image animation
+      gsap.fromTo('.center-image',
+        { scale: 0.9, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".radial-diagram",
+            start: "top center+=100",
+          }
+        }
+      );
+    });
+  </script>
   <!-- Fixed aspect ratio container -->
   <div class="mx-auto" style="width: min(100%, 800px);">
     <div class="relative" style="padding-bottom: 100%;">
@@ -100,7 +139,7 @@ const getCoordinates = (index: number, radius: number) => {
 
         <!-- Center Image -->
         <div
-          class="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 w-[25%] aspect-square z-20"
+          class="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 w-[25%] aspect-square z-20 center-image"
         >
           <div class="relative w-full h-full">
             <div
@@ -138,7 +177,7 @@ const getCoordinates = (index: number, radius: number) => {
                   href={business.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="absolute w-[18%] aspect-square transition-all duration-300 hover:scale-125 hover:z-20 group cursor-pointer"
+                  class="absolute w-[18%] aspect-square transition-all duration-300 hover:scale-125 hover:z-20 group cursor-pointer business-logo"
                   style={`left: ${pos.x}%; top: ${pos.y}%; transform: translate(-50%, -50%);`}
                 >
                   <div class="relative w-full h-full">
@@ -151,7 +190,7 @@ const getCoordinates = (index: number, radius: number) => {
                         height={80}
                       />
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 bg-purple-600 text-white px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12 shadow-lg z-30 text-xs md:text-sm max-w-[200px] text-center">
+                    <div class="absolute left-1/2 -translate-x-1/2 bg-purple-600 text-white px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12 shadow-lg z-30 text-xs md:text-sm whitespace-nowrap text-center">
                       {business.name}
                     </div>
                   </div>

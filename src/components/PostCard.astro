@@ -15,20 +15,23 @@ import { Image } from "astro:assets";
 ---
 
 <div
+  data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
+  data-aos-duration="1000"
   class={`group relative overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 hover:-translate-y-2 md:flex ${
     index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
   } bg-[rgb(var(--card-bg))] border border-[rgb(var(--nav-border))]`}
 >
-  <div class="relative h-64 md:h-auto md:w-1/2">
+  <div class="relative h-64 md:h-auto md:w-1/2 overflow-hidden">
     <Image
       src={image.src}
       alt={image.alt}
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover lazyload transition-transform duration-500 scale-[1.01] group-hover:scale-110"
       width={600}
       height={400}
+      loading="lazy"
     />
     <div
-      class="absolute inset-0 bg-purple-900/40 group-hover:bg-purple-900/50 transition-all duration-300"
+      class="absolute inset-0 bg-purple-900/40 group-hover:bg-purple-900/50 transition-all duration-500"
     >
     </div>
   </div>
