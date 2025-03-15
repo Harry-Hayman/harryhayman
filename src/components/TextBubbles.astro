@@ -3,7 +3,7 @@
 ---
 
 <div
-    class="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"
+    class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
     id="text-bubbles"
     style="z-index: -1;"
 >
@@ -108,6 +108,45 @@
         }
 
         let creationTimeout: ReturnType<typeof setTimeout>;
+        function createBubble(
+            bubbles: HTMLElement,
+            template: HTMLTemplateElement,
+        ) {
+            const index = Math.floor(Math.random() * interests.length);
+            const interest: string = interests[index] || "Innovation";
+            const bubbleNode = template.content.cloneNode(
+                true,
+            ) as DocumentFragment;
+            const bubbleElement = bubbleNode.querySelector("div") as HTMLDivElement;
+
+            if (bubbleElement && interest) {
+                bubbleElement.textContent = interest;
+
+                const textLength = interest.length;
+                const baseSize = Math.max(textLength * 1.2, 6);
+                const sizePx = baseSize * 10;
+
+                bubbleElement.style.width = sizePx + "px";
+                bubbleElement.style.height = sizePx + "px";
+                bubbleElement.style.fontSize =
+                    Math.max(sizePx * 0.15, 12) + "px";
+
+                const x = generateRandom(0, window.innerWidth - sizePx);
+                bubbleElement.style.left = x + "px";
+
+                const duration = generateRandom(15000, 20000);
+                bubbleElement.style.animationDuration = duration + "ms";
+
+                bubbleElement.style.transform = "translateY(0)";
+                bubbles.appendChild(bubbleElement);
+
+                // Remove bubble after animation ends
+                setTimeout(() => {
+                    bubbleElement.remove();
+                }, duration);
+            }
+        }
+
         function createBubbles() {
             clearTimeout(creationTimeout);
 
@@ -119,46 +158,28 @@
             if (!bubbles || !template) return;
 
             clearBubbles();
+            bubbles.classList.remove("opacity-0");
 
-            // Create bubbles after a delay to ensure proper initial positioning
-            creationTimeout = setTimeout(() => {
-                // Show the container
-                bubbles.classList.remove("opacity-0");
+            // Create initial set of bubbles
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    createBubble(bubbles, template);
+                }, i * 2000);
+            }
 
-                interests.forEach((interest) => {
-                    const bubbleNode = template.content.cloneNode(true) as DocumentFragment;
-                    const bubbleElement = bubbleNode.querySelector("div");
+            // Continuously create new bubbles
+            const createNewBubble = () => {
+                if (document.querySelectorAll(".bubble").length < 10) {
+                    createBubble(bubbles, template);
+                }
+                creationTimeout = setTimeout(
+                    createNewBubble,
+                    generateRandom(2000, 4000),
+                );
+            };
 
-                    if (bubbleElement) {
-                        bubbleElement.textContent = interest;
-
-                        const textLength = interest.length;
-                        const baseSize = Math.max(textLength * 1.2, 6);
-                        const sizePx = baseSize * 10;
-
-                        bubbleElement.style.width = sizePx + "px";
-                        bubbleElement.style.height = sizePx + "px";
-                        bubbleElement.style.fontSize =
-                            Math.max(sizePx * 0.15, 12) + "px";
-
-                        const x = generateRandom(0, window.innerWidth - sizePx);
-                        bubbleElement.style.left = x + "px";
-
-                        // Shorter animation duration for smoother flow
-                        const duration = generateRandom(15000, 20000);
-                        bubbleElement.style.animationDelay =
-                            generateRandom(0, 3000) + "ms";
-                        bubbleElement.style.animationDuration = duration + "ms";
-
-                        // Ensure initial positioning is from bottom
-                        bubbleElement.style.transform = "translateY(0)";
-                        bubbles.appendChild(bubbleElement);
-
-                        // Force a reflow to ensure the animation starts properly
-                        void bubbleElement.offsetWidth;
-                    }
-                });
-            }, 500); // Wait for layout to stabilize
+            // Start continuous creation after initial set
+            setTimeout(createNewBubble, 6000);
         }
 
         let resizeTimeout: ReturnType<typeof setTimeout>;
