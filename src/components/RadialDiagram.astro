@@ -57,15 +57,20 @@ const getCoordinates = (index: number, radius: number) => {
 };
 ---
 
-<div class="relative overflow-hidden radial-diagram" data-aos="zoom-in" data-aos-duration="1000">
+<div
+  class="relative overflow-hidden radial-diagram"
+  data-aos="zoom-in"
+  data-aos-duration="1000"
+>
   <script>
     declare const gsap: any;
-    
-    window.addEventListener('load', () => {
+
+    window.addEventListener("load", () => {
       // Initialize all business logos at once
-      const logos = document.querySelectorAll('.business-logo');
+      const logos = document.querySelectorAll(".business-logo");
       logos.forEach((logo, index) => {
-        gsap.fromTo(logo,
+        gsap.fromTo(
+          logo,
           { scale: 0.8, opacity: 0 },
           {
             scale: 1,
@@ -76,24 +81,25 @@ const getCoordinates = (index: number, radius: number) => {
             scrollTrigger: {
               trigger: ".radial-diagram",
               start: "top center+=100",
-            }
-          }
+            },
+          },
         );
       });
 
       // Center image animation
-      gsap.fromTo('.center-image',
+      gsap.fromTo(
+        ".center-image",
         { scale: 0.9, opacity: 0 },
         {
           scale: 1,
           opacity: 1,
-          duration: 0.6,
+          duration: 0.2,
           ease: "power2.out",
           scrollTrigger: {
             trigger: ".radial-diagram",
             start: "top center+=100",
-          }
-        }
+          },
+        },
       );
     });
   </script>

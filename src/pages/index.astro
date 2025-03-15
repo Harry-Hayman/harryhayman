@@ -81,19 +81,25 @@ const passions = [
             <h1
               class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 leading-tight text-[rgb(var(--text-primary))]"
             >
-              Inspiring Change Through <span class="text-purple-600 inline-block hover:scale-105 transition-transform"
+              Inspiring Change Through <span
+                class="text-purple-600 inline-block hover:scale-105 transition-transform"
                 >Innovation</span
               >
             </h1>
             <p
               class="text-base sm:text-lg md:text-xl text-[rgb(var(--text-primary))] leading-relaxed mb-8 max-w-lg"
               data-aos="fade-up"
-              data-aos-delay="200"
+              data-aos-delay="50"
             >
               From revolutionizing Philadelphia's hospitality scene to fostering
               community through jazz and sustainable initiatives.
             </p>
-            <div class="flex flex-row gap-4" data-aos="fade-up" data-aos-delay="400">
+            <div
+              class="flex flex-row gap-4"
+              data-aos="fade-up"
+              data-aos-delay="100"
+              data-aos-offset="10"
+            >
               <a
                 href="/ventures"
                 class="flex-1 sm:flex-none bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors text-center whitespace-nowrap"
@@ -193,102 +199,108 @@ const passions = [
     </section>
 
     <!-- Vision for Philadelphia -->
-      <section class="relative h-[90vh] sm:h-[80vh] overflow-hidden group">
-        <div class="relative w-full h-full transform transition-transform duration-[2s] ease-out group-hover:scale-110">
-          <div class="absolute inset-0 w-full h-[120%] -top-[10%] motion-safe:animate-subtle-scroll">
-            <Image
-              src={skylineImage}
-              alt="Philadelphia Skyline"
-              class="w-full h-full object-cover brightness-75 transition-all duration-1000"
-              width={1600}
-              height={900}
-            />
-          </div>
-          <div class="absolute inset-0 bg-gradient-to-b from-purple-900/90 to-purple-900/60 transition-all duration-1000"></div>
+    <section class="relative h-[90vh] sm:h-[60vh] overflow-hidden group">
+      <div
+        class="relative w-full h-full transform transition-transform duration-[2s] ease-out group-hover:scale-110"
+      >
+        <div
+          class="absolute inset-0 w-full h-[120%] -top-[10%] motion-safe:animate-subtle-scroll"
+        >
+          <Image
+            src={skylineImage}
+            alt="Philadelphia Skyline"
+            class="w-full h-full object-cover brightness-75 transition-all duration-1000"
+            width={1600}
+            height={900}
+          />
         </div>
-        <div class="absolute inset-0 flex items-center">
-          <div class="container mx-auto px-6 py-8 text-center">
-            <div class="max-w-4xl mx-auto">
-              <h2
-                class="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6 text-white drop-shadow-lg"
-              >
-                Shaping Philadelphia’s future, one step at a time.
-              </h2>
-              <!-- <p class="text-base sm:text-lg md:text-xl text-white leading-relaxed px-4 sm:px-0">
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-purple-900/90 to-purple-900/60 transition-all duration-1000"
+        >
+        </div>
+      </div>
+      <div class="absolute inset-0 flex items-center">
+        <div class="container mx-auto px-6 py-8 text-center">
+          <div class="max-w-4xl mx-auto">
+            <h2
+              class="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6 text-white drop-shadow-lg"
+            >
+              Shaping Philadelphia’s future, one step at a time.
+            </h2>
+            <!-- <p class="text-base sm:text-lg md:text-xl text-white leading-relaxed px-4 sm:px-0">
               Through his diverse initiatives in hospitality, arts,
               sustainability, and community service, Harry continues to shape
               Philadelphia's future. His commitment to the city goes beyond
               business success, focusing on creating lasting positive impact and
               making Philadelphia a better place for all its residents.
             </p> -->
-            </div>
           </div>
         </div>
-      </section>
-
-      <!-- Call to Action -->
-      <section class="py-12 sm:py-16 md:py-20 text-center px-4">
-        <h2
-          class="text-2xl md:text-3xl font-serif mb-4 md:mb-6 text-[rgb(var(--text-primary))]"
-        >
-          Join the Movement
-        </h2>
-        <p
-          class="text-lg md:text-xl text-[rgb(var(--text-primary))] mb-8 max-w-2xl mx-auto"
-        >
-          Whether you're passionate about arts, sustainability, or community
-          development, there's a place for you in our initiatives.
-        </p>
-        <a
-          href="/blog"
-          class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors"
-          >Read Our Stories</a
-        >
-      </section>
+      </div>
     </section>
 
-    <style>
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-      }
-
-      @keyframes float-delayed {
-        0%,
-        100% {
-          transform: translateY(-20px);
-        }
-        50% {
-          transform: translateY(0);
-        }
-      }
-
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
-
-      .animate-float-delayed {
-        animation: float-delayed 6s ease-in-out infinite;
-        animation-delay: 2s;
-      }
-
-      @keyframes subtle-scroll {
-        from {
-          transform: translateY(0);
-        }
-        to {
-          transform: translateY(-10%);
-        }
-      }
-
-      .motion-safe\:animate-subtle-scroll {
-        animation: subtle-scroll 15s ease-in-out infinite alternate;
-      }
-    </style>
+    <!-- Call to Action -->
+    <section class="py-12 sm:py-16 md:py-20 text-center px-4">
+      <h2
+        class="text-2xl md:text-3xl font-serif mb-4 md:mb-6 text-[rgb(var(--text-primary))]"
+      >
+        Join the Movement
+      </h2>
+      <p
+        class="text-lg md:text-xl text-[rgb(var(--text-primary))] mb-8 max-w-2xl mx-auto"
+      >
+        Whether you're passionate about arts, sustainability, or community
+        development, there's a place for you in our initiatives.
+      </p>
+      <a
+        href="/blog"
+        class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors"
+        >Read Our Stories</a
+      >
+    </section>
   </div>
+
+  <style>
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes float-delayed {
+      0%,
+      100% {
+        transform: translateY(-20px);
+      }
+      50% {
+        transform: translateY(0);
+      }
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+      animation: float-delayed 6s ease-in-out infinite;
+      animation-delay: 2s;
+    }
+
+    @keyframes subtle-scroll {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-10%);
+      }
+    }
+
+    .motion-safe\:animate-subtle-scroll {
+      animation: subtle-scroll 15s ease-in-out infinite alternate;
+    }
+  </style>
 </AppLayout>
