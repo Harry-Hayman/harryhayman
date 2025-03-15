@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './bubbles.css';
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 @layer base {
   :root {
     --background: 255, 255, 255;
@@ -26,8 +39,21 @@
   /* Apply theme to html and body */
   html,
   body {
-    background-color: rgb(var(--background)) !important;
     color: rgb(var(--text-primary)) !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Light mode background */
+  body {
+    background-color: rgb(var(--background)) !important;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Dark mode background */
+  :root.dark body {
+    background-color: rgb(24, 24, 27) !important;
   }
 
   /* Prose styles for blog content */

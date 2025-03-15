@@ -1,0 +1,84 @@
+---
+import "../styles/bubbles.css";
+---
+
+<div class="bubbles-wrapper">
+    <svg xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur
+                    in="SourceGraphic"
+                    stdDeviation="10"
+                    result="blur"></feGaussianBlur>
+                <feColorMatrix
+                    in="blur"
+                    mode="matrix"
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
+                    result="goo"></feColorMatrix>
+                <feBlend in="SourceGraphic" in2="goo"></feBlend>
+            </filter>
+        </defs>
+    </svg>
+    <div class="gradient-container">
+        <div class="g1"></div>
+        <div class="g2"></div>
+        <div class="g3"></div>
+        <div class="g4"></div>
+        <div class="g5"></div>
+        <div class="interactive"></div>
+    </div>
+</div>
+
+<script>
+    const interactive = document.querySelector(".interactive") as HTMLElement;
+    const wrapper = document.querySelector(".bubbles-wrapper") as HTMLElement;
+    
+    if (interactive && wrapper) {
+        let curX = 0;
+        let curY = 0;
+        let tgX = 0;
+        let tgY = 0;
+
+        const easeFactor = 6; // Even faster response
+        let isHovered = false;
+
+        function move() {
+            if (!isHovered) {
+                // Gentle floating animation when not hovered
+                const time = Date.now() / 3000;
+                tgX = Math.sin(time) * 100;
+                tgY = Math.cos(time) * 100;
+            }
+
+            curX += (tgX - curX) / easeFactor;
+            curY += (tgY - curY) / easeFactor;
+
+            interactive.style.transform = `translate3d(${Math.round(curX)}px, ${Math.round(curY)}px, 0)`;
+            requestAnimationFrame(move);
+        }
+
+        wrapper.addEventListener("mousemove", (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            tgX = e.clientX - rect.left - centerX;
+            tgY = e.clientY - rect.top - centerY;
+        });
+
+        wrapper.addEventListener("mouseenter", () => {
+            isHovered = true;
+            interactive.style.opacity = "1";
+            interactive.style.filter = "brightness(1.5) contrast(1.2)";
+        });
+
+        wrapper.addEventListener("mouseleave", () => {
+            isHovered = false;
+            interactive.style.opacity = "0.5";
+            interactive.style.filter = "";
+        });
+
+        move();
+    }
+</script>
+

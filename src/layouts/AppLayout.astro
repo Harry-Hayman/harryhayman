@@ -3,6 +3,7 @@ import Link from "@components/Link.astro";
 import { author, defaultMeta } from "@data/socials";
 import navigation from "@data/navigation.json";
 import ThemeToggle from "@components/ThemeToggle.astro";
+import Bubbles from "@components/Bubbles.astro";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/500.css";
 import "@fontsource/playfair-display/600.css";
@@ -173,12 +174,13 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       async></script>
   </head>
   <body>
+    <Bubbles />
     <div
-      class="flex flex-col min-h-screen bg-[rgb(var(--background))] text-[rgb(var(--text-primary))]"
+      class="flex flex-col min-h-screen text-[rgb(var(--text-primary))] relative z-10"
     >
       <!-- Navigation -->
       <nav
-        class="sticky top-0 z-50 backdrop-blur-lg bg-[rgb(var(--background))]/80"
+        class="sticky top-0 z-50 backdrop-blur-lg bg-transparent"
       >
         <div class="max-w-7xl mx-auto px-4">
           <div class="py-3 flex justify-center">
