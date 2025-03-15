@@ -9,9 +9,13 @@ export class MusicPlayer {
   private button: HTMLButtonElement;
   private albumArtDiv: HTMLElement;
   private audio: HTMLAudioElement | null = null;
-  private currentTrack = 0;
+  private currentTrack: number;
   private isPlaying = false;
   private readonly tracks: Track[];
+
+  private getRandomTrackIndex(): number {
+    return Math.floor(Math.random() * this.tracks.length);
+  }
 
   constructor() {
     const buttonEl = document.getElementById('music-toggle');
@@ -23,22 +27,22 @@ export class MusicPlayer {
 
     this.button = buttonEl as HTMLButtonElement;
     this.albumArtDiv = albumArtEl;
-    
+
     // Initialize tracks with paths and album art
     this.tracks = [
-      { 
-        path: '/music/flymetothemoon.mp3', 
+      {
+        path: '/music/flymetothemoon.mp3',
         albumArt: '/music/flymetothemoon.jpg',
         title: 'Fly Me to the Moon',
         artist: 'Frank Sinatra'
       },
-      { 
-        path: '/music/Musicjust_the_two_of_us.mp3', 
+      {
+        path: '/music/Musicjust_the_two_of_us.mp3',
         albumArt: '/music/Musicjust_the_two_of_us.jpg',
         title: 'Just the Two of Us',
         artist: 'Bill Withers'
       },
-      { 
+      {
         path: '/music/what_a_wonderful_world.mp3',
         albumArt: '/music/what_a_wonderful_world.jpg',
         title: 'What a Wonderful World',
@@ -46,6 +50,7 @@ export class MusicPlayer {
       }
     ];
 
+    this.currentTrack = this.getRandomTrackIndex();
     this.setupEventListeners();
     this.initializeAndPlay();
   }
@@ -94,7 +99,7 @@ export class MusicPlayer {
       const track = this.getCurrentTrack();
       this.updateAlbumArt(track.albumArt);
       await this.loadAudio();
-      
+
       setTimeout(async () => {
         try {
           await this.play();
@@ -130,11 +135,11 @@ export class MusicPlayer {
       this.audio = new Audio();
       this.audio.addEventListener('ended', () => this.playNext());
     }
-    
+
     const track = this.getCurrentTrack();
     this.audio.src = track.path;
     this.audio.preload = 'auto';
-    
+
     try {
       await this.audio.load();
     } catch (error) {
