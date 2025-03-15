@@ -1,56 +1,106 @@
-# About Harry Hayman
+# Harry Hayman
 
-Harry Hayman is a prominent figure in Philadelphia, known for his many business ventures and charitable causes. He first made a name for himself in the restaurant and hospitality industries, with an impressive resume of ventures that includes the Bynum Hospitality Group, Gemini Hospitality Consultants, East Coast Saloons & Renegade Tacos.
+## Professional Portfolio
 
-Harry Hayman currently participates in numerous forms of community involvement, including his frequent speaking engagements, the Feed Philly Coalition, and The Philadelphia Jazz Experience, which he founded and created.
+Harry Hayman is a dynamic leader and influential figure in Philadelphia's restaurant and hospitality industries, with an entrepreneurial spirit that has fueled numerous successful ventures. Starting in the early days with The Capital Management & Development Corporation, to Road Show Management to East Coast Saloons and then finally to the renowned Bynum Hospitality Group as well as launching Gemini Hospitality Consultants, Harry's career reflects a deep commitment to innovation and excellence in hospitality.
 
-## Harry’s Background
+Beyond his business endeavors, Harry is passionate about giving back to the community. He is the founder of both the Feed Philly Coalition, a movement dedicated to combating food insecurity, and The Philadelphia Jazz Experience, an initiative aimed at preserving and celebrating Philadelphia's rich jazz heritage. Harry also currently serves as the Sr. Fellow to Food Economy & Policy at The Economy League of Greater Philadelphia. Harry's involvement in frequent public appearances, charitable donations, speaking engagements and charitable causes underscores his dedication to making a positive impact.
 
-If you don’t immediately know the name Harry Hayman, you might be familiar with names such as the Bynum Group, Gemini Hospitality Consultants, McFadden’s, and Philly’s South Jazz Club. These are just a few of Harry’s many ventures, as the hospitality and management specialist has been involved with a variety of Philadelphia startups over the years. When he is not working on his professional projects, Harry is dedicated to spending time with his family and helping his non-profit foundations through both volunteering and charitable donations.
+## Career Timeline
 
-## The Bynum Group & Green Soul
+### 1990s
+- 🏫 Attended Radnor High School
+- 🍽️ Age 17: Started as a dishwasher in Washington, DC
+- 📈 Age 19: Founded Presto! Design, marketing special events at local bars and restaurants
+- 🎓 Graduated from The American University with B.A. in International Business and Finance
+- 🎓 Accepted into the prestigious Wharton School of Business in Philadelphia
 
-If you don’t immediately know the name Harry Hayman, you might be familiar with names such as the Bynum Group, Gemini Hospitality Consultants, McFadden’s, and Philly’s South Jazz Club. These are just a few of Harry’s many ventures, as the hospitality and management specialist has been involved with a variety of Philadelphia startups over the years. When he is not working on his professional projects, Harry is dedicated to spending time with his family and helping his non-profit foundations through both volunteering and charitable donations.
+### 2000s
+- 💼 Founded The Capital Management & Development Corporation
+- 🏢 Established Road Show Management
+- 🍺 Launched East Coast Saloons
+- 🎵 Joined Bynum Hospitality Group (including SOUTH Jazz Club)
+- 🏆 Operated McFadden's and other successful venues
 
-## Gemini Consulting
+### 2010s - Present
+- 🤝 Founded Gemini Hospitality Consultants (CEO)
+- 🎨 Established Harry Hayman Creative
+- 💝 Created Another Three Hearts Experience
+- 🌱 Launched Veggie Graffiti
+- 🍽️ Started Feed Philly Coalition
+- 🎵 Founded The Philadelphia Jazz Experience
+- 🤲 Initiated I Am Hungry in Philly
+- 📊 Appointed Sr. Fellow to Food Economy & Policy at The Economy League of Greater Philadelphia
 
-Harry Hayman’s latest venture is with Gemini Hospitality Consultants, a company he founded, where he currently serves as CEO. The company welcomes Philadelphia startups, investors, and operators in the restaurant and foodservice industries and helps them get their operations running and achieving further growth. His team of hospitality management specialists goes through their financial analysis, website design, and more to ensure that these companies are on track for success. Based on Harry’s history in the restaurant industry, his insight is put to work with every client who relies on Gemini Consulting.
+## Current Ventures
 
-## In Addition to His Professional Background...
+### Hospitality & Consulting
+- **Gemini Hospitality Consultants**: As CEO, Harry leads a team helping Philadelphia startups, investors, and operators in the restaurant industry achieve sustainable growth through financial analysis, website design, and strategic consulting.
+- **Another Three Hearts Experience**: Creating extraordinary hospitality experiences blending culinary excellence with cultural enrichment.
+- **Harry Hayman Creative**: A full-service agency specializing in branding, marketing, and digital solutions for hospitality businesses.
 
-Harry’s family has also played an important role in his life.
-
-Harry Hayman IV was born in Washington DC to his parents, Robin and Harry III. With his father being an international banker, young Harry soon became accustomed to traveling the world extensively, moving from Maryland to Virginia to New Jersey to Venezuela to Mexico to London to Germany to New York City and many places in between.
-
-Harry grew up with two younger siblings: a sister, Kimberly, with whom he is still close to this day, and a brother, Brad. Kimberly was married in 1997 and eventually gave birth to Harry’s three nephews and nieces, Jackson, Ella, and Reed. Brad and Harry were also close, despite a gap in age, but Brad tragically passed away due to heart complications as a teenager, while Harry was in his mid-twenties. After his passing, the family started the Hayman Family Fund in Brad’s name and honor.
-
-Harry is currently unmarried but is involved in a serious relationship with his current girlfriend. She has accompanied him to various outings supporting the arts, as well as at his numerous speaking engagements and other professional appearances. She is also actively involved in many of his charitable donations.
-
-Harry Hayman remains very close with his family to this day. He still makes it a point to see his mother, his uncles, John and Jim, and the rest of his family on a regular basis. He especially enjoys visiting them and cooking for them. There are few things more important to Harry than his family, with his family values being an inspiration for all of this past, present, and future endeavors. His upbringing and background have played a substantial part in molding Harry into the man he is today.
-
-## Harry’s Early Career
-
-From an early age, Harry Hayman knew he wanted to be an entrepreneur. At age 17, he got his foot in the door of the bar business as a dish-washer in Washington, DC. Within the next couple of years, he would rise through the ranks and work just about every job you could think of in a bar. By 19, he was expediting. That same year, he also started Presto! Design, marketing special events at local bars and restaurants.
-
-While gaining real-world experience working in bars, he also pursued more traditional education. After attending Radnor High School, and then The American University (where he earned a B.A. in International Business and Finance), he wanted to prove to himself and others that he could get into the prestigious Wharton School of Business in Philadelphia.
-
-He did.
+### Community Initiatives
+- **Feed Philly Coalition**: Combating food insecurity through innovative partnerships with local restaurants and organizations.
+- **I Am Hungry in Philly**: Connecting Philadelphia's hungry with vital food resources and support services.
+- **The Philadelphia Jazz Experience**: Preserving Philadelphia's jazz heritage while educating young people about jazz music and culture.
+- **Veggie Graffiti**: Urban farming initiative using hydroponic technology for sustainable local produce.
 
 ## Speaking Engagements
 
-As a successful entrepreneur, Harry Hayman has been the keynote speaker at a variety of public functions and engagements, sharing his previous experiences and advice for businesses, college students, and any member of the Greater Philadelphia Area looking to make an impact. Having such a diverse background, Harry is qualified to speak on a variety of different topics. He is always looking for opportunities to share his experience with those who can benefit from it.
+Harry Hayman is a sought-after keynote speaker who shares insights at various institutions and events:
 
-At each engagement, Harry Hayman speaks about what motivates him. These topics range from experiences from his childhood and professional career, to issues that are important to him and his family, to ways in which people can make the world around them a better place. If you are at an event where Harry is speaking, be prepared for some great information, as well as a great time.
+### Educational Institutions
+- **Temple University**: Food and Beverage Management lecture
+- **Drexel University**: Food Upcycling Conference
+- **Community College of Philadelphia**: Be Professionally Diverse Conference, discussing workplace diversity
 
-Harry Hayman has previously spoken at a series of Philadelphia’s higher educational centers, including Temple University, Drexel University, and the Community College of Philadelphia. At Drexel and Temple, Harry gave his insight to those looking to go into the management side of the food industry, speaking at the Food Upcycling Conference at Drexel and the Food and Beverage Management lecture at Temple. At the Be Professionally Diverse Conference CCP, he talked about the importance of diversity in the workplace and hiring the best candidate.
+### Organizations
+- **North Broad Street Renaissance Advisory Board**
+- **Alex's Lemonade Stand** (Board Member)
 
-Other organizations that have had Harry Hayman as a keynote speaker at their events include the North Broad Street Renaissance Advisory Board and Alex’s Lemonade Stand, of which he is a board member. These speaking engagements have ranged from telling professionals how to go further in their business endeavors to encouraging others to make a difference through community involvement and taking action.
+His speaking topics include:
+- Business development and entrepreneurship
+- Hospitality management
+- Community engagement
+- Workplace diversity
+- Food industry insights
+- Personal motivation and success
 
-If you would like to arrange for Harry Hayman to speak at your public event, feel free to contact him to inquire about his availability.
+## Personal Life
 
-## What’s Next for Harry?
+### Family Background
+- Born: Washington DC
+- Parents: Robin and Harry III (international banker)
+- Early Life: Extensive international travel through Maryland, Virginia, New Jersey, Venezuela, Mexico, London, Germany, New York City
 
-If you would like to inquire further about Harry Hayman’s latest ventures, or if you would like to book him for any future speaking engagements, feel free to contact him today.
+### Siblings
+- Sister: Kimberly (married 1997)
+  - Nieces/Nephews: Jackson, Ella, and Reed
+- Brother: Brad (deceased)
+  - Legacy: Hayman Family Fund established in his honor
+
+### Current Personal Life
+- Close relationship with family
+- Regular visits with mother and uncles John and Jim
+- Passionate about cooking for family gatherings
+- Currently in a serious relationship
+  - Partner actively involved in charitable work and arts support
+  - Accompanies at speaking engagements and professional events
+
+### Values & Interests
+- Strong family values
+- Commitment to community service
+- Passion for hospitality
+- Love for jazz and arts
+- Dedication to philanthropy
+
+## Contact Information
+
+If you would like to:
+- Book Harry for a speaking engagement
+- Learn more about his ventures
+- Explore collaboration opportunities
+- Get involved with his initiatives
 
 [Get in touch](link_to_contact_page)
 
