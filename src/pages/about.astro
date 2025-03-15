@@ -13,12 +13,13 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
         data-aos="fade"
         data-aos-duration="800"
       >
-        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-purple-600 to-blue-600"></div>
         <h1
           class="text-4xl sm:text-5xl md:text-6xl font-serif font-bold mb-8 text-[rgb(var(--text-primary))] relative inline-block"
         >
           About Harry Hayman
-          <span class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 transition-transform group-hover:scale-x-100"></span>
+          <span
+            class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 transition-transform group-hover:scale-x-100"
+          ></span>
         </h1>
         <p
           class="text-xl sm:text-2xl text-[rgb(var(--text-primary))] leading-relaxed"
@@ -48,7 +49,10 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
               height={600}
               loading="lazy"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            >
+            </div>
           </div>
         </div>
       </div>
@@ -56,27 +60,37 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
       <!-- Professional Journey Timeline -->
       <section class="max-w-5xl mx-auto mb-24 relative">
         <h2
-          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))] relative inline-block"
+          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))]"
         >
           Professional Journey
-          <div class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600"></div>
         </h2>
 
         <div class="relative">
           <!-- Timeline Line -->
-          <div
-            class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-600 to-blue-600"
-          ></div>
-
-          <!-- Timeline Dots -->
-          <div class="absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-purple-600 rounded-full shadow-lg"></div>
-          <div class="absolute left-1/2 transform -translate-x-1/2 top-1/2 w-4 h-4 bg-purple-600 rounded-full shadow-lg"></div>
-          <div class="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-4 h-4 bg-purple-600 rounded-full shadow-lg"></div>
+          <!-- Timeline Line & Dots for Desktop -->
+          <div class="hidden md:block">
+            <div
+              class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-600 to-blue-600"
+            >
+            </div>
+            <div
+              class="absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-purple-600 rounded-full shadow-lg"
+            >
+            </div>
+            <div
+              class="absolute left-1/2 transform -translate-x-1/2 top-1/2 w-4 h-4 bg-purple-600 rounded-full shadow-lg"
+            >
+            </div>
+            <div
+              class="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-4 h-4 bg-purple-600 rounded-full shadow-lg"
+            >
+            </div>
+          </div>
 
           <!-- 1990s -->
           <div class="relative mb-16">
-            <div class="flex flex-col md:flex-row items-center">
-              <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
+            <div class="flex flex-col md:flex-row items-start">
+              <div class="w-full md:w-1/2 md:pr-12 mb-8 md:mb-0 relative">
                 <div
                   class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-purple-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-purple-600/10"
                   data-aos="fade-right"
@@ -84,28 +98,46 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
                   <h3
                     class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
                   >
-                    <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3 text-sm">90s</span>
-                    Early Beginnings
+                    <span
+                      class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3 text-sm"
+                      >90s</span
+                    >
+                     Early Beginnings
                   </h3>
                   <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Attended Radnor High School</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
-                      <span>Started as a dishwasher in Washington, DC at age 17</span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
+                      <span
+                        >Started as a dishwasher in Washington, DC at age 17</span
+                      >
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Founded Presto! Design at age 19</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
-                      <span>Graduated from The American University (B.A. in International Business and Finance)</span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
+                      <span
+                        >Graduated from The American University (B.A. in
+                        International Business and Finance)</span
+                      >
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Accepted into Wharton School of Business</span>
                     </li>
                   </ul>
@@ -119,28 +151,44 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
                   <h3
                     class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
                   >
-                    <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3 text-sm">00s</span>
-                    Business Growth
+                    <span
+                      class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3 text-sm"
+                      >00s</span
+                    >
+                     Business Growth
                   </h3>
                   <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
-                      <span>Founded The Capital Management & Development Corporation</span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
+                      <span
+                        >Founded The Capital Management & Development
+                        Corporation</span
+                      >
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"
+                      ></span>
                       <span>Established Road Show Management</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Launched East Coast Saloons</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Joined Bynum Hospitality Group</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Operated McFadden's and SOUTH Jazz Club</span>
                     </li>
                   </ul>
@@ -151,33 +199,44 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
 
           <!-- Present -->
           <div class="relative">
-            <div class="flex flex-col md:flex-row items-center">
-              <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
+            <div class="flex flex-col md:flex-row items-start">
+              <div class="w-full md:w-1/2 md:pr-12 mb-8 md:mb-0">
                 <div
-                  class="bg-[rgb(var(--card-bg))] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-purple-600/10"
+                  class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-purple-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-purple-600/10"
                   data-aos="fade-right"
                 >
                   <h3
                     class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
                   >
-                    <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3 text-xs">2020+</span>
-                    Current Ventures
+                    <span
+                      class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3 text-xs"
+                      >Now</span
+                    >
+                     Current Ventures
                   </h3>
                   <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>CEO of Gemini Hospitality Consultants</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Founded Harry Hayman Creative</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Created Another Three Hearts Experience</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Launched Veggie Graffiti</span>
                     </li>
                   </ul>
@@ -191,25 +250,39 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
                   <h3
                     class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
                   >
-                    <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3">🤝</span>
-                    Community Impact
+                    <span
+                      class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3"
+                      >🤝</span
+                    >
+                     Community Impact
                   </h3>
                   <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Founded Feed Philly Coalition</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Established The Philadelphia Jazz Experience</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                      ></span>
                       <span>Initiated I Am Hungry in Philly</span>
                     </li>
                     <li class="flex items-center space-x-3 group">
-                      <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
-                      <span>Sr. Fellow at The Economy League of Greater Philadelphia</span>
+                      <span
+                        class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"
+                      ></span>
+                      <span
+                        >Sr. Fellow at The Economy League of Greater
+                        Philadelphia</span
+                      >
                     </li>
                   </ul>
                 </div>
@@ -222,32 +295,44 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
       <!-- Speaking Engagements -->
       <section class="max-w-4xl mx-auto mb-24">
         <h2
-          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))] relative inline-block"
+          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))]"
         >
           Speaking Engagements
-          <div class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600"></div>
         </h2>
         <div class="grid md:grid-cols-2 gap-8">
           <div
             class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-purple-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-purple-600/10"
             data-aos="fade-up"
           >
-            <h3 class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center">
-              <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3">🎓</span>
-              Educational Institutions
+            <h3
+              class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
+            >
+              <span
+                class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3"
+                >🎓</span
+              >
+               Educational Institutions
             </h3>
             <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
               <li class="flex items-center space-x-3 group">
-                <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                <span
+                  class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                ></span>
                 <span>Temple University - Food and Beverage Management</span>
               </li>
               <li class="flex items-center space-x-3 group">
-                <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                <span
+                  class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                ></span>
                 <span>Drexel University - Food Upcycling Conference</span>
               </li>
               <li class="flex items-center space-x-3 group">
-                <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
-                <span>Community College of Philadelphia - Workplace Diversity</span>
+                <span
+                  class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                ></span>
+                <span
+                  >Community College of Philadelphia - Workplace Diversity</span
+                >
               </li>
             </ul>
           </div>
@@ -255,21 +340,32 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
             class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-purple-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-purple-600/10"
             data-aos="fade-up"
           >
-            <h3 class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center">
-              <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3">🏢</span>
-              Organizations
+            <h3
+              class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
+            >
+              <span
+                class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3"
+                >🏢</span
+              >
+               Organizations
             </h3>
             <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
               <li class="flex items-center space-x-3 group">
-                <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                <span
+                  class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                ></span>
                 <span>North Broad Street Renaissance Advisory Board</span>
               </li>
               <li class="flex items-center space-x-3 group">
-                <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                <span
+                  class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                ></span>
                 <span>Alex's Lemonade Stand (Board Member)</span>
               </li>
               <li class="flex items-center space-x-3 group">
-                <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                <span
+                  class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                ></span>
                 <span>Various Philadelphia community organizations</span>
               </li>
             </ul>
@@ -280,10 +376,9 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
       <!-- Personal Life -->
       <section class="max-w-4xl mx-auto mb-24">
         <h2
-          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))] relative inline-block"
+          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))]"
         >
           Personal Life & Values
-          <div class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600"></div>
         </h2>
         <div
           class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-purple-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-purple-600/10"
@@ -291,53 +386,83 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
         >
           <div class="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center">
-                <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3">👨‍👨‍👧‍👦</span>
-                Family Background
+              <h3
+                class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
+              >
+                <span
+                  class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3"
+                  >👨‍👨‍👧‍👦</span
+                >
+                 Family Background
               </h3>
               <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Born in Washington DC to Robin and Harry III</span>
                 </li>
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Global upbringing due to father's banking career</span>
                 </li>
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Close relationship with sister Kimberly</span>
                 </li>
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
-                  <span>Established Hayman Family Fund in memory of brother Brad</span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
+                  <span
+                    >Established Hayman Family Fund in memory of brother Brad</span
+                  >
                 </li>
               </ul>
             </div>
             <div>
-              <h3 class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center">
-                <span class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3">💫</span>
-                Core Values
+              <h3
+                class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
+              >
+                <span
+                  class="w-8 h-8 inline-flex items-center justify-center bg-purple-600 text-white rounded-full mr-3"
+                  >💫</span
+                >
+                 Core Values
               </h3>
               <ul class="space-y-3 text-lg text-[rgb(var(--text-primary))]">
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Strong family bonds</span>
                 </li>
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Community service dedication</span>
                 </li>
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Entrepreneurial spirit</span>
                 </li>
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Cultural preservation</span>
                 </li>
                 <li class="flex items-center space-x-3 group">
-                  <span class="w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform"></span>
+                  <span
+                    class="min-w-[0.5rem] w-2 h-2 bg-purple-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
+                  ></span>
                   <span>Innovation in hospitality</span>
                 </li>
               </ul>
@@ -348,9 +473,10 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
 
       <!-- Call to Action -->
       <div class="max-w-3xl mx-auto mt-16 text-center">
-        <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))] relative inline-block">
+        <h2
+          class="text-3xl sm:text-4xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]"
+        >
           Join the Journey
-          <div class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-purple-600 to-blue-600"></div>
         </h2>
         <p class="text-xl text-[rgb(var(--text-primary))] mb-8">
           Connect with Harry Hayman and be part of transformative initiatives
@@ -359,13 +485,13 @@ import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-fol
         <div class="flex justify-center gap-4">
           <a
             href="/ventures"
-            class="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-1 text-lg shadow-lg hover:shadow-xl"
+            class="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-5 py-2.5 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-1 text-base shadow-lg hover:shadow-xl"
           >
             Explore Ventures
           </a>
           <a
             href="link_to_contact_page"
-            class="inline-block border-2 border-purple-600 text-[rgb(var(--text-primary))] px-8 py-4 rounded-lg hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 text-lg"
+            class="inline-block border-2 border-purple-600 text-[rgb(var(--text-primary))] px-5 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-1 text-base"
           >
             Get in Touch
           </a>
