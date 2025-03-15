@@ -10,8 +10,6 @@ import creativeImage from "../assets/data/homepage_images/creative_aspect.jpg";
 import sustainabilityImage from "../assets/data/homepage_images/controlled_environmental_agriculture.jpg";
 import scriptImage from "../assets/data/homepage_images/writing_script_movies.jpg";
 import skylineImage from "../assets/data/homepage_images/looking_at_philadelphia_skyline.jpg";
-import musicSymbol1 from "../assets/data/homepage_images/music_symbol_1.png";
-import musicSymbol2 from "../assets/data/homepage_images/music_symbol_2.png";
 
 const passions = [
   {
@@ -166,24 +164,6 @@ const passions = [
           Harry's Passions
         </h2>
 
-        <!-- Floating Music Notes -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-          <Image
-            src={musicSymbol1}
-            alt="Musical Note"
-            class="absolute top-20 right-[10%] w-16 h-16 opacity-30 animate-float"
-            width={64}
-            height={64}
-          />
-          <Image
-            src={musicSymbol2}
-            alt="Musical Note"
-            class="absolute top-1/3 left-[15%] w-12 h-12 opacity-30 animate-float-delayed"
-            width={48}
-            height={48}
-          />
-        </div>
-
         <div class="flex flex-col gap-8 mb-24">
           {
             passions.map((passion, index) => (
@@ -262,35 +242,6 @@ const passions = [
   </div>
 
   <style>
-    @keyframes float {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-20px);
-      }
-    }
-
-    @keyframes float-delayed {
-      0%,
-      100% {
-        transform: translateY(-20px);
-      }
-      50% {
-        transform: translateY(0);
-      }
-    }
-
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .animate-float-delayed {
-      animation: float-delayed 6s ease-in-out infinite;
-      animation-delay: 2s;
-    }
-
     @keyframes subtle-scroll {
       from {
         transform: translateY(0);
