@@ -1,6 +1,7 @@
 ---
 import AppLayout from "@layouts/AppLayout.astro";
 import { Image } from "astro:assets";
+import TextBubbles from "@components/TextBubbles.astro";
 import RadialDiagram from "@components/RadialDiagram.astro";
 import hospitalityImage from "../assets/data/supporting images/A diverse group of professionals collaborating around a conference table, symbolizing the teamwork at Gemini Hospitality Consultants.png";
 import jazzImage from "../assets/data/supporting images/A lively jazz band performing on stage in a cozy Philadelphia jazz club, capturing the essence of the Philadelphia Jazz Experience.png";
@@ -8,6 +9,7 @@ import veggieImage from "../assets/data/supporting images/Close-up of fresh micr
 import feedPhillyImage from "../assets/data/supporting images/Volunteers serving meals to diverse community members at an outdoor event, symbolizing the efforts of the Feed Philly Coalition, no person face visible.png";
 ---
 
+<TextBubbles />
 <AppLayout title="Ventures - Harry Hayman">
   <div class="py0 sm:py0">
     <div class="container mx-auto px">
@@ -15,7 +17,11 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
       <RadialDiagram />
 
       <!-- Header -->
-      <header class="max-w-3xl mx-auto text-center mb-16" data-aos="fade-down">
+      <header
+        class="max-w-3xl mx-auto text-center mb-16"
+        data-aos="fade-down"
+        data-aos-duration="800"
+      >
         <h1
           class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]"
         >
@@ -25,6 +31,7 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
           class="text-lg sm:text-xl text-[rgb(var(--text-primary))] leading-relaxed"
           data-aos="fade-up"
           data-aos-delay="200"
+          data-aos-duration="600"
         >
           Exploring innovative solutions across hospitality, culture, and
           community development.

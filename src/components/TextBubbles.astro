@@ -3,7 +3,7 @@
 ---
 
 <div
-    class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
+    class="absolute inset-0 w-screen h-full overflow-hidden pointer-events-none"
     id="text-bubbles"
     style="z-index: -1;"
 >
@@ -117,7 +117,9 @@
             const bubbleNode = template.content.cloneNode(
                 true,
             ) as DocumentFragment;
-            const bubbleElement = bubbleNode.querySelector("div") as HTMLDivElement;
+            const bubbleElement = bubbleNode.querySelector(
+                "div",
+            ) as HTMLDivElement;
 
             if (bubbleElement && interest) {
                 bubbleElement.textContent = interest;
