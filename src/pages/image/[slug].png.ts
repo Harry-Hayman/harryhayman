@@ -1,8 +1,8 @@
 import satori from 'satori';
 import { html } from 'satori-html';
 import { Resvg } from '@resvg/resvg-js';
-import InterRegular from '@fontsource/inter/files/inter-latin-400-normal.woff';
-import InterBold from '@fontsource/inter/files/inter-latin-700-normal.woff';
+import fs from 'node:fs';
+import path from 'node:path';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
@@ -23,7 +23,7 @@ export async function GET(context: APIContext) {
   const date = pubDate.toLocaleDateString('en-US', { dateStyle: 'full' });
 
   const markup = html`
-    <div tw="bg-zinc-900 flex flex-col w-full h-full rounded-lg overflow-hidden shadow-lg text-white border border-zinc-700/50 divide-y divide-zinc-700/50 divide-solid">
+    <div tw="bg-zinc-900 flex flex-col w-full h-full rounded-lg overflow-hidden shadow-lg text-white border border-zinc-700/50">
 
       <div tw="flex flex-col w-full h-4/5 p-10 justify-center">
         <div tw="flex text-zinc-400 text-xl">
@@ -53,16 +53,24 @@ export async function GET(context: APIContext) {
     </div>
   `;
 
-  const svg = await satori(markup, {
+  // Load font files from node_modules
+  const fontRegular = fs.readFileSync(
+    path.resolve('./node_modules/@fontsource/inter/files/inter-latin-400-normal.woff')
+  );
+  const fontBold = fs.readFileSync(
+    path.resolve('./node_modules/@fontsource/inter/files/inter-latin-700-normal.woff')
+  );
+
+  const svg = await satori(markup as any, {
     fonts: [
       {
         name: 'Inter',
-        data: Buffer.from(InterRegular),
+        data: fontRegular,
         weight: 400,
       },
       {
         name: 'Inter',
-        data: Buffer.from(InterBold),
+        data: fontBold,
         weight: 700,
       },
     ],
@@ -93,14 +101,14 @@ export async function GET(context: APIContext) {
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  const paths = posts.map((post) => ({
+  const paths = posts.map((post: any) => ({
     params: {
       slug: post.slug,
 
     },
     props: {
       title: post.data.title,
-      pubDate: post.data.updatedDate ?? post.data.pubDate,
+      pubDate: post.data.pubDate,
       description: post.data.description,
       tags: post.data.tags,
     },
