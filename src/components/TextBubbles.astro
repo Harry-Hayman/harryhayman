@@ -1,0 +1,184 @@
+---
+
+---
+
+<div
+    class="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"
+    id="text-bubbles"
+    style="z-index: -1;"
+>
+    <template id="template-bubble">
+        <div
+            class="bubble absolute rounded-full opacity-0 bg-purple-600/20 backdrop-blur-sm text-white font-medium
+      shadow-[inset_0_0_20px_rgba(147,51,234,0.3)]
+      after:rounded-full
+      after:bg-transparent
+      after:absolute
+      after:inset-px
+      after:border-r-4
+      after:border-white/50
+      after:-rotate-45
+      after:blur-sm
+      flex items-center justify-center
+      text-center
+      p-4"
+            style="bottom: -200px"
+        >
+        </div>
+    </template>
+</div>
+
+<style>
+    .bubble {
+        animation-name: float-up;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+        position: absolute;
+        bottom: -100px;
+        will-change: transform, opacity;
+    }
+
+    @keyframes float-up {
+        0% {
+            transform: translateY(0);
+            opacity: 0;
+        }
+        2% {
+            opacity: 0.4;
+        }
+        95% {
+            opacity: 0.4;
+            transform: translateY(-120vh);
+        }
+        100% {
+            transform: translateY(-130vh);
+            opacity: 0;
+        }
+    }
+
+    #text-bubbles {
+        mask-image: linear-gradient(
+            to top,
+            transparent,
+            black 10% 90%,
+            transparent
+        );
+    }
+</style>
+<script>
+    declare global {
+        interface Window {
+            textBubblesInitialized?: boolean;
+        }
+    }
+
+    // Only initialize once globally
+    if (!window.textBubblesInitialized) {
+        window.textBubblesInitialized = true;
+
+        const interests = [
+            "Jazz",
+            "Hospitality",
+            "Community",
+            "Environment",
+            "Philanthropy",
+            "Innovation",
+            "Culture",
+            "Food",
+            "Sustainability",
+            "Philadelphia",
+        ];
+
+        function generateRandom(min = 0, max = 100) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function clearBubbles() {
+            const bubbles = document.getElementById("text-bubbles");
+            if (bubbles) {
+                // Remove all children except template
+                Array.from(bubbles.children).forEach((child) => {
+                    if (child.id !== "template-bubble") {
+                        bubbles.removeChild(child);
+                    }
+                });
+            }
+        }
+
+        let creationTimeout: ReturnType<typeof setTimeout>;
+        function createBubbles() {
+            clearTimeout(creationTimeout);
+
+            const bubbles = document.getElementById("text-bubbles");
+            const template = document.getElementById(
+                "template-bubble",
+            ) as HTMLTemplateElement;
+
+            if (!bubbles || !template) return;
+
+            clearBubbles();
+
+            // Create bubbles after a delay to ensure proper initial positioning
+            creationTimeout = setTimeout(() => {
+                // Show the container
+                bubbles.classList.remove("opacity-0");
+
+                interests.forEach((interest) => {
+                    const bubbleNode = template.content.cloneNode(true) as DocumentFragment;
+                    const bubbleElement = bubbleNode.querySelector("div");
+
+                    if (bubbleElement) {
+                        bubbleElement.textContent = interest;
+
+                        const textLength = interest.length;
+                        const baseSize = Math.max(textLength * 1.2, 6);
+                        const sizePx = baseSize * 10;
+
+                        bubbleElement.style.width = sizePx + "px";
+                        bubbleElement.style.height = sizePx + "px";
+                        bubbleElement.style.fontSize =
+                            Math.max(sizePx * 0.15, 12) + "px";
+
+                        const x = generateRandom(0, window.innerWidth - sizePx);
+                        bubbleElement.style.left = x + "px";
+
+                        // Shorter animation duration for smoother flow
+                        const duration = generateRandom(15000, 20000);
+                        bubbleElement.style.animationDelay =
+                            generateRandom(0, 3000) + "ms";
+                        bubbleElement.style.animationDuration = duration + "ms";
+
+                        // Ensure initial positioning is from bottom
+                        bubbleElement.style.transform = "translateY(0)";
+                        bubbles.appendChild(bubbleElement);
+
+                        // Force a reflow to ensure the animation starts properly
+                        void bubbleElement.offsetWidth;
+                    }
+                });
+            }, 500); // Wait for layout to stabilize
+        }
+
+        let resizeTimeout: ReturnType<typeof setTimeout>;
+
+        // Handle window resize
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(createBubbles, 250);
+        });
+
+        // Create initial bubbles after a short delay
+        setTimeout(() => {
+            createBubbles();
+            // Fade in bubbles one by one
+            const bubbles = document.querySelectorAll(".bubble");
+            bubbles.forEach((bubble, index) => {
+                setTimeout(() => {
+                    bubble.classList.remove("opacity-0");
+                }, index * 100);
+            });
+        }, 500);
+    }
+</script>

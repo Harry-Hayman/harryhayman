@@ -2,6 +2,7 @@
 import AppLayout from "@layouts/AppLayout.astro";
 import { Image } from "astro:assets";
 import PostCard from "@components/PostCard.astro";
+import TextBubbles from "@components/TextBubbles.astro";
 import authorImage from "../assets/data/harryhayman images/harryhayman_bg_removed.png";
 import jazzImage from "../assets/data/homepage_images/playing_jazz_instrument.jpg";
 import hospitalityImage from "../assets/data/homepage_images/hospitality.jpg";
@@ -73,6 +74,7 @@ const passions = [
   <div class="w-full overflow-x-hidden py-6 px-0">
     <!-- Hero Section -->
     <section class="min-h-[80vh] flex items-center -mt-4 sm:mt-0">
+      <TextBubbles />
       <div class="container mx-auto">
         <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center w-full">
           <div class="order-2 lg:order-1 px-4">
