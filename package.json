@@ -21,6 +21,7 @@
     "astro-icon": "^0.8.1",
     "decap-cms-app": "^3.0.12",
     "gsap": "^3.12.7",
+    "jsmediatags": "^3.9.7",
     "satori": "^0.12.1",
     "satori-html": "^0.3.2",
     "sharp": "^0.33.5",

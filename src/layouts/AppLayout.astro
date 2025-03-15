@@ -4,6 +4,7 @@ import { author, defaultMeta } from "@data/socials";
 import navigation from "@data/navigation.json";
 import ThemeToggle from "@components/ThemeToggle.astro";
 import Bubbles from "@components/Bubbles.astro";
+import MusicPlayer from "@components/MusicPlayer.astro";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/500.css";
 import "@fontsource/playfair-display/600.css";
@@ -172,6 +173,7 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"
       async></script>
+    
   </head>
   <body>
     <Bubbles />
@@ -209,6 +211,9 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
           <slot />
         </div>
       </main>
+
+      <!-- Music Player -->
+      <MusicPlayer />
 
       <!-- Footer -->
       <Footer />

@@ -1,0 +1,185 @@
+---
+// Component UI layout
+---
+
+<div id="music-player" class="fixed bottom-4 right-4 z-50">
+  <!-- Track List Drop-up -->
+  <div 
+    id="track-list" 
+    class="absolute bottom-full right-0 mb-2 w-64 bg-[rgb(var(--background-secondary))] rounded-lg shadow-lg transform scale-y-0 origin-bottom transition-transform duration-300"
+  >
+    <div class="p-2 space-y-1 max-h-48 overflow-y-auto">
+      <!-- Track items will be inserted here by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Music Toggle Button -->
+  <button
+    id="music-toggle"
+    class="vinyl-record w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform relative"
+    aria-label="Toggle music"
+  >
+    <!-- Music disc base image -->
+    <img 
+      src="/src/assets/data/music_disc.png" 
+      alt="Music disc" 
+      class="w-full h-full object-contain rounded-full"
+      draggable="false"
+    />
+
+    <!-- Album art overlay -->
+    <div 
+      id="album-art" 
+      class="absolute inset-0 bg-cover bg-center rounded-full transition-opacity duration-300 opacity-0"
+    ></div>
+  </button>
+</div>
+
+<script>
+  import { MusicPlayer } from '../scripts/MusicPlayer';
+  
+  // Initialize player when page loads or navigates
+  let player: MusicPlayer | null = null;
+  let isTrackListVisible = false;
+  let lastClickTime = 0;
+  const doubleClickDelay = 300; // milliseconds
+
+  function createTrackList() {
+    if (!player) return;
+
+    const container = document.querySelector('#track-list > div');
+    if (!container) return;
+
+    // Clear existing items
+    container.innerHTML = '';
+
+    // Create new items
+    player.getTracks().forEach((track, index) => {
+      const item = document.createElement('button');
+      item.className = 'w-full px-3 py-2 text-left hover:bg-[rgb(var(--text-primary))] hover:bg-opacity-10 rounded transition-colors text-sm text-[rgb(var(--text-primary))] truncate';
+      item.textContent = `${track.title} - ${track.artist}`;
+      item.onclick = () => {
+        player?.playTrack(index);
+        hideTrackList();
+      };
+      container.appendChild(item);
+    });
+  }
+
+  function toggleTrackList() {
+    const trackList = document.getElementById('track-list');
+    if (!trackList) return;
+
+    isTrackListVisible = !isTrackListVisible;
+    trackList.style.transform = isTrackListVisible ? 'scaleY(1)' : 'scaleY(0)';
+
+    if (isTrackListVisible) {
+      createTrackList();
+    }
+  }
+
+  function hideTrackList() {
+    const trackList = document.getElementById('track-list');
+    if (!trackList) return;
+
+    isTrackListVisible = false;
+    trackList.style.transform = 'scaleY(0)';
+  }
+
+  function handleClick(e: MouseEvent) {
+    const currentTime = Date.now();
+    const timeDiff = currentTime - lastClickTime;
+
+    if (timeDiff < doubleClickDelay) {
+      // Double click - show track list
+      e.preventDefault();
+      toggleTrackList();
+    } else {
+      // Single click - toggle play/pause
+      if (player) {
+        player.toggleMusic();
+      }
+    }
+
+    lastClickTime = currentTime;
+  }
+
+  function setupEventListeners() {
+    const toggleButton = document.getElementById('music-toggle');
+    if (!toggleButton) return;
+
+    toggleButton.addEventListener('click', handleClick);
+
+    // Close track list when clicking outside
+    document.addEventListener('click', (e) => {
+      if (isTrackListVisible) {
+        const trackList = document.getElementById('track-list');
+        const toggleButton = document.getElementById('music-toggle');
+        
+        if (trackList && toggleButton &&
+            !trackList.contains(e.target as Node) && 
+            !toggleButton.contains(e.target as Node)) {
+          hideTrackList();
+        }
+      }
+    });
+  }
+
+  // Initialize components
+  const initComponents = () => {
+    if (!player) {
+      player = new MusicPlayer();
+      setupEventListeners();
+    }
+  };
+
+  document.addEventListener('astro:page-load', initComponents);
+  document.addEventListener('DOMContentLoaded', initComponents);
+</script>
+
+<style>
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .vinyl-record {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .vinyl-record.spinning {
+    animation: spin 2s linear infinite;
+  }
+
+  #album-art {
+    mix-blend-mode: overlay;
+    z-index: 1;
+  }
+
+  #track-list {
+    backdrop-filter: blur(10px);
+  }
+
+  #track-list > div {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--text-primary), 0.2) transparent;
+  }
+
+  #track-list > div::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #track-list > div::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #track-list > div::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--text-primary), 0.2);
+    border-radius: 3px;
+  }
+</style>
