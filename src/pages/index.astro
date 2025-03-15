@@ -72,7 +72,7 @@ const passions = [
 ---
 
 <AppLayout title="Harry Hayman - Philadelphia Business Leader & Philanthropist">
-  <div class="max-w-[100vw] overflow-x-hidden py-6">
+  <div class="w-full overflow-x-hidden py-6 px-0">
     <!-- Hero Section -->
     <section class="min-h-[80vh] flex items-center -mt-4 sm:mt-0">
       <div class="container mx-auto">
@@ -157,7 +157,7 @@ const passions = [
     </section>
 
     <!-- Harry's Passions -->
-    <section class="relative py-16 md:py-24">
+    <section class="relative py-16 md:py-12">
       <div class="container mx-auto px-4">
         <h2
           class="text-3xl md:text-4xl font-serif text-center mb-16 text-[rgb(var(--text-primary))]"
@@ -199,7 +199,7 @@ const passions = [
     </section>
 
     <!-- Vision for Philadelphia -->
-    <section class="relative h-[90vh] sm:h-[60vh] overflow-hidden group">
+    <section class="relative h-[40vh] sm:h-[60vh] overflow-hidden group">
       <div
         class="relative w-full h-full transform transition-transform duration-[2s] ease-out group-hover:scale-110"
       >
@@ -209,7 +209,7 @@ const passions = [
           <Image
             src={skylineImage}
             alt="Philadelphia Skyline"
-            class="w-full h-full object-cover brightness-75 transition-all duration-1000"
+            class="w-full h-full object-cover object-center brightness-75 transition-all duration-1000"
             width={1600}
             height={900}
           />
@@ -220,10 +220,10 @@ const passions = [
         </div>
       </div>
       <div class="absolute inset-0 flex items-center">
-        <div class="container mx-auto px-6 py-8 text-center">
+        <div class="container mx-auto px-4 sm:px-6 py-4 sm:py-8 text-center">
           <div class="max-w-4xl mx-auto">
             <h2
-              class="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 sm:mb-6 text-white drop-shadow-lg"
+              class="text-xl sm:text-4xl md:text-5xl font-serif font-bold mb-2 sm:mb-6 text-white drop-shadow-lg leading-tight"
             >
               Shaping Philadelphia’s future, one step at a time.
             </h2>

@@ -106,11 +106,11 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       function initAOS() {
         if (typeof AOS !== "undefined") {
           AOS.init({
-            duration: 500,
+            duration: 700,
             easing: "ease-in-out",
             once: false,
             mirror: true,
-            offset: 10,
+            offset: 5,
             delay: 50,
           });
         }
