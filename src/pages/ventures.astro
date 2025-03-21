@@ -1,16 +1,9 @@
 ---
 import AppLayout from "@layouts/AppLayout.astro";
-import { Image } from "astro:assets";
 import TextBubbles from "@components/TextBubbles.astro";
 import RadialDiagram from "@components/RadialDiagram.astro";
-import hospitalityImage from "../assets/data/supporting images/A diverse group of professionals collaborating around a conference table, symbolizing the teamwork at Gemini Hospitality Consultants.png";
-import creativeImage from "../assets/data/business_logo/harry_hayman_creative.png";
-import hungryImage from "../assets/data/business_logo/i_am_hungry.jpg";
-import threeHeartsImage from "../assets/data/business_logo/another_three_hearts_experience.png";
-import travelsImage from "../assets/data/business_logo/harry_hayman_travels.jpg";
-import jazzImage from "../assets/data/supporting images/A lively jazz band performing on stage in a cozy Philadelphia jazz club, capturing the essence of the Philadelphia Jazz Experience.png";
-import veggieImage from "../assets/data/supporting images/Close-up of fresh microgreens being artfully plated by a chef in a modern kitchen, representing Veggie Graffiti's offerings.png";
-import feedPhillyImage from "../assets/data/supporting images/Volunteers serving meals to diverse community members at an outdoor event, symbolizing the efforts of the Feed Philly Coalition, no person face visible.png";
+import VentureCard from "@components/VentureCard.astro";
+import { ventures } from "../data/ventures";
 ---
 
 <TextBubbles />
@@ -45,230 +38,15 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
 
       <!-- Ventures Grid -->
       <div class="grid gap-8 md:grid-cols-2">
-        <!-- Gemini Hospitality -->
-        <div
-          data-aos="fade"
-          data-aos-delay="0"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64">
-            <Image
-              src={hospitalityImage}
-              alt="Gemini Hospitality Consultants"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
+        {
+          ventures.map((venture, index) => (
+            <VentureCard
+              {...venture}
+              data-aos="fade"
+              data-aos-delay={index * 100}
             />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              Gemini Hospitality Consultants
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              Strategic consulting services for restaurants and hospitality
-              businesses, focusing on innovative solutions and sustainable
-              growth.
-            </p>
-          </div>
-        </div>
-
-        <!-- Philadelphia Jazz Experience -->
-        <div
-          data-aos="fade"
-          data-aos-delay="100"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64 overflow-hidden">
-            <Image
-              src={jazzImage}
-              alt="Philadelphia Jazz Experience"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
-            />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              Philadelphia Jazz Experience
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              Preserving and promoting Philadelphia's rich jazz heritage through
-              education, performance, and community engagement.
-            </p>
-          </div>
-        </div>
-
-        <!-- Veggie Graffiti -->
-        <div
-          data-aos="fade"
-          data-aos-delay="200"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64 overflow-hidden">
-            <Image
-              src={veggieImage}
-              alt="Veggie Graffiti"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
-            />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              Veggie Graffiti
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              Urban farming initiative combining hydroponic technology with
-              sustainable practices to provide fresh, local produce.
-            </p>
-          </div>
-        </div>
-
-        <!-- Feed Philly Coalition -->
-        <div
-          data-aos="fade"
-          data-aos-delay="300"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64 overflow-hidden">
-            <Image
-              src={feedPhillyImage}
-              alt="Feed Philly Coalition"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
-            />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              Feed Philly Coalition
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              Community initiative addressing food insecurity through
-              partnerships with local restaurants and organizations.
-            </p>
-          </div>
-        </div>
-
-        <!-- Harry Hayman Creative -->
-        <div
-          data-aos="fade"
-          data-aos-delay="400"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64 overflow-hidden">
-            <Image
-              src={creativeImage}
-              alt="Harry Hayman Creative"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
-            />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              Harry Hayman Creative
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              A creative agency specializing in branding, marketing, and digital
-              solutions for hospitality and lifestyle businesses.
-            </p>
-          </div>
-        </div>
-
-        <!-- I Am Hungry in Philly -->
-        <div
-          data-aos="fade"
-          data-aos-delay="500"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64 overflow-hidden">
-            <Image
-              src={hungryImage}
-              alt="I Am Hungry in Philly"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
-            />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              I Am Hungry in Philly
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              An initiative connecting Philadelphia's hungry with local food
-              resources and support services.
-            </p>
-          </div>
-        </div>
-
-        <!-- Another Three Hearts Experience -->
-        <div
-          data-aos="fade"
-          data-aos-delay="600"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64 overflow-hidden">
-            <Image
-              src={threeHeartsImage}
-              alt="Another Three Hearts Experience"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
-            />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              Another Three Hearts Experience
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              Creating unique hospitality experiences that combine culinary
-              excellence with cultural enrichment.
-            </p>
-          </div>
-        </div>
-
-        <!-- Harry Hayman Travels -->
-        <div
-          data-aos="fade"
-          data-aos-delay="700"
-          class="group bg-[rgb(var(--card-bg))] rounded-2xl overflow-hidden border border-[rgb(var(--nav-border))] transition-transform duration-300 hover:-translate-y-2"
-        >
-          <div class="relative h-64 overflow-hidden">
-            <Image
-              src={travelsImage}
-              alt="Harry Hayman Travels"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              width={800}
-              height={600}
-            />
-          </div>
-          <div class="p-8">
-            <h2
-              class="text-2xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-            >
-              Harry Hayman Travels
-            </h2>
-            <p class="text-[rgb(var(--text-primary))] mb-6">
-              Sharing culinary and cultural experiences from travels around the
-              world, inspiring innovation in hospitality.
-            </p>
-          </div>
-        </div>
+          ))
+        }
       </div>
 
       <!-- Call to Action -->
@@ -283,10 +61,10 @@ import feedPhillyImage from "../assets/data/supporting images/Volunteers serving
           Let's connect and explore opportunities together.
         </p>
         <a
-          href="/blog"
+          href="/contact"
           class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors"
         >
-          Read Our Stories
+          Get in Touch
         </a>
       </div>
     </div>

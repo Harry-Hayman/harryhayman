@@ -72,7 +72,7 @@ const passions = [
 
 <TextBubbles />
 <AppLayout title="Harry Hayman - Philadelphia Business Leader & Philanthropist">
-  <div class="w-full overflow-x-hidden py-6 px-0">
+  <div class="w-full overflow-x-hidden py-1 px-0">
     <!-- Hero Section -->
     <section class="min-h-[80vh] flex items-center -mt-4 sm:mt-0 relative">
       <div class="container mx-auto">
@@ -210,13 +210,6 @@ const passions = [
             >
               Shaping Philadelphia's future, one step at a time.
             </h2>
-            <!-- <p class="text-base sm:text-lg md:text-xl text-white leading-relaxed px-4 sm:px-0">
-              Through his diverse initiatives in hospitality, arts,
-              sustainability, and community service, Harry continues to shape
-              Philadelphia's future. His commitment to the city goes beyond
-              business success, focusing on creating lasting positive impact and
-              making Philadelphia a better place for all its residents.
-            </p> -->
           </div>
         </div>
       </div>
@@ -235,11 +228,33 @@ const passions = [
         Whether you're passionate about arts, sustainability, or community
         development, there's a place for you in our initiatives.
       </p>
-      <a
-        href="/blog"
-        class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors"
-        >Read Our Stories</a
-      >
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/contact"
+          class="w-full sm:w-auto bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 group"
+        >
+          Get in Touch
+          <svg
+            class="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 7l5 5m0 0l-5 5m5-5H6"
+            />
+          </svg>
+        </a>
+        <a
+          href="/blog"
+          class="w-full sm:w-auto border border-[rgb(var(--nav-border))] bg-[rgb(var(--card-bg))] text-[rgb(var(--text-primary))] px-8 py-4 rounded-lg hover:bg-[rgb(var(--card-bg))] transition-colors"
+        >
+          Read Our Stories
+        </a>
+      </div>
     </section>
   </div>
 
