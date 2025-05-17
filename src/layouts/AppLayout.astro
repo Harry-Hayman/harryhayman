@@ -1,6 +1,11 @@
 ---
 import Link from "@components/Link.astro";
 import { author, defaultMeta } from "@data/socials";
+interface NavItem {
+  href: string;
+  text: string;
+}
+
 import navigation from "@data/navigation.json";
 import ThemeToggle from "@components/ThemeToggle.astro";
 import Bubbles from "@components/Bubbles.astro";
@@ -155,26 +160,6 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       document.addEventListener("DOMContentLoaded", initGSAP);
       document.addEventListener("astro:page-load", initGSAP);
       window.addEventListener("load", initGSAP);
-    </script>
-
-    <!-- GSAP -->
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
-    ></script>
-    <script
-      is:inline
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
-    ></script>
-    <script is:inline>
-      document.addEventListener("DOMContentLoaded", () => {
-        if (
-          typeof window.gsap !== "undefined" &&
-          typeof window.ScrollTrigger !== "undefined"
-        ) {
-          window.gsap.registerPlugin(window.ScrollTrigger);
-        }
-      });
     </script>
 
     <!-- Lazy Loading -->
