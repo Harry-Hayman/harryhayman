@@ -17,7 +17,6 @@ const { Content } = await post.render();
 <AppLayout
   title={post.data.title}
   description={post.data.description}
-  ogImage={post.data.image}
 >
   <article class="py-12 sm:py-16">
     <header class="mb-12">
@@ -60,7 +59,7 @@ const { Content } = await post.render();
       }
     </header>
 
-    <div class="prose prose-lg mx-auto">
+    <div class="prose prose-lg mx-auto max-w-3xl">
       <div class="text-[rgb(var(--text-primary))]">
         <Content />
       </div>
@@ -106,6 +105,11 @@ const { Content } = await post.render();
 
   .prose img {
     border-radius: 0.75rem;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+    margin: 1.5rem auto;
+    display: block;
   }
 
   .prose blockquote {

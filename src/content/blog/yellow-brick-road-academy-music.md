@@ -3,14 +3,14 @@ title: Follow the Yellow Brick Road... to the Academy of Music!
 description: An electrifying journey through The Wiz at Philadelphia's Academy of Music - a soul-shaking celebration of Black excellence, power vocals, and pure theatrical magic.
 pubDate: 2024-12-16
 updatedDate: 2024-12-16
-image: "~/assets/blogs/yellow-brick-music-academy/hh-1.jpeg"
+image: ../../assets/blogs/yellow-brick-music-academy/hh-1.jpeg
 heroAlt: "The Wiz performance at Academy of Music"
 tags: ["philadelphia", "theatre", "the-wiz", "academy-of-music", "black-excellence", "musical", "arts", "entertainment"]
 ---
 
 Got a taste of pure magic as **The Wiz** lit up the Academy of Music stage like a technicolor dream! From the first note to the final bow, it was a soul-shaking, joy-spreading, tear-jerking masterpiece that had us all easing on down the road and back again.
 
-![The Wiz cast in full performance glory](~/assets/blogs/yellow-brick-music-academy/hh-2.jpeg)
+![The Wiz cast in full performance glory](../../assets/blogs/yellow-brick-music-academy/hh-2.jpeg)
 
 ## This Ain't Your Grandma's Wizard of Oz
 
@@ -26,7 +26,7 @@ Every step, every gesture, every synchronized movement pulsed with energy that s
 ### The Costumes: Dazzling
 From Dorothy's iconic dress to the Wiz's magnificent robes, every costume was a work of art. The design team created a visual feast that honored the original while adding contemporary flair that felt both timeless and thoroughly modern.
 
-![Behind the scenes magic at The Wiz](~/assets/blogs/yellow-brick-music-academy/hh-3.jpeg)
+![Behind the scenes magic at The Wiz](../../assets/blogs/yellow-brick-music-academy/hh-3.jpeg)
 
 ### The Performances: UNREAL
 The vocal performances were nothing short of extraordinary. Each actor brought their own interpretation to beloved characters while respecting the legacy of those who came before. Dorothy didn't just find her way home—she brought the house down on the way, delivering powerhouse vocals that left not a dry eye in the house.
@@ -35,7 +35,7 @@ The vocal performances were nothing short of extraordinary. Each actor brought t
 
 What makes The Wiz special isn't just its spectacular production values—it's the way it celebrates community, resilience, and the power of believing in yourself. This production at the Academy of Music captured all of that magic and amplified it for Philadelphia audiences.
 
-![The magical finale of The Wiz](~/assets/blogs/yellow-brick-music-academy/hh-4.jpeg)
+![The magical finale of The Wiz](../../assets/blogs/yellow-brick-music-academy/hh-4.jpeg)
 
 The show serves as a reminder of the incredible talent within Philadelphia's theatre community and the importance of supporting productions that celebrate diverse voices and stories. Every moment on that stage was a testament to the power of representation in the arts.
 

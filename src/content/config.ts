@@ -1,14 +1,14 @@
 import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     pubDate: z.date(),
     lastmod: z.date().optional(),
     heroImage: z.string().optional(),
     imageAlt: z.string().optional(),
-    image: z.any().optional(),  // Add this line to support image
+    image: image().optional(),  // Use Astro's image() helper for proper local image imports
     category: z.string().optional(),
     tags: z.array(z.string()).optional(),
     draft: z.boolean().optional(),
