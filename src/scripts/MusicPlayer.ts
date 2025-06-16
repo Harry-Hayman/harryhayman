@@ -52,7 +52,7 @@ export class MusicPlayer {
 
     this.currentTrack = this.getRandomTrackIndex();
     this.setupEventListeners();
-    this.initializeAndPlay();
+    this.initialize();
   }
 
   // Public methods for external access
@@ -61,14 +61,18 @@ export class MusicPlayer {
   }
 
   public async toggleMusic(): Promise<void> {
-    if (!this.audio) {
-      await this.loadAudio();
-    }
+    try {
+      if (!this.audio) {
+        await this.loadAudio();
+      }
 
-    if (this.isPlaying) {
-      this.pause();
-    } else {
-      this.play();
+      if (this.isPlaying) {
+        this.pause();
+      } else {
+        await this.play();
+      }
+    } catch (error) {
+      console.error('Error toggling music:', error);
     }
   }
 
@@ -88,32 +92,18 @@ export class MusicPlayer {
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && this.audio) {
         this.pause();
-      } else if (!document.hidden && this.audio && !this.isPlaying) {
-        this.play();
       }
+      // Removed auto-resume when page becomes visible to prevent unwanted auto-play
     });
   }
 
-  private async initializeAndPlay() {
+  private async initialize() {
     try {
       const track = this.getCurrentTrack();
       this.updateAlbumArt(track.albumArt);
-      await this.loadAudio();
-
-      setTimeout(async () => {
-        try {
-          await this.play();
-        } catch (error) {
-          console.log('Autoplay prevented - waiting for user interaction');
-          const startPlayback = () => {
-            this.play();
-            document.removeEventListener('click', startPlayback);
-          };
-          document.addEventListener('click', startPlayback);
-        }
-      }, 1000);
+      // Only initialize the UI, don't auto-play music
     } catch (error) {
-      console.error('Error initializing audio:', error);
+      console.error('Error initializing music player:', error);
     }
   }
 
