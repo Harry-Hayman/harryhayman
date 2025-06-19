@@ -23,6 +23,11 @@ export default defineConfig({
   vite: {
     ssr: {
       external: ["svgo"]
+    },
+    resolve: {
+      alias: {
+        '@': new URL('./src', import.meta.url).pathname
+      }
     }
   }
 });
