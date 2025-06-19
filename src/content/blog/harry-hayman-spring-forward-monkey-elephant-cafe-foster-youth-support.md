@@ -4,7 +4,7 @@ description: "Harry Hayman and his family open their doors and hearts for Spring
 pubDate: 2025-05-27
 tags: ["philadelphia", "foster care", "charity", "spring forward", "monkey elephant cafe", "community support", "social impact"]
 category: "Community Service"
-heroImage: "../../assets/blogs/spring-forward-monkey-elephant-cafe-foster-youth/2025-05-27_21-02-28_UTC.jpg"
+image: "../../assets/blogs/spring-forward-monkey-elephant-cafe-foster-youth/2025-05-27_21-02-28_UTC.jpg"
 imageAlt: "Harry Hayman hosting Spring Forward fundraiser for The Monkey & The Elephant Café supporting foster youth"
 ---
 

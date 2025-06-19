@@ -4,7 +4,7 @@ description: "Harry Hayman showcases The Social at Morton, owned by J'nelle & Ty
 pubDate: 2025-03-24
 tags: ["philadelphia", "morton pa", "social morton", "jnelle lawrence", "ty lawrence", "economy league", "restaurant support", "hospitality industry"]
 category: "Restaurant & Business Support"
-heroImage: "../../assets/blogs/social-morton-restaurant-jnelle-ty-lawrence/2025-03-24_23-00-24_UTC.jpg"
+image: "../../assets/blogs/social-morton-restaurant-jnelle-ty-lawrence/2025-03-24_23-00-24_UTC.jpg"
 imageAlt: "Harry Hayman promoting The Social at Morton restaurant owned by J'nelle and Ty Lawrence"
 ---
 

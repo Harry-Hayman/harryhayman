@@ -4,7 +4,7 @@ description: "Harry Hayman investigates Hawaii's groundbreaking Food is Medicine
 pubDate: 2025-03-19
 tags: ["philadelphia", "food is medicine", "hawaii", "healthcare innovation", "nutrition", "feed philly coalition", "food insecurity", "health policy"]
 category: "Healthcare Innovation"
-heroImage: "../../assets/blogs/food-is-medicine-hawaii-pilot-program-philadelphia/2025-03-19_23-01-12_UTC.jpg"
+image: "../../assets/blogs/food-is-medicine-hawaii-pilot-program-philadelphia/2025-03-19_23-01-12_UTC.jpg"
 imageAlt: "Harry Hayman exploring Food is Medicine pilot program in Hawaii for Philadelphia implementation"
 ---
 

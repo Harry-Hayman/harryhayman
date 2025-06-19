@@ -4,7 +4,7 @@ description: "Join Harry Hayman at the GPLEX 2025 Chicago Recruitment Event at P
 pubDate: 2025-05-22
 tags: ["philadelphia", "gplex", "chicago", "leadership exchange", "creative economy", "pig iron theatre", "community leadership"]
 category: "Leadership & Innovation"
-heroImage: "../../assets/blogs/gplex-chicago-recruitment-philadelphia-leadership/2025-05-22_14-03-27_UTC.jpg"
+image: "../../assets/blogs/gplex-chicago-recruitment-philadelphia-leadership/2025-05-22_14-03-27_UTC.jpg"
 imageAlt: "Harry Hayman promoting GPLEX Chicago recruitment event at Pig Iron Theatre Company"
 ---
 

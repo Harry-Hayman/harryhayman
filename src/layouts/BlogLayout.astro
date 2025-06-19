@@ -37,13 +37,11 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
       </div>
       {
         image?.src && (
-          <div class="mt-8 rounded-xl overflow-hidden max-w-lg mx-auto">
+          <div class="mt-8 mx-auto">
             <Image
               src={image}
               alt={title}
-              class="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
-              width={1200}
-              height={600}
+              class="w-auto h-auto max-w-full rounded-xl"
             />
           </div>
         )

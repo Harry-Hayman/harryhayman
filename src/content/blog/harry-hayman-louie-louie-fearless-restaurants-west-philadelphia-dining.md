@@ -4,7 +4,7 @@ description: "Harry Hayman explores Louie Louie on Walnut Street, where Fearless
 pubDate: 2025-03-07
 tags: ["philadelphia", "louie louie", "fearless restaurants", "west philadelphia", "french bistro", "walnut street", "cocktails", "fine dining"]
 category: "Restaurant Excellence"
-heroImage: "../../assets/blogs/louie-louie-philadelphia-fearless-restaurants-west-philly/2025-03-07_20-01-43_UTC_1.jpg"
+image: "../../assets/blogs/louie-louie-philadelphia-fearless-restaurants-west-philly/2025-03-07_20-01-43_UTC_1.jpg"
 imageAlt: "Harry Hayman experiencing Louie Louie restaurant by Fearless Restaurants in West Philadelphia"
 ---
 

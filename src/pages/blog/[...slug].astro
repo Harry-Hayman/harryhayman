@@ -14,10 +14,7 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<AppLayout
-  title={post.data.title}
-  description={post.data.description}
->
+<AppLayout title={post.data.title} description={post.data.description}>
   <article class="py-12 sm:py-16">
     <header class="mb-12">
       <div class="text-center">
@@ -48,11 +45,12 @@ const { Content } = await post.render();
       </div>
       {
         post.data.image?.src && (
-          <div class="mt-8 rounded-xl overflow-hidden">
+          <div class="mt-8 overflow-hidden flex justify-center items-center">
             <img
               src={post.data.image.src}
               alt={post.data.title}
-              class="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover"
+              class=" h-[300px] sm:h-[400px] md:h-[500px] object-contain rounded-2xl"
+              style="background: transparent;"
             />
           </div>
         )

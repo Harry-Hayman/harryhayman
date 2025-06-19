@@ -4,7 +4,7 @@ description: "Harry Hayman discovers Poison Heart, Philadelphia's award-winning 
 pubDate: 2025-04-17
 tags: ["philadelphia", "poison heart", "cocktail bar", "spring garden street", "punk rock", "nightlife", "award winning bar"]
 category: "Nightlife & Entertainment"
-heroImage: "../../assets/blogs/poison-heart-philadelphia-punk-cocktail-bar/2025-04-17_22-03-10_UTC_1.jpg"
+image: "../../assets/blogs/poison-heart-philadelphia-punk-cocktail-bar/2025-04-17_22-03-10_UTC_1.jpg"
 imageAlt: "Harry Hayman exploring Poison Heart, Philadelphia's punk-infused cocktail bar on Spring Garden Street"
 ---
 

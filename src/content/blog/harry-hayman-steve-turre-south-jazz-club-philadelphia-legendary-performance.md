@@ -4,7 +4,7 @@ description: "Harry Hayman brings jazz royalty to Philadelphia as legendary Stev
 pubDate: 2025-06-04
 tags: ["philadelphia", "jazz", "steve turre", "south jazz club", "philadelphia jazz experience", "live music", "jazz legends"]
 category: "Jazz & Music"
-heroImage: "../../assets/blogs/steve-turre-south-jazz-club-philadelphia/2025-06-04_21-03-15_UTC.jpg"
+image: "../../assets/blogs/steve-turre-south-jazz-club-philadelphia/2025-06-04_21-03-15_UTC.jpg"
 imageAlt: "Steve Turre and his all-star band performing at SOUTH Jazz Club, presented by Harry Hayman"
 ---
 

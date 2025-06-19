@@ -4,7 +4,7 @@ description: "Join Harry Hayman at InLiquid's Human Scale opening at Park Towne 
 pubDate: 2025-06-05
 tags: ["philadelphia", "art", "inliquid", "human scale", "park towne place", "rachel zimmerman", "community"]
 category: "Arts & Culture"
-heroImage: "../../assets/blogs/inliquid-human-scale-art-experience/2025-06-05_21-06-22_UTC_1.jpg"
+image: "../../assets/blogs/inliquid-human-scale-art-experience/2025-06-05_21-06-22_UTC_1.jpg"
 imageAlt: "Harry Hayman at InLiquid's Human Scale art exhibition opening at Park Towne Place"
 ---
 

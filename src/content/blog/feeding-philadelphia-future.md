@@ -3,7 +3,7 @@ title: Feeding Philadelphia's Future
 description: How the Feed Philly Coalition is tackling food insecurity through innovative partnerships and community-driven solutions.
 pubDate: 2024-03-01
 updatedDate: 2024-03-20
-hero: "~/assets/data/supporting images/Volunteers serving meals to diverse community members at an outdoor event, symbolizing the efforts of the Feed Philly Coalition, no person face visible.png"
+image: "~/assets/data/supporting images/Volunteers serving meals to diverse community members at an outdoor event, symbolizing the efforts of the Feed Philly Coalition, no person face visible.png"
 heroAlt: "Volunteers serving meals at a community event"
 tags: ["community", "food-security", "philadelphia", "partnerships", "social-impact"]
 ---

@@ -1,10 +1,10 @@
 ---
 title: "FABRIKA Philadelphia: Harry Hayman's Electric Dinner Show Experience on Front Street"
 description: "Join Harry Hayman as he explores FABRIKA Philadelphia's incredible dinner and show experience. Discover why this Front Street gem combines Studio 54 vibes with Moulin Rouge elegance in the heart of Philadelphia's entertainment scene."
+image: "../../assets/blogs/fabrika-philadelphia-experience/1.jpg"
 pubDate: 2025-06-17
 tags: ["philadelphia", "entertainment", "dining", "nightlife", "fabrika", "front street"]
 category: "Entertainment"
-heroImage: "../../assets/blogs/fabrika-philadelphia-experience/2025-06-17_21-03-09_UTC_1.jpg"
 imageAlt: "Harry Hayman's experience at FABRIKA Philadelphia dinner show"
 ---
 

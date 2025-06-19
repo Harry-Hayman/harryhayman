@@ -4,7 +4,7 @@ description: "Harry Hayman explores two Northern Liberties gems during Restauran
 pubDate: 2025-02-07
 tags: ["philadelphia", "northern liberties", "restaurant week", "bourbon branch", "north 3rd", "mark bee", "rae dianz", "nolibs", "dining"]
 category: "Restaurant Week"
-heroImage: "../../assets/blogs/northern-liberties-restaurant-week-bourbon-branch-north-3rd/2025-02-07_01-00-20_UTC_1.jpg"
+image: "../../assets/blogs/northern-liberties-restaurant-week-bourbon-branch-north-3rd/2025-02-07_01-00-20_UTC_1.jpg"
 imageAlt: "Harry Hayman experiencing Northern Liberties Restaurant Week at Bourbon & Branch and North 3rd"
 ---
 

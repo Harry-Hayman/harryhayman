@@ -4,7 +4,7 @@ description: "Harry Hayman shares his inspiring career journey from starting as 
 pubDate: 2025-02-12
 tags: ["harry hayman", "entrepreneurship", "career journey", "dishwasher", "bynum hospitality", "gemini hospitality", "jensen huang", "nvidia", "inspiration"]
 category: "Entrepreneurship & Leadership"
-heroImage: "../../assets/blogs/harry-hayman-dishwasher-entrepreneur-journey-nvidia-jensen-huang/2025-02-12_23-02-31_UTC.jpg"
+image: "../../assets/blogs/harry-hayman-dishwasher-entrepreneur-journey-nvidia-jensen-huang/2025-02-12_23-02-31_UTC.jpg"
 imageAlt: "Harry Hayman reflecting on his entrepreneurial journey from dishwasher to business leader"
 ---
 

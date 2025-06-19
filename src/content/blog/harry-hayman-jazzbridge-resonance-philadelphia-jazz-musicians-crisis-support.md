@@ -6,7 +6,7 @@ author: "Harry Hayman"
 tags: ["JazzBridge", "Philadelphia jazz", "musician support", "community service", "South Side venue", "jazz heritage", "financial assistance", "healthcare support", "music community"]
 ---
 
-# Harry Hayman's Call to Action: JazzBridge Resonance and Supporting Philadelphia's Jazz Community
+## Harry Hayman's Call to Action: JazzBridge Resonance and Supporting Philadelphia's Jazz Community
 
 In the heart of Philadelphia's vibrant music scene, **Harry Hayman** continues his unwavering commitment to supporting the artists and musicians who define the city's cultural identity. His recent advocacy for JazzBridge Resonance, scheduled for June 19, represents more than an event promotion—it's a rallying cry for the Philadelphia community to support jazz musicians facing critical challenges.
 

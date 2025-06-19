@@ -4,7 +4,7 @@ description: "Harry Hayman supports the Eraserhood Passport, a groundbreaking co
 pubDate: 2025-04-10
 tags: ["philadelphia", "eraserhood", "community zine", "local artists", "neighborhood festival", "collaborative art", "community engagement"]
 category: "Community Arts"
-heroImage: "../../assets/blogs/eraserhood-passport-community-zine-festival/2025-04-10_00-48-06_UTC_1.jpg"
+image: "../../assets/blogs/eraserhood-passport-community-zine-festival/2025-04-10_00-48-06_UTC_1.jpg"
 imageAlt: "Harry Hayman promoting the Eraserhood Passport community zine project and festival"
 ---
 

@@ -6,7 +6,7 @@ author: "Harry Hayman"
 tags: ["Philadelphia performing arts", "Lunar New Year celebration", "The Velvet Whip", "drag performance", "burlesque", "community arts support", "Philadelphia nightlife", "creative venues", "artistic expression", "cultural celebration"]
 ---
 
-# Harry Hayman Champions The Velvet Whip: Celebrating Philadelphia's Bold Performing Arts Community Through Spectacular Lunar New Year Performance
+
 
 In Philadelphia's ever-evolving landscape of entertainment and cultural celebration, **Harry Hayman** continues to champion venues that push creative boundaries while building community connections. His enthusiastic support for The Velvet Whip's Lunar New Year 2025 celebration demonstrates his commitment to supporting Philadelphia's diverse performing arts scene and the artists who make the city's cultural life so vibrant and unique.
 

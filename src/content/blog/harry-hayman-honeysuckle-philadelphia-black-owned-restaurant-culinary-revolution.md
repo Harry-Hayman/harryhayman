@@ -4,7 +4,7 @@ description: "Harry Hayman champions Honeysuckle Philadelphia, a revolutionary B
 pubDate: 2025-05-05
 tags: ["philadelphia", "honeysuckle", "black owned restaurant", "culinary excellence", "local food economy", "soul food", "restaurant review"]
 category: "Dining & Culture"
-heroImage: "../../assets/blogs/honeysuckle-philadelphia-restaurant-black-owned/2025-05-05_23-01-54_UTC_1.jpg"
+image: "../../assets/blogs/honeysuckle-philadelphia-restaurant-black-owned/2025-05-05_23-01-54_UTC_1.jpg"
 imageAlt: "Harry Hayman exploring Honeysuckle Philadelphia, the revolutionary Black-owned restaurant"
 ---
 

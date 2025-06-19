@@ -4,7 +4,7 @@ description: "Harry Hayman celebrates the opening of Honeysuckle Provisions by O
 pubDate: 2025-04-21
 tags: ["philadelphia", "honeysuckle provisions", "omar tate", "black owned business", "food justice", "restaurant opening", "neighborhood development"]
 category: "Community & Business"
-heroImage: "../../assets/blogs/honeysuckle-provisions-opening-philadelphia-omar-tate/2025-04-21_22-21-26_UTC.jpg"
+image: "../../assets/blogs/honeysuckle-provisions-opening-philadelphia-omar-tate/2025-04-21_22-21-26_UTC.jpg"
 imageAlt: "Harry Hayman welcoming Honeysuckle Provisions opening by Omar Tate and Cybille St.Aude-Tate"
 ---
 
