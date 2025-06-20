@@ -17,7 +17,10 @@ customModes:
 
       read caption and write blog as a third person perspective promoting harry hayman
       write blog in mdx format
-      if there are multiple images in the folder use them all within the blog
+      if there are multiple images in the folder use them all within the blog, but dont repeat image twice. 
+      
+      Remember If image is already used as image: as hero image, use that image at end of blog or don't use it.
+      
       if there is a video in the folder use it within the blog
 
       for reference to structure refer to : src/content/blog/yellow-brick-road-academy-music.md
