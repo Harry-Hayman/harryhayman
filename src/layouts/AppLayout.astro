@@ -165,17 +165,52 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
 
     <!-- Metricool Tracking -->
     <script is:inline>
-      function loadScript(a) {
-        var b = document.getElementsByTagName("head")[0],
-          c = document.createElement("script");
-        (c.type = "text/javascript"),
-          (c.src = "https://tracker.metricool.com/resources/be.js"),
-          (c.onreadystatechange = a),
-          (c.onload = a),
-          b.appendChild(c);
+      function loadScript(callback) {
+        try {
+          var head = document.getElementsByTagName("head")[0],
+            script = document.createElement("script");
+          
+          script.type = "text/javascript";
+          script.src = "https://tracker.metricool.com/resources/be.js";
+          
+          // Handle successful load
+          script.onload = function() {
+            if (callback && typeof callback === 'function') {
+              callback();
+            }
+          };
+          
+          // Handle errors (like ad blockers)
+          script.onerror = function() {
+            // Silently fail - analytics blocked by ad blocker
+            console.debug('Analytics script blocked by ad blocker');
+          };
+          
+          // For older browsers
+          script.onreadystatechange = function() {
+            if (this.readyState === 'complete' || this.readyState === 'loaded') {
+              if (callback && typeof callback === 'function') {
+                callback();
+              }
+            }
+          };
+          
+          head.appendChild(script);
+        } catch (error) {
+          // Silently handle any errors
+          console.debug('Analytics initialization failed:', error.message);
+        }
       }
+      
       loadScript(function () {
-        beTracker.t({ hash: "f9fe076de289567c484620078e1d3423" });
+        try {
+          if (typeof beTracker !== 'undefined') {
+            beTracker.t({ hash: "f9fe076de289567c484620078e1d3423" });
+          }
+        } catch (error) {
+          // Silently handle tracking errors
+          console.debug('Analytics tracking failed:', error.message);
+        }
       });
     </script>
   </head>

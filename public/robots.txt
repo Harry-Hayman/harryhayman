@@ -1,27 +1,35 @@
 # Allow all crawlers including Google, Bing, Brave, DuckDuckGo, etc.
 User-agent: *
 Allow: /
+Disallow: /projects
 
 # Specific crawlers
 User-agent: Googlebot
 Allow: /
+Disallow: /projects
 
 User-agent: Bingbot
 Allow: /
+Disallow: /projects
 
 User-agent: BraveSearchBot
 Allow: /
+Disallow: /projects
 
 User-agent: DuckDuckBot
 Allow: /
+Disallow: /projects
 
 User-agent: YandexBot
 Allow: /
+Disallow: /projects
 
 User-agent: facebookexternalhit
 Allow: /
+Disallow: /projects
 
 User-agent: Twitterbot
 Allow: /
+Disallow: /projects
 
 Sitemap: https://harryhayman.com/sitemap-index.xml
