@@ -1,0 +1,27 @@
+# Allow all crawlers including Google, Bing, Brave, DuckDuckGo, etc.
+User-agent: *
+Allow: /
+
+# Specific crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: BraveSearchBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+Sitemap: https://harryhayman.com/sitemap-index.xml

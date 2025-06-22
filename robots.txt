@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://harryhayman.com/sitemap-index.xml
