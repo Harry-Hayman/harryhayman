@@ -12,6 +12,7 @@ customModes:
       Information about Harry : @/src/assets/data/about.md 
       @/src/assets/data/harryhayman.md
 
+      dont write blog from folder name starting with year, eg 2016
       if topic blog not given specifically, start from latest in blogs.csv
 
       after each blog dont forget to update blog for that folder to src/assets/blogs/blogs.csv
