@@ -2,17 +2,22 @@ import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import keystatic from '@keystatic/astro';
+import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://harryhayman.com',
+  output: 'hybrid',
   integrations: [
     mdx(),
     tailwind({
       // Configure theme customization
       config: { path: './tailwind.config.cjs' },
     }),
-    sitemap()
+    sitemap(),
+    react(),
+    keystatic()
   ],
   markdown: {
     shikiConfig: {
