@@ -58,6 +58,8 @@ export default config({
             { label: 'Sustainability', value: 'Sustainability' },
             { label: 'Arts & Culture', value: 'Arts & Culture' },
             { label: 'Business', value: 'Business' },
+            { label: 'Innovation', value: 'Innovation' },
+            { label: "Events", value: "Events" }
           ],
           defaultValue: 'Community',
         }),
