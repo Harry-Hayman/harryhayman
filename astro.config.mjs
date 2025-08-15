@@ -4,15 +4,13 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import keystatic from '@keystatic/astro';
 import react from '@astrojs/react';
-import node from '@astrojs/node';
+import netlify from '@astrojs/netlify';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://harryhayman.com',
   output: 'hybrid',
-  adapter: node({
-    mode: 'standalone'
-  }),
+  adapter: netlify(),
   integrations: [
     mdx(),
     tailwind({

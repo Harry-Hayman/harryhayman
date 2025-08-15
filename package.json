@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^2.0.0",
-    "@astrojs/node": "^8.3.4",
+    "@astrojs/netlify": "^5.5.4",
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^5.0.0",
@@ -27,6 +27,7 @@
     "astro-icon": "0.8.1",
     "gsap": "^3.12.7",
     "jsmediatags": "^3.9.7",
+    "pnpm": "^10.14.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "satori": "^0.12.1",
