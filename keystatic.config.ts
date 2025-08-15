@@ -4,13 +4,22 @@ export default config({
   storage: {
     kind: 'local',
   },
+  cloud: {
+    project: 'hghayman-blog/harryhayman',
+  },
   collections: {
     blog: collection({
       label: 'Blog',
-      slugField: 'title',
+      slugField: 'postSlug',
       path: 'src/content/blog/*',
       format: { contentField: 'content' },
       schema: {
+        postSlug: fields.slug({
+          name: {
+            label: 'URL Slug',
+            description: 'URL-friendly version for the post',
+          },
+        }),
         title: fields.text({
           label: 'Title',
           validation: { isRequired: true },
@@ -60,6 +69,11 @@ export default config({
             itemLabel: props => props.value || 'Tag',
           }
         ),
+        draft: fields.checkbox({
+          label: 'Draft',
+          description: 'Mark this post as a draft',
+          defaultValue: false,
+        }),
         content: fields.mdx({
           label: 'Content',
           options: {
