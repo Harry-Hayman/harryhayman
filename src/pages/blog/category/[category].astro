@@ -1,19 +1,21 @@
 ---
+export const prerender = true;
+
 import AppLayout from "@layouts/AppLayout.astro";
 import { getCollection } from "astro:content";
 import BlogCard from "@components/BlogCard.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  const categories = [...new Set(posts.map((post) => post.data.category))].filter(
-    (category): category is string => typeof category === 'string'
-  );
+  const categories = [
+    ...new Set(posts.map((post) => post.data.category)),
+  ].filter((category): category is string => typeof category === "string");
 
   return categories.map((category) => ({
     params: { category },
-    props: { 
-      posts: posts.filter(post => post.data.category === category),
-      category 
+    props: {
+      posts: posts.filter((post) => post.data.category === category),
+      category,
     },
   }));
 }
@@ -24,14 +26,18 @@ interface Props {
 }
 
 const { posts, category } = Astro.props;
-const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedPosts = posts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <AppLayout title={`${category} - Blog - Harry Hayman`}>
   <div class="py-12 sm:py-16 max-w-4xl mx-auto">
     <!-- Header -->
     <header class="text-center mb-12">
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]">
+      <h1
+        class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
+      >
         {category}
       </h1>
       <p class="text-[rgb(var(--text-primary))] text-lg">
@@ -65,7 +71,9 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
     {
       sortedPosts.length === 0 && (
         <div class="text-center py-12">
-          <p class="text-[rgb(var(--text-primary))] text-lg">No posts found in this category.</p>
+          <p class="text-[rgb(var(--text-primary))] text-lg">
+            No posts found in this category.
+          </p>
         </div>
       )
     }
