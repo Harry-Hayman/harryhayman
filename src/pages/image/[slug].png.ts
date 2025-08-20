@@ -18,9 +18,24 @@ interface Props {
   tags: string[];
 }
 
+// --- Sanitize helper ---
+function sanitizeText(input: string): string {
+  return input
+    .normalize("NFKD")            // Normalize unicode
+    .replace(/[’‘]/g, "'")        // curly single quotes → straight
+    .replace(/[“”]/g, '"')        // curly double quotes → straight
+    .replace(/–|—/g, "-")         // dashes → hyphen
+    .replace(/[^\x00-\x7F]/g, ""); // remove non-ascii (optional)
+}
+
 export async function GET(context: APIContext) {
   const { title, pubDate, description, tags } = context.props as Props;
   const date = pubDate.toLocaleDateString('en-US', { dateStyle: 'full' });
+
+  // Apply sanitizer
+  const safeTitle = sanitizeText(title);
+  const safeDescription = sanitizeText(description);
+  const safeTags = tags.map((t: string) => sanitizeText(t));
 
   const markup = html`
     <div tw="bg-zinc-900 flex flex-col w-full h-full rounded-lg overflow-hidden shadow-lg text-white border border-zinc-700/50">
@@ -29,14 +44,14 @@ export async function GET(context: APIContext) {
         <div tw="flex text-zinc-400 text-xl">
           ${date}
         </div>
-        <div tw="flex text-6xl mb-4 w-full font-bold leading-snug tracking-tight text-transparent bg-indigo-400" style="background-clip: text; -webkit-background-clip: text; background: linear-gradient(90deg, rgb(87, 57, 249), rgb(98, 203, 242));">
-          ${title}
+        <div tw="flex text-6xl mb-4 w-full font-bold leading-snug tracking-tight text-transparent bg-indigo-400" 
+             style="background-clip: text; -webkit-background-clip: text; background: linear-gradient(90deg, rgb(87, 57, 249), rgb(98, 203, 242));">
+          ${safeTitle}
         </div>
-        <div tw="text-zinc-400 text-xl mt-4">${description}</div>
+        <div tw="text-zinc-400 text-xl mt-4">${safeDescription}</div>
       </div>
 
       <div tw="w-full h-1/5 border-t border-zinc-700/50 flex p-10 items-center justify-between text-2xl">
-      
         <div tw="flex items-center">
           <span tw="ml-3 text-zinc-500">cojocarudavid.me</span>
         </div>
@@ -49,11 +64,10 @@ export async function GET(context: APIContext) {
           </div>
         </div>
       </div>
-
     </div>
   `;
 
-  // Load font files from node_modules
+  // Load fonts
   const fontRegular = fs.readFileSync(
     path.resolve('./node_modules/@fontsource/inter/files/inter-latin-400-normal.woff')
   );
@@ -90,7 +104,7 @@ export async function GET(context: APIContext) {
       'Content-Type': 'image/png',
       'Cache-Control': 'public, max-age=31536000, immutable',
       'Content-Length': image.asPng().length.toString(),
-      'Surrogate-Key': tags.join(' '),
+      'Surrogate-Key': safeTags.join(' '),
       'Query-String-Hash': 'image',
       'Cache-Tag': 'image',
       'Keep-Alive': 'timeout=5, max=1000',
@@ -104,13 +118,12 @@ export async function getStaticPaths() {
   const paths = posts.map((post: any) => ({
     params: {
       slug: post.slug,
-
     },
     props: {
-      title: post.data.title,
+      title: sanitizeText(post.data.title),
       pubDate: post.data.pubDate,
-      description: post.data.description,
-      tags: post.data.tags,
+      description: sanitizeText(post.data.description),
+      tags: post.data.tags.map((t: string) => sanitizeText(t)),
     },
   }));
   return paths;
