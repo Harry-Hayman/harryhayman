@@ -43,6 +43,12 @@ export default config({
           description: 'The main image for the blog post',
           directory: 'src/assets/blogs',
           publicPath: '../../assets/blogs/',
+          transformFilename: (originalFilename) =>
+            originalFilename
+              .normalize("NFKD") // strip diacritics
+              .replace(/[’'"]/g, '') // remove apostrophes/quotes
+              .replace(/[^a-zA-Z0-9.-]/g, '-') // safe chars only
+              .toLowerCase(),
         }),
         heroAlt: fields.text({
           label: 'Hero Image Alt Text',
@@ -60,7 +66,8 @@ export default config({
             { label: 'Business', value: 'Business' },
             { label: 'Innovation', value: 'Innovation' },
             { label: "Events", value: "Events" },
-            { label: "Story", value: "Story" }
+            { label: "Story", value: "Story" },
+            { label: "Personal Life", value: "Personal Life" }
           ],
           defaultValue: 'Community',
         }),
@@ -83,6 +90,12 @@ export default config({
             image: {
               directory: 'src/assets/blogs',
               publicPath: '../../assets/blogs/',
+              transformFilename: (originalFilename) =>
+                originalFilename
+                  .normalize("NFKD")
+                  .replace(/[’'"]/g, '')
+                  .replace(/[^a-zA-Z0-9.-]/g, '-')
+                  .toLowerCase(),
             },
           },
         }),
