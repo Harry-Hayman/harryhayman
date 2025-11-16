@@ -110,9 +110,10 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       })();
     </script>
 
-    <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-    <script is:inline src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <!-- AOS - Load non-blocking -->
+    <link rel="preload" href="/css/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="/css/aos.css" /></noscript>
+    <script is:inline src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
     <script is:inline>
       function initAOS() {
         if (typeof AOS !== "undefined") {

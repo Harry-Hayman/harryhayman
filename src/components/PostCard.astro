@@ -28,7 +28,11 @@ import { Image } from "astro:assets";
       class="w-full h-full object-cover lazyload transition-transform duration-500 scale-[1.01] group-hover:scale-110"
       width={600}
       height={400}
+      format="webp"
+      quality={70}
       loading="lazy"
+      decoding="async"
+      sizes="(max-width: 768px) 100vw, 50vw"
     />
     <div
       class="absolute inset-0 bg-purple-900/40 group-hover:bg-purple-900/50 transition-all duration-500"

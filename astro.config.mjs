@@ -10,7 +10,9 @@ import netlify from '@astrojs/netlify';
 export default defineConfig({
   site: 'https://harryhayman.com',
   output: 'hybrid',
-  adapter: netlify(),
+  adapter: netlify({
+    imageCDN: true
+  }),
   integrations: [
     mdx(),
     tailwind({
@@ -21,6 +23,17 @@ export default defineConfig({
     react(),
     keystatic()
   ],
+  image: {
+    // Optimize images with proper defaults
+    service: {
+      entrypoint: 'astro/assets/services/sharp'
+    },
+    remotePatterns: [{ protocol: "https" }],
+    domains: ['harryhayman.com'],
+    formats: ['webp', 'avif'],
+    // Default quality for image optimization
+    quality: 70
+  },
   markdown: {
     shikiConfig: {
       theme: 'dracula',
@@ -34,6 +47,15 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': new URL('./src', import.meta.url).pathname
+      }
+    },
+    build: {
+      cssMinify: true,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true
+        }
       }
     }
   }

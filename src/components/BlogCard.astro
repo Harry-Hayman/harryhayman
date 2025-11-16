@@ -38,6 +38,11 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
             class="w-full h-full object-cover"
             width={800}
             height={400}
+            format="webp"
+            quality={70}
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           {category && (
             <span class="absolute top-4 left-4 px-3 py-1 text-sm font-medium rounded-full bg-purple-600 text-white">

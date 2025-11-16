@@ -41,7 +41,14 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
             <Image
               src={image}
               alt={title}
+              width={600}
+              height={600}
+              format="webp"
+              quality={70}
+              loading="eager"
+              decoding="async"
               class="w-auto h-auto max-w-full rounded-xl"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 600px, 600px"
             />
           </div>
         )
@@ -98,10 +105,22 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
 
   .prose img {
     border-radius: 0.75rem;
-    max-width: 300px;
+    max-width: 600px;
+    width: 100%;
     height: auto;
     object-fit: contain;
     margin: 1.5rem auto;
     display: block;
+  }
+  
+  /* Ensure MDX images are also optimized */
+  .prose picture {
+    display: block;
+    margin: 1.5rem auto;
+  }
+  
+  .prose picture img {
+    width: 100%;
+    max-width: 600px;
   }
 </style>
