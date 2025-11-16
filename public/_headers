@@ -49,6 +49,19 @@
 /
   Cache-Control: public, max-age=3600, must-revalidate
 
-# Netlify image CDN
+# Netlify image CDN - force WebP/AVIF and resize
 /_netlify/images/*
+  Cache-Control: public, max-age=31536000, immutable
+  
+# Force image optimization on astro images
+/_astro/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+  
+/_astro/*.png
+  Cache-Control: public, max-age=31536000, immutable
+  
+/_astro/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+  
+/_astro/*.avif
   Cache-Control: public, max-age=31536000, immutable

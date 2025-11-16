@@ -41,15 +41,15 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
             <Image
               src={image}
               alt={title}
-              width={600}
-              height={600}
+              width={525}
+              height={525}
               format="avif"
-              quality={60}
+              quality={50}
               loading="eager"
               decoding="async"
               fetchpriority="high"
               class="w-auto h-auto max-w-full rounded-xl"
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 600px, 600px"
+              sizes="(max-width: 640px) 100vw, 525px"
             />
           </div>
         )

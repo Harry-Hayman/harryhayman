@@ -30,13 +30,16 @@ export default defineConfig({
   image: {
     // Optimize images with proper defaults - maximum compression
     service: {
-      entrypoint: 'astro/assets/services/sharp'
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        limitInputPixels: false,
+      }
     },
     remotePatterns: [{ protocol: "https" }],
     domains: ['harryhayman.com'],
     formats: ['avif', 'webp'],
-    // Aggressive quality for maximum compression
-    quality: 60
+    // Ultra-aggressive quality for maximum compression
+    quality: 50
   },
   markdown: {
     shikiConfig: {
