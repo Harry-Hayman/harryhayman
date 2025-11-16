@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import path from 'path';
 
 interface Props {
   src: string;
@@ -13,6 +14,25 @@ const { src, alt, width = 600, height = 600, class: className } = Astro.props;
 
 // Handle both local and remote images
 const isRemote = src.startsWith('http://') || src.startsWith('https://') || src.startsWith('/');
+
+// For local images, check if WebP version exists
+let finalSrc = src;
+if (!isRemote && typeof src === 'string') {
+  const ext = path.extname(src);
+  const basePath = src.replace(ext, '');
+  const webpPath = `${basePath}.webp`;
+  
+  // Try to use WebP version if it exists
+  try {
+    const images = import.meta.glob('/src/assets/**/*.{jpg,jpeg,png,webp}', { eager: false });
+    const webpKey = Object.keys(images).find(key => key.endsWith(webpPath.replace('/src', '')));
+    if (webpKey) {
+      finalSrc = webpPath;
+    }
+  } catch (e) {
+    // Fallback to original if WebP check fails
+  }
+}
 ---
 
 {isRemote ? (
@@ -28,12 +48,12 @@ const isRemote = src.startsWith('http://') || src.startsWith('https://') || src.
   />
 ) : (
   <Image
-    src={src}
+    src={finalSrc}
     alt={alt}
     width={width}
     height={height}
-    format="avif"
-    quality={55}
+    format="webp"
+    quality={70}
     loading="lazy"
     decoding="async"
     class={className}
