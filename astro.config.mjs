@@ -50,13 +50,7 @@ export default defineConfig({
       }
     },
     build: {
-      cssMinify: true,
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true
-        }
-      }
+      cssMinify: true
     }
   }
 });
