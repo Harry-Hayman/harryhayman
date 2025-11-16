@@ -14,7 +14,11 @@ export default defineConfig({
     imageCDN: true
   }),
   integrations: [
-    mdx(),
+    mdx({
+      optimize: true,
+      remarkPlugins: [],
+      rehypePlugins: []
+    }),
     tailwind({
       // Configure theme customization
       config: { path: './tailwind.config.cjs' },
@@ -50,7 +54,15 @@ export default defineConfig({
       }
     },
     build: {
-      cssMinify: true
+      cssMinify: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor': ['react', 'react-dom'],
+            'gsap': ['gsap']
+          }
+        }
+      }
     }
   }
 });

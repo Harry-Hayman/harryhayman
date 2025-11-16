@@ -106,9 +106,9 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
 
   .prose img {
     border-radius: 0.75rem;
-    max-width: 600px;
-    width: 100%;
-    height: auto;
+    max-width: 525px !important;
+    width: 100% !important;
+    height: auto !important;
     object-fit: contain;
     margin: 1.5rem auto;
     display: block;
@@ -118,10 +118,11 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
   .prose picture {
     display: block;
     margin: 1.5rem auto;
+    max-width: 525px;
   }
   
   .prose picture img {
     width: 100%;
-    max-width: 600px;
+    max-width: 525px;
   }
 </style>
