@@ -2,15 +2,8 @@
   command = "npm run build"
   publish = "dist"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 [build.environment]
   NODE_VERSION = "20"
-
-# Image optimization settings
-[[plugins]]
-  package = "@netlify/plugin-image-optim"
 
 # Redirects and rewrites
 [[redirects]]
@@ -19,7 +12,7 @@
   status = 200
   force = false
   
-# Force image optimization for all images
+# Security and performance headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -28,13 +21,10 @@
     X-XSS-Protection = "1; mode=block"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
-# Netlify Image CDN configuration
+# Netlify Image CDN configuration (built-in)
 [images]
-  # Enable automatic image optimization
   remote_images = ["https://**"]
   
 [images.settings]
-  # Default quality for image optimization
   quality = 50
-  # Formats to generate
   formats = ["avif", "webp"]
