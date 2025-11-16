@@ -92,6 +92,12 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
     <link rel="manifest" href="/manifest.json" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
 
+    <!-- Resource Hints for Critical Assets -->
+    <link rel="dns-prefetch" href="https://unpkg.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://unpkg.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
     <!-- Theme initialization -->
     <script is:inline>
       (function () {
@@ -113,7 +119,7 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
     <!-- AOS - Load non-blocking -->
     <link rel="preload" href="/css/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="/css/aos.css" /></noscript>
-    <script is:inline src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
     <script is:inline>
       function initAOS() {
         if (typeof AOS !== "undefined") {
@@ -134,14 +140,14 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       window.addEventListener("load", initAOS);
     </script>
 
-    <!-- GSAP -->
+    <!-- GSAP - Deferred -->
     <script
-      is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+      defer
     ></script>
     <script
-      is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
+      defer
     ></script>
     <script is:inline>
       function initGSAP() {
@@ -159,10 +165,7 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       window.addEventListener("load", initGSAP);
     </script>
 
-    <!-- Lazy Loading -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"
-      async></script>
+    <!-- Lazy Loading - Removed (native lazy loading used instead) -->
 
     <!-- Metricool Tracking -->
     <script is:inline>

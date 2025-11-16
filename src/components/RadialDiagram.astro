@@ -189,10 +189,11 @@ const getCoordinates = (index: number, radius: number) => {
                 class="w-full h-full object-contain"
                 width={192}
                 height={192}
-                format="webp"
-                quality={70}
+                format="avif"
+                quality={60}
                 loading="eager"
                 decoding="async"
+                fetchpriority="high"
               />
             </div>
           </div>
@@ -230,8 +231,8 @@ const getCoordinates = (index: number, radius: number) => {
                         class="w-full h-full object-contain p-2"
                         width={80}
                         height={80}
-                        format="webp"
-                        quality={70}
+                        format="avif"
+                        quality={55}
                         loading="lazy"
                         decoding="async"
                       />

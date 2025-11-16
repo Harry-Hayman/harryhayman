@@ -24,15 +24,15 @@ export default defineConfig({
     keystatic()
   ],
   image: {
-    // Optimize images with proper defaults
+    // Optimize images with proper defaults - maximum compression
     service: {
       entrypoint: 'astro/assets/services/sharp'
     },
     remotePatterns: [{ protocol: "https" }],
     domains: ['harryhayman.com'],
-    formats: ['webp', 'avif'],
-    // Default quality for image optimization
-    quality: 70
+    formats: ['avif', 'webp'],
+    // Aggressive quality for maximum compression
+    quality: 60
   },
   markdown: {
     shikiConfig: {

@@ -43,10 +43,11 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
               alt={title}
               width={600}
               height={600}
-              format="webp"
-              quality={70}
+              format="avif"
+              quality={60}
               loading="eager"
               decoding="async"
+              fetchpriority="high"
               class="w-auto h-auto max-w-full rounded-xl"
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 600px, 600px"
             />
