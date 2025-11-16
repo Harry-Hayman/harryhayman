@@ -5,8 +5,6 @@
   "scripts": {
     "dev": "astro dev --host 0.0.0.0",
     "start": "astro dev",
-    "compress-images": "node scripts/compress-images.js",
-    "prebuild": "npm run compress-images",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
