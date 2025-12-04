@@ -92,13 +92,29 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
     <link rel="manifest" href="/manifest.json" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D67B4Z3VNH"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-D67B4Z3VNH");
+    </script>
+
     <!-- Resource Hints for Critical Assets -->
     <link rel="dns-prefetch" href="https://unpkg.com" />
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="https://tracker.metricool.com" />
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://static.cloudflareinsights.com"
+      crossorigin
+    />
 
     <!-- Theme initialization -->
     <script is:inline>
@@ -119,7 +135,12 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
     </script>
 
     <!-- AOS - Load non-blocking -->
-    <link rel="preload" href="/css/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link
+      rel="preload"
+      href="/css/aos.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
     <noscript><link rel="stylesheet" href="/css/aos.css" /></noscript>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
     <script is:inline>
@@ -145,12 +166,10 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
     <!-- GSAP - Deferred -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
-      defer
-    ></script>
+      defer></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
-      defer
-    ></script>
+      defer></script>
     <script is:inline>
       function initGSAP() {
         if (
@@ -175,47 +194,50 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
         try {
           var head = document.getElementsByTagName("head")[0],
             script = document.createElement("script");
-          
+
           script.type = "text/javascript";
           script.src = "https://tracker.metricool.com/resources/be.js";
-          
+
           // Handle successful load
-          script.onload = function() {
-            if (callback && typeof callback === 'function') {
+          script.onload = function () {
+            if (callback && typeof callback === "function") {
               callback();
             }
           };
-          
+
           // Handle errors (like ad blockers)
-          script.onerror = function() {
+          script.onerror = function () {
             // Silently fail - analytics blocked by ad blocker
-            console.debug('Analytics script blocked by ad blocker');
+            console.debug("Analytics script blocked by ad blocker");
           };
-          
+
           // For older browsers
-          script.onreadystatechange = function() {
-            if (this.readyState === 'complete' || this.readyState === 'loaded') {
-              if (callback && typeof callback === 'function') {
+          script.onreadystatechange = function () {
+            if (
+              this.readyState === "complete" ||
+              this.readyState === "loaded"
+            ) {
+              if (callback && typeof callback === "function") {
                 callback();
               }
             }
           };
-          
+
           head.appendChild(script);
         } catch (error) {
           // Silently handle any errors
-          console.debug('Analytics initialization failed:', error.message);
+          console.debug("Analytics initialization failed:", error.message);
         }
       }
-      
+
       loadScript(function () {
         try {
-          if (typeof beTracker !== 'undefined') {
+          if (typeof beTracker !== "undefined") {
             beTracker.t({ hash: "f9fe076de289567c484620078e1d3423" });
           }
         } catch (error) {
           // Silently handle tracking errors
-          console.debug('Analytics tracking failed:', error.message);
+          console.debug("Analytics tracking failed:", error.message);
         }
       });
     </script>

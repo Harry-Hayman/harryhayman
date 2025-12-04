@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 
 interface Props {
   src: string;
@@ -12,32 +12,37 @@ interface Props {
 const { src, alt, width = 1200, height = 1200, class: className } = Astro.props;
 
 // Handle both local and remote images
-const isRemote = src.startsWith('http://') || src.startsWith('https://') || src.startsWith('/');
+const isRemote =
+  src.startsWith("http://") ||
+  src.startsWith("https://") ||
+  src.startsWith("/");
 ---
 
-{isRemote ? (
-  <img
-    src={src}
-    alt={alt}
-    width={width}
-    height={height}
-    loading="lazy"
-    decoding="async"
-    class={className}
-    style="max-width: 100%; width: 100%; height: auto; object-fit: contain; margin: 1.5rem auto; display: block; border-radius: 0.75rem;"
-  />
-) : (
-  <Image
-    src={src}
-    alt={alt}
-    width={width}
-    height={height}
-    format="webp"
-    quality={60}
-    loading="lazy"
-    decoding="async"
-    class={className}
-    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 800px, 1200px"
-    densities={[1, 2]}
-  />
-)}
+{
+  isRemote ? (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      loading="lazy"
+      decoding="async"
+      class={className}
+      style="max-width: 100%; width: 100%; height: auto; object-fit: contain; margin: 1.5rem auto; display: block; border-radius: 0.75rem;"
+    />
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      format="webp"
+      quality={60}
+      loading="lazy"
+      decoding="async"
+      class={className}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 800px, 1200px"
+      densities={[1, 2]}
+    />
+  )
+}
