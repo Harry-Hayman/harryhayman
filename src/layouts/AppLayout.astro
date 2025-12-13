@@ -241,6 +241,95 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
         }
       });
     </script>
+
+    <!-- Person Schema Markup -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Harry Hayman",
+        "alternateName": "Harrison Graham Hayman IV",
+        "url": "https://harryhayman.com",
+        "image": "https://harryhayman.com/banner.png",
+        "description": "Philadelphia business leader, hospitality entrepreneur, and philanthropist known for work in restaurant industry and community development through Feed Philly Coalition and The Philadelphia Jazz Experience.",
+        "jobTitle": "Hospitality Entrepreneur & Community Leader",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Gemini Hospitality Consultants"
+        },
+        "founder": [
+          {
+            "@type": "Organization",
+            "name": "Gemini Hospitality Consultants",
+            "url": "https://harryhaymangemini.com/",
+            "description": "Strategic consulting services for restaurants and hospitality businesses"
+          },
+          {
+            "@type": "Organization",
+            "name": "Philadelphia Jazz Experience",
+            "url": "https://philadelphiajazzexperience.org",
+            "description": "Preserving and promoting Philadelphia's rich jazz heritage"
+          },
+          {
+            "@type": "Organization",
+            "name": "Veggie Graffiti",
+            "url": "https://veggiegraffiti.com",
+            "description": "Urban farming initiative combining hydroponic technology with sustainable practices"
+          },
+          {
+            "@type": "Organization",
+            "name": "Feed Philly Coalition",
+            "url": "https://feedphillycoalition.org",
+            "description": "Community initiative addressing food insecurity"
+          },
+          {
+            "@type": "Organization",
+            "name": "Harry Hayman Creative",
+            "url": "https://harryhaymancreative.com/",
+            "description": "Creative agency specializing in branding and marketing for hospitality businesses"
+          },
+          {
+            "@type": "Organization",
+            "name": "I Am Hungry in Philly",
+            "url": "https://iamhungryinphilly.org",
+            "description": "Connecting Philadelphia's hungry with local food resources"
+          },
+          {
+            "@type": "Organization",
+            "name": "Another Three Hearts Experience",
+            "url": "https://another3heartsexperience.com/",
+            "description": "Creating unique hospitality experiences combining culinary excellence with cultural enrichment"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/HaymanHG/",
+          "https://www.pinterest.com/hghayman1/",
+          "https://www.instagram.com/harryhayman4",
+          "https://x.com/HGHayman",
+          "https://www.threads.com/@harryhayman4",
+          "https://bsky.app/profile/harryhayman.bsky.social",
+          "https://www.youtube.com/@harryhayman1467/shorts",
+          "https://www.linkedin.com/in/harrisongrahamhaymaniv/"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Philadelphia",
+          "addressRegion": "PA",
+          "addressCountry": "US"
+        },
+        "knowsAbout": [
+          "Restaurant Management",
+          "Hospitality Industry",
+          "Community Development",
+          "Food Justice",
+          "Jazz Music",
+          "Philanthropy",
+          "Business Consulting",
+          "Urban Agriculture",
+          "Creative Marketing"
+        ]
+      }
+    </script>
   </head>
   <body>
     <Bubbles />
