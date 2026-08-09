@@ -25,43 +25,24 @@
     aria-label="Play or pause background music. Double click for the track list."
     title="Play or pause background music"
   >
+    <!-- The vinyl is drawn in ink on the same paper control as the theme
+         toggle, so the two floating controls read as one pair rather than a
+         quiet button next to a heavy dark disc. -->
     <svg
-      class="h-11 w-11"
-      viewBox="0 0 48 48"
+      class="h-5 w-5"
+      viewBox="0 0 24 24"
       fill="none"
+      stroke="currentColor"
       aria-hidden="true"
       focusable="false"
     >
-      <circle cx="24" cy="24" r="24" fill="#0C2438"></circle>
-      <circle
-        cx="24"
-        cy="24"
-        r="19"
-        stroke="#56A9F2"
-        stroke-opacity="0.35"
-        stroke-width="1"></circle>
-      <circle
-        cx="24"
-        cy="24"
-        r="14.5"
-        stroke="#56A9F2"
-        stroke-opacity="0.28"
-        stroke-width="1"></circle>
-      <circle
-        cx="24"
-        cy="24"
-        r="10"
-        stroke="#56A9F2"
-        stroke-opacity="0.22"
-        stroke-width="1"></circle>
-      <circle cx="24" cy="24" r="7" fill="#1B6FBF"></circle>
-      <circle cx="24" cy="24" r="1.8" fill="#0C2438"></circle>
-      <path
-        d="M24 6.5a17.5 17.5 0 0 1 12.4 5.1"
-        stroke="#8AC6FB"
-        stroke-opacity="0.55"
-        stroke-width="1.5"
-        stroke-linecap="round"></path>
+      <circle cx="12" cy="12" r="10.25" stroke-width="1.5"></circle>
+      <circle cx="12" cy="12" r="7" stroke-width="1" stroke-opacity="0.55"
+      ></circle>
+      <circle cx="12" cy="12" r="4.25" stroke-width="1" stroke-opacity="0.4"
+      ></circle>
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"
+      ></circle>
     </svg>
 
     <!-- Album art overlay, only filled in once a track is chosen -->
@@ -187,8 +168,25 @@
     animation: spin 3s linear infinite;
   }
 
+  /* Album art fills the control once a track is chosen. It used to be
+     `mix-blend-mode: overlay` against a dark disc; on the paper control it
+     sits inset behind the hairline, under a paper scrim so the ink glyph
+     stays legible over any sleeve. */
   #album-art {
-    mix-blend-mode: overlay;
+    inset: 3px;
+    z-index: 0;
+  }
+
+  #album-art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: rgba(var(--surface-raised), 0.58);
+  }
+
+  .vinyl-record svg {
+    position: relative;
     z-index: 1;
   }
 

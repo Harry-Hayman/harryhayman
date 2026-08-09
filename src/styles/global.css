@@ -520,21 +520,32 @@
     height: 2.75rem;
     border-radius: var(--r-pill);
     border: 1px solid rgb(var(--nav-border));
-    background-color: rgba(var(--surface-raised), 0.92);
+    /* Opaque, not translucent: these sit over body copy on a phone, and a
+       half-visible word behind a control reads as a bug rather than chrome. */
+    background-color: rgb(var(--surface-raised));
     color: rgb(var(--text-secondary));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-2);
+    box-shadow: var(--shadow-1);
     transition:
       color var(--dur-1) var(--ease),
       border-color var(--dur-1) var(--ease),
+      box-shadow var(--dur-1) var(--ease),
       transform var(--dur-1) var(--ease);
   }
 
   .float-control:hover {
     color: rgb(var(--accent));
     border-color: rgb(var(--brand-400));
+    box-shadow: var(--shadow-2);
     transform: translateY(-2px);
+  }
+
+  /* On a phone the reading column is the full width, so the pair tucks
+     tighter into the corners and loses a little size. */
+  @media (max-width: 480px) {
+    .float-control {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
   }
 
   /* ---------------------------------------------------------------- */
