@@ -7,11 +7,11 @@
  */
 ---
 
-<div id="music-player" class="fixed bottom-4 right-4 z-50">
+<div id="music-player" class="fixed bottom-4 right-4 z-[60]">
   <!-- Track List Drop-up -->
   <div
     id="track-list"
-    class="absolute bottom-full right-0 mb-2 w-64 rounded-lg border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-raised))] shadow-lg transform scale-y-0 origin-bottom transition-transform duration-300"
+    class="absolute bottom-full right-0 mb-2 w-64 rounded-card border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-raised))] shadow-2 transform scale-y-0 origin-bottom transition-transform duration-300"
   >
     <div class="p-2 space-y-1 max-h-48 overflow-y-auto">
       <!-- Track items are inserted here by JavaScript -->
@@ -21,12 +21,12 @@
   <!-- Music Toggle Button -->
   <button
     id="music-toggle"
-    class="vinyl-record relative flex h-12 w-12 items-center justify-center rounded-full shadow-lg ring-1 ring-black/5 transition-transform hover:scale-105"
+    class="vinyl-record float-control relative overflow-hidden"
     aria-label="Play or pause background music. Double click for the track list."
     title="Play or pause background music"
   >
     <svg
-      class="h-12 w-12"
+      class="h-11 w-11"
       viewBox="0 0 48 48"
       fill="none"
       aria-hidden="true"

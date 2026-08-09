@@ -1,7 +1,8 @@
 [
   {
     "href": "/",
-    "text": "Home"
+    "text": "Home",
+    "mobileHidden": true
   },
   {
     "href": "/about",
@@ -14,5 +15,9 @@
   {
     "href": "/blog",
     "text": "Blog"
+  },
+  {
+    "href": "/contact",
+    "text": "Contact"
   }
 ]

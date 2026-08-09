@@ -1,31 +1,58 @@
 /*
- * Ambient background wash.
- * Rebuilt on the light-blue brand ramp: five blues plus one warm accent so the
- * field still has depth without competing with text. Opacity is deliberately
- * low, and article pages drop it further via .reading-mode.
+ * Ambient background field: the room the paper sits in.
+ *
+ * Five drifting orbs built from the light-blue brand ramp, merged by an SVG
+ * goo filter so they read as one living field rather than five circles.
+ *
+ *   homepage (.bubbles-full)  full presence, clearly floating
+ *   every other page          a calm wash
+ *   articles                  none at all (AppLayout never renders it)
+ *
+ * The wrapper is inert: no pointer events, no cursor tricks, and every
+ * animation stops under prefers-reduced-motion.
  */
 
-:root {
-  --gradient-1: 20, 60, 94; /* brand-900 */
-  --gradient-2: 27, 111, 191; /* brand-600 */
-  --gradient-3: 86, 169, 242; /* brand-400 */
-  --gradient-4: 138, 198, 251; /* brand-300 */
-  --gradient-5: 185, 220, 255; /* brand-200 */
+:root:not(.dark) {
+  /* Pale end of the ramp in light mode: the field tints, it never darkens
+     text. Content sits on opaque surfaces above it. */
+  --gradient-1: 138, 198, 251; /* brand-300 */
+  --gradient-2: 86, 169, 242; /* brand-400 */
+  --gradient-3: 185, 220, 255; /* brand-200 */
+  --gradient-4: 46, 139, 224; /* brand-500 */
+  --gradient-5: 221, 238, 255; /* brand-100 */
+
+  --bubble-opacity: 0.5;
+  --bubble-blend: normal;
+  --gradient-intensity: 0.13;
+  --bubble-blur: 34px;
 }
 
 :root.dark {
-  --bubble-opacity: 0.3;
+  --gradient-1: 20, 60, 94; /* brand-900 */
+  --gradient-2: 27, 111, 191; /* brand-600 */
+  --gradient-3: 21, 87, 150; /* brand-700 */
+  --gradient-4: 46, 139, 224; /* brand-500 */
+  --gradient-5: 20, 72, 117; /* brand-800 */
+
+  --bubble-opacity: 0.62;
   --bubble-blend: screen;
-  --gradient-intensity: 0.22;
+  --gradient-intensity: 0.2;
+  --bubble-blur: 40px;
 }
 
-:root:not(.dark) {
-  --bubble-opacity: 0.16;
-  --bubble-blend: multiply;
-  --gradient-intensity: 0.14;
+/* The homepage keeps its floating bubbles at full presence (per Anuj);
+   every other page gets the calm wash above, articles get none. */
+body.bubbles-full {
+  --gradient-intensity: 0.44;
+  --bubble-opacity: 0.72;
 }
 
-/* Article pages: keep the brand wash on the chrome, calm it behind the text. */
+:root.dark body.bubbles-full {
+  --gradient-intensity: 0.5;
+  --bubble-opacity: 0.78;
+}
+
+/* Article pages: kept for safety if a reading page ever renders the field. */
 body.reading-mode .bubbles-wrapper {
   opacity: 0.05;
 }
@@ -41,35 +68,25 @@ body.reading-mode .bubbles-wrapper {
   height: 100%;
   z-index: 0;
   overflow: hidden;
-  /* Was pointer-events: all + cursor: none, which swallowed the cursor
-     across the whole viewport. The wash is decorative, so it is inert. */
   pointer-events: none;
   mix-blend-mode: var(--bubble-blend);
   opacity: var(--bubble-opacity);
   background-color: transparent;
+  contain: strict;
 }
 
 .gradient-container {
-  filter: url(#goo) blur(80px);
+  filter: url(#goo) blur(var(--bubble-blur));
   width: 130%;
   height: 130%;
   position: absolute;
   left: -15%;
   top: -15%;
-  opacity: 0.9;
   pointer-events: none;
 }
 
 :root.dark .gradient-container {
-  opacity: 1;
   mix-blend-mode: screen;
-  filter: url(#goo) blur(80px) brightness(1.1);
-}
-
-:root:not(.dark) .gradient-container {
-  opacity: 0.8;
-  mix-blend-mode: multiply;
-  filter: url(#goo) blur(80px) contrast(1.05);
 }
 
 .g1,
@@ -79,91 +96,92 @@ body.reading-mode .bubbles-wrapper {
 .g5 {
   position: absolute;
   opacity: 1;
+  will-change: transform;
 }
 
 .g1 {
-  --size: min(70vh, 800px);
+  --size: min(62vh, 720px);
   background: radial-gradient(
       circle at center,
       rgba(var(--gradient-1), var(--gradient-intensity)) 0%,
-      rgba(var(--gradient-1), calc(var(--gradient-intensity) * 0.3)) 50%,
-      rgba(var(--gradient-1), 0) 70%
+      rgba(var(--gradient-1), calc(var(--gradient-intensity) * 0.42)) 48%,
+      rgba(var(--gradient-1), 0) 72%
     )
     no-repeat;
   width: var(--size);
   height: var(--size);
-  top: calc(50% - var(--size) / 2);
-  left: calc(50% - var(--size) / 2);
+  top: calc(38% - var(--size) / 2);
+  left: calc(24% - var(--size) / 2);
   transform-origin: center center;
-  animation: bounceV 30s ease infinite;
+  animation: bounceV 34s ease-in-out infinite;
 }
 
 .g2 {
-  --size: min(90vh, 900px);
+  --size: min(84vh, 880px);
   background: radial-gradient(
       circle at center,
       rgba(var(--gradient-2), var(--gradient-intensity)) 0%,
-      rgba(var(--gradient-2), calc(var(--gradient-intensity) * 0.3)) 50%,
-      rgba(var(--gradient-2), 0) 70%
+      rgba(var(--gradient-2), calc(var(--gradient-intensity) * 0.4)) 48%,
+      rgba(var(--gradient-2), 0) 72%
     )
     no-repeat;
   width: var(--size);
   height: var(--size);
-  top: calc(50% - var(--size) / 2);
-  left: calc(50% - var(--size) / 2);
-  transform-origin: calc(50% - 400px);
-  animation: moveInCircle 20s reverse infinite;
+  top: calc(58% - var(--size) / 2);
+  left: calc(78% - var(--size) / 2);
+  transform-origin: calc(50% - 320px);
+  animation: moveInCircle 26s reverse linear infinite;
 }
 
 .g3 {
-  --size: min(60vh, 700px);
+  --size: min(54vh, 620px);
   background: radial-gradient(
       circle at center,
-      rgba(var(--gradient-3), var(--gradient-intensity)) 0%,
-      rgba(var(--gradient-3), calc(var(--gradient-intensity) * 0.3)) 50%,
-      rgba(var(--gradient-3), 0) 70%
+      rgba(var(--gradient-3), calc(var(--gradient-intensity) * 1.15)) 0%,
+      rgba(var(--gradient-3), calc(var(--gradient-intensity) * 0.45)) 48%,
+      rgba(var(--gradient-3), 0) 72%
     )
     no-repeat;
   width: var(--size);
   height: var(--size);
-  top: calc(50% - var(--size) / 2 + 200px);
-  left: calc(50% - var(--size) / 2 - 500px);
+  top: calc(50% - var(--size) / 2 + 180px);
+  left: calc(50% - var(--size) / 2 - 460px);
   transform-origin: calc(50% + 400px);
-  animation: moveInCircle 40s linear infinite;
+  animation: moveInCircle 44s linear infinite;
 }
 
 .g4 {
-  --size: min(80vh, 850px);
+  --size: min(74vh, 800px);
   background: radial-gradient(
       circle at center,
-      rgba(var(--gradient-4), var(--gradient-intensity)) 0%,
-      rgba(var(--gradient-4), calc(var(--gradient-intensity) * 0.3)) 50%,
-      rgba(var(--gradient-4), 0) 70%
+      rgba(var(--gradient-4), calc(var(--gradient-intensity) * 0.9)) 0%,
+      rgba(var(--gradient-4), calc(var(--gradient-intensity) * 0.34)) 48%,
+      rgba(var(--gradient-4), 0) 72%
     )
     no-repeat;
   width: var(--size);
   height: var(--size);
-  top: calc(50% - var(--size) / 2);
-  left: calc(50% - var(--size) / 2);
+  top: calc(22% - var(--size) / 2);
+  left: calc(62% - var(--size) / 2);
   transform-origin: calc(50% - 200px);
-  animation: bounceH 40s ease infinite;
+  animation: bounceH 46s ease-in-out infinite;
 }
 
 .g5 {
-  --size: min(100vh, 1000px);
+  --size: min(96vh, 980px);
   background: radial-gradient(
       circle at center,
-      rgba(var(--gradient-5), var(--gradient-intensity)) 0%,
-      rgba(var(--gradient-5), calc(var(--gradient-intensity) * 0.3)) 50%,
-      rgba(var(--gradient-5), 0) 70%
+      rgba(var(--gradient-5), calc(var(--gradient-intensity) * 1.2)) 0%,
+      rgba(var(--gradient-5), calc(var(--gradient-intensity) * 0.45)) 48%,
+      rgba(var(--gradient-5), 0) 72%
     )
     no-repeat;
   width: var(--size);
   height: var(--size);
-  top: calc(50% - var(--size) / 2);
-  left: calc(50% - var(--size) / 2);
-  transform-origin: calc(50% - 800px) calc(50% + 200px);
-  animation: moveInCircle 20s ease infinite;
+  top: calc(76% - var(--size) / 2);
+  left: calc(34% - var(--size) / 2);
+  transform-origin: calc(50% - 600px) calc(50% + 200px);
+  animation: moveInCircle 24s ease-in-out infinite;
 }
 
 @keyframes moveInCircle {
@@ -210,14 +228,4 @@ body.reading-mode .bubbles-wrapper {
   .g5 {
     animation: none;
   }
-}
-
-/* The homepage keeps its floating bubbles at full presence (per Anuj);
-   every other page gets the calm wash above, articles get none. */
-body.bubbles-full {
-  --gradient-intensity: 0.85;
-}
-html.dark body.bubbles-full,
-.dark body.bubbles-full {
-  --gradient-intensity: 0.6;
 }

@@ -14,6 +14,9 @@ import MusicPlayer from "@components/MusicPlayer.astro";
  */
 import "@fontsource/playfair-display/latin-400.css";
 import "@fontsource/playfair-display/latin-700.css";
+/* Real italic for the display voice: a browser-synthesised oblique on a
+   high-contrast serif looks broken at hero sizes. Fetched only where used. */
+import "@fontsource/playfair-display/latin-700-italic.css";
 import "@fontsource/poppins/latin-400.css";
 import "@fontsource/poppins/latin-500.css";
 import "@fontsource/poppins/latin-600.css";
@@ -351,18 +354,23 @@ const graph = {
     >
       <!-- Navigation -->
       <nav class="sticky top-0 z-50 site-nav" aria-label="Primary">
-        <div class="mx-auto max-w-6xl px-4">
-          <div
-            class="flex min-h-[3.5rem] items-center justify-center gap-3 sm:justify-between"
-          >
-            <a href="/" class="wordmark hidden text-lg sm:inline-block">
-              Harry Hayman
+        <div class="wrap">
+          <div class="flex min-h-[3.75rem] items-center justify-between gap-2">
+            <a href="/" class="wordmark text-base sm:text-lg">
+              <span class="sm:hidden">HH</span>
+              <span class="hidden sm:inline">Harry Hayman</span>
+              <span class="wordmark-rule hidden md:block" aria-hidden="true"
+              ></span>
+              <span
+                class="hidden text-[0.6875rem] font-sans font-semibold uppercase tracking-[0.18em] text-[rgb(var(--text-muted))] md:inline"
+                >Philadelphia</span
+              >
             </a>
             <ul class="flex items-center gap-0.5 sm:gap-1">
               {
                 navigation.map((item) => (
-                  <li>
-                    <Link {...item} />
+                  <li class:list={[item.mobileHidden && "hidden sm:block"]}>
+                    <Link href={item.href} text={item.text} />
                   </li>
                 ))
               }
@@ -376,9 +384,7 @@ const graph = {
 
       <!-- Main Content -->
       <main id="main" class="flex-grow">
-        <div class="px-4 md:px-6 lg:px-8 mx-auto max-w-6xl">
-          <slot />
-        </div>
+        <slot />
       </main>
 
       <!-- Music Player -->
