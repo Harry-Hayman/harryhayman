@@ -5,6 +5,15 @@ import AppLayout from "@layouts/AppLayout.astro";
 import RadialDiagram from "@components/RadialDiagram.astro";
 import VentureCard from "@components/VentureCard.astro";
 import { ventures } from "../data/ventures";
+
+/*
+ * The showcase splits on what each venture actually has to show. Four have
+ * commissioned imagery and carry the full card; four have a brand mark and
+ * carry a compact row with the mark on a neutral tile, so their own colours
+ * are never fighting the light blue system.
+ */
+const flagship = ventures.filter((venture) => venture.kind === "photo");
+const rest = ventures.filter((venture) => venture.kind === "logo");
 ---
 
 <AppLayout
@@ -12,52 +21,112 @@ import { ventures } from "../data/ventures";
   description="The ventures Harry Hayman leads in Philadelphia: Gemini Hospitality Consultants, Philadelphia Jazz Experience, Veggie Graffiti and Feed Philly Coalition."
   textBubbles={true}
 >
-  <div class="py-8">
-    <div class="container mx-auto">
-      <!-- Radial Diagram -->
-      <RadialDiagram />
-
-      <!-- Header -->
-      <header class="max-w-3xl mx-auto text-center mb-16" data-aos="fade-up">
-        <h1
-          class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]"
-        >
-          Ventures & Initiatives
-        </h1>
-        <p
-          class="text-lg sm:text-xl text-[rgb(var(--text-secondary))] leading-relaxed"
-        >
+  <!-- Header -->
+  <section class="wrap pt-12 sm:pt-16">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="kicker">Ventures &amp; Initiatives</p>
+        <h1 class="display-2 mt-5">Eight ventures, one city</h1>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="lede">
           Exploring innovative solutions across hospitality, culture, and
           community development.
         </p>
-      </header>
+      </div>
+    </div>
+    <hr class="rule mt-10" />
+  </section>
 
-      <!-- Ventures Grid -->
-      <div class="grid gap-8 md:grid-cols-2">
-        {
-          ventures.map((venture, index) => (
+  <!-- Flagship ventures -->
+  <section class="wrap section-tight" aria-labelledby="flagship-heading">
+    <h2 id="flagship-heading" class="sr-only">Flagship ventures</h2>
+    <div class="grid gap-6 md:grid-cols-2 lg:gap-8">
+      {
+        flagship.map((venture, index) => (
+          <div class="h-full" data-aos="fade-up" data-aos-delay={(index % 2) * 80}>
             <VentureCard
               {...venture}
-              data-aos="fade-up"
-              data-aos-delay={(index % 2) * 100}
+              variant="feature"
+              index={ventures.indexOf(venture)}
             />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Further initiatives -->
+  <section
+    class="border-y border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))]"
+    aria-labelledby="more-heading"
+  >
+    <div class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Also under way</p>
+          <h2 id="more-heading" class="heading-2 mt-3">Further initiatives</h2>
+        </div>
+      </div>
+      <div class="grid gap-5 md:grid-cols-2">
+        {
+          rest.map((venture, index) => (
+            <div class="h-full" data-aos="fade-up" data-aos-delay={(index % 2) * 80}>
+              <VentureCard
+                {...venture}
+                variant="compact"
+                index={ventures.indexOf(venture)}
+              />
+            </div>
           ))
         }
       </div>
+    </div>
+  </section>
 
-      <!-- Call to Action -->
-      <div class="text-center mt-16">
-        <h2
-          class="text-2xl sm:text-3xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-        >
-          Get Involved
+  <!-- The network at a glance -->
+  <section class="wrap section" aria-labelledby="network-heading">
+    <div class="section-head">
+      <div>
+        <p class="kicker">At a glance</p>
+        <h2 id="network-heading" class="heading-2 mt-3">The network</h2>
+      </div>
+      <p class="meta max-w-sm sm:text-right">
+        Every organisation Harry founded or leads, and how they sit around him.
+      </p>
+    </div>
+    <RadialDiagram />
+  </section>
+
+  <!-- Call to action -->
+  <section class="wrap pb-4" aria-labelledby="involved-heading">
+    <div class="panel-ink px-6 py-12 sm:px-12 sm:py-16">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="kicker kicker-plain justify-center">Collaborate</p>
+        <h2 id="involved-heading" class="heading-2 mt-4 text-white">
+          Get involved
         </h2>
-        <p class="text-[rgb(var(--text-secondary))] mb-8 max-w-2xl mx-auto">
-          Interested in collaborating or learning more about our initiatives?
+        <p class="mt-4 text-[rgb(var(--ink-panel-muted))] sm:text-lg">
+          Interested in collaborating or learning more about these initiatives?
           Let's connect and explore opportunities together.
         </p>
-        <a href="/contact" class="btn btn-primary"> Get in touch with Harry </a>
+        <div class="mt-8 flex justify-center">
+          <a href="/contact" class="btn btn-on-ink btn-lg">
+            Get in touch with Harry
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"
+              ></path>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </AppLayout>

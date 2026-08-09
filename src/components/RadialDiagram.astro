@@ -151,6 +151,10 @@ const getCoordinates = (index: number, radius: number) => {
             }
             .animated-line {
               animation: dash 1.5s linear infinite;
+              stroke: rgb(var(--brand-500));
+            }
+            :global(:root.dark) .animated-line {
+              stroke: rgb(var(--brand-400));
             }
             @media (prefers-reduced-motion: reduce) {
               .animated-line {
@@ -170,9 +174,10 @@ const getCoordinates = (index: number, radius: number) => {
                     y1={`${inner.y}%`}
                     x2={`${outer.x}%`}
                     y2={`${outer.y}%`}
-                    stroke="rgb(27, 111, 191)"
-                    stroke-width="2"
-                    stroke-dasharray="6,6"
+                    stroke="#2E8BE0"
+                    stroke-width="1.5"
+                    stroke-dasharray="4,7"
+                    stroke-linecap="round"
                     class="animated-line"
                   />
                 </svg>
@@ -187,7 +192,7 @@ const getCoordinates = (index: number, radius: number) => {
         >
           <div class="relative w-full h-full">
             <div
-              class="absolute inset-0 rounded-full overflow-hidden border-4 border-brand-600 bg-white shadow-lg"
+              class="absolute inset-0 rounded-full overflow-hidden border-2 border-[rgb(var(--brand-500))] bg-white shadow-2 ring-8 ring-[rgb(var(--accent-soft))]"
             >
               <Image
                 src={harryImage}
@@ -206,10 +211,10 @@ const getCoordinates = (index: number, radius: number) => {
           <!-- Harry's name. Hidden on narrow screens, where it collided with
                the satellite logos and duplicated the page heading below. -->
           <div
-            class="absolute -bottom-8 left-1/2 hidden w-max -translate-x-1/2 text-center sm:block"
+            class="absolute -bottom-9 left-1/2 hidden w-max -translate-x-1/2 text-center sm:block"
           >
             <p
-              class="whitespace-nowrap font-serif text-base font-bold text-[rgb(var(--accent))] md:text-xl"
+              class="whitespace-nowrap font-serif text-base font-bold text-[rgb(var(--text-primary))] md:text-lg"
             >
               Harry Hayman
             </p>
@@ -231,20 +236,20 @@ const getCoordinates = (index: number, radius: number) => {
                   style={`left: ${pos.x}%; top: ${pos.y}%; transform: translate(-50%, -50%);`}
                 >
                   <div class="relative w-full h-full">
-                    <div class="w-full h-full rounded-full overflow-hidden border-2 border-brand-600 bg-white shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-full h-full rounded-full overflow-hidden border border-[rgb(var(--nav-border))] bg-white shadow-1 transition-shadow group-hover:shadow-2">
                       <Image
                         src={business.logo}
                         alt={business.name}
-                        class="w-full h-full object-contain p-2"
-                        width={60}
-                        height={60}
+                        class="w-full h-full object-contain p-2.5"
+                        width={120}
+                        height={120}
                         format="webp"
-                        quality={70}
+                        quality={72}
                         loading="lazy"
                         decoding="async"
                       />
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 bg-brand-600 text-white px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12 shadow-lg z-30 text-xs md:text-sm whitespace-nowrap text-center">
+                    <div class="absolute left-1/2 -translate-x-1/2 bg-[rgb(var(--ink-panel))] text-white px-3 py-1.5 rounded-field opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-11 shadow-2 z-30 text-xs whitespace-nowrap text-center">
                       {business.name}
                     </div>
                   </div>
