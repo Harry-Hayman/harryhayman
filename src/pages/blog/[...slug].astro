@@ -79,7 +79,7 @@ const articleSchema = {
     <!-- Breadcrumb: orientation for readers and crawlers -->
     <nav
       aria-label="Breadcrumb"
-      class="mx-auto mb-8 max-w-3xl text-sm text-[rgb(var(--text-muted))]"
+      class="mx-auto mb-8 max-w-3xl text-sm text-[rgb(var(--text-muted))] lg:max-w-[54rem]"
     >
       <ol class="flex flex-wrap items-center gap-1.5">
         <li><a href="/" class="hover:text-[rgb(var(--accent))]">Home</a></li>
@@ -103,7 +103,7 @@ const articleSchema = {
       </ol>
     </nav>
 
-    <header class="mx-auto mb-10 max-w-3xl">
+    <header class="mx-auto mb-10 max-w-3xl lg:max-w-[54rem]">
       {
         post.data.category && (
           <a
@@ -131,29 +131,34 @@ const articleSchema = {
       </div>
     </header>
 
+    <!-- The frame hugs the picture. A fixed-width frame turned every portrait
+         hero into a thin image floating in a mat wider than itself; a
+         landscape hero still fills the whole column. -->
     {
       post.data.image && (
-        <figure class="mx-auto mb-10 max-w-3xl">
-          <div class="overflow-hidden rounded-card border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))] shadow-2">
+        <figure class="mx-auto mb-10 max-w-3xl text-center lg:max-w-[54rem]">
+          <span class="inline-block max-w-full overflow-hidden rounded-card border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))] align-top shadow-2">
             <Image
               src={post.data.image}
               alt={post.data.title}
-              width={860}
+              width={960}
               format="webp"
               quality={68}
               loading="eager"
               decoding="async"
               fetchpriority="high"
-              sizes="(max-width: 768px) 100vw, 768px"
-              class="mx-auto h-auto max-h-[34rem] w-auto max-w-full object-contain"
+              sizes="(max-width: 1024px) 100vw, 864px"
+              class="block h-auto max-h-[34rem] w-auto max-w-full object-contain lg:max-h-[38rem]"
             />
-          </div>
+          </span>
         </figure>
       )
     }
 
     <!-- Calm, high contrast reading surface -->
-    <div class="reading-surface mx-auto max-w-3xl px-5 py-8 sm:px-10 sm:py-12">
+    <div
+      class="reading-surface mx-auto max-w-3xl px-5 py-8 sm:px-10 sm:py-12 lg:max-w-[54rem] lg:px-12"
+    >
       <div class="prose mx-auto">
         <Content />
       </div>
@@ -164,7 +169,7 @@ const articleSchema = {
       (newer || older) && (
         <nav
           aria-label="More posts"
-          class="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-2"
+          class="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-2 lg:max-w-[54rem]"
         >
           {newer ? (
             <a
@@ -198,7 +203,7 @@ const articleSchema = {
       )
     }
 
-    <div class="mx-auto mt-10 max-w-3xl text-center">
+    <div class="mx-auto mt-10 max-w-3xl text-center lg:max-w-[54rem]">
       <a href="/blog" class="btn btn-secondary">
         Back to all of Harry's writing
       </a>
@@ -207,10 +212,20 @@ const articleSchema = {
 </AppLayout>
 
 <style is:global>
-  /* Article typography. The measure is capped at 68ch and the body sits on an
-     opaque surface so nothing ever crawls under the copy. */
+  /* Article typography. The body sits on an opaque surface so nothing ever
+     crawls under the copy.
+
+     Measure: 68ch on phones and tablets, opening out to a full editorial
+     column from the large breakpoint up. At 640px the column was leaving most
+     of a desktop screen empty and the article read as a narrow strip. */
   .reading-surface .prose {
     max-width: 68ch;
+  }
+
+  @media (min-width: 1024px) {
+    .reading-surface .prose {
+      max-width: 48rem;
+    }
   }
 
   .reading-surface .prose > :first-child {
