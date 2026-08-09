@@ -37,10 +37,6 @@
 /music/*
   Cache-Control: public, max-age=2592000
 
-# Cache AOS CSS
-/css/aos.css
-  Cache-Control: public, max-age=31536000, immutable
-
 # HTML pages - shorter cache with revalidation
 /*.html
   Cache-Control: public, max-age=3600, must-revalidate

@@ -1,42 +1,73 @@
 ---
-// Component UI layout
-import { Image } from "astro:assets";
+/*
+ * Ambient music toggle.
+ * The vinyl used to be a 4.7 MB PNG from /public rendered at 48 px, which
+ * Astro could not optimise. It is now an inline SVG: zero network cost and it
+ * follows the theme.
+ */
 ---
 
 <div id="music-player" class="fixed bottom-4 right-4 z-50">
   <!-- Track List Drop-up -->
   <div
     id="track-list"
-    class="absolute bottom-full right-0 mb-2 w-64 bg-[rgb(var(--background-secondary))] rounded-lg shadow-lg transform scale-y-0 origin-bottom transition-transform duration-300"
+    class="absolute bottom-full right-0 mb-2 w-64 rounded-lg border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-raised))] shadow-lg transform scale-y-0 origin-bottom transition-transform duration-300"
   >
     <div class="p-2 space-y-1 max-h-48 overflow-y-auto">
-      <!-- Track items will be inserted here by JavaScript -->
+      <!-- Track items are inserted here by JavaScript -->
     </div>
   </div>
 
   <!-- Music Toggle Button -->
   <button
     id="music-toggle"
-    class="vinyl-record w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform relative"
-    aria-label="Toggle music"
+    class="vinyl-record relative flex h-12 w-12 items-center justify-center rounded-full shadow-lg ring-1 ring-black/5 transition-transform hover:scale-105"
+    aria-label="Play or pause background music. Double click for the track list."
+    title="Play or pause background music"
   >
-    <!-- Music disc base image -->
-    <Image
-      src="/music_disc.png"
-      alt="Music Disc"
-      width={64}
-      height={64}
-      format="avif"
-      quality={40}
-      loading="lazy"
-      decoding="async"
-      class="rounded-full"
-    />
+    <svg
+      class="h-12 w-12"
+      viewBox="0 0 48 48"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="24" cy="24" r="24" fill="#0C2438"></circle>
+      <circle
+        cx="24"
+        cy="24"
+        r="19"
+        stroke="#56A9F2"
+        stroke-opacity="0.35"
+        stroke-width="1"></circle>
+      <circle
+        cx="24"
+        cy="24"
+        r="14.5"
+        stroke="#56A9F2"
+        stroke-opacity="0.28"
+        stroke-width="1"></circle>
+      <circle
+        cx="24"
+        cy="24"
+        r="10"
+        stroke="#56A9F2"
+        stroke-opacity="0.22"
+        stroke-width="1"></circle>
+      <circle cx="24" cy="24" r="7" fill="#1B6FBF"></circle>
+      <circle cx="24" cy="24" r="1.8" fill="#0C2438"></circle>
+      <path
+        d="M24 6.5a17.5 17.5 0 0 1 12.4 5.1"
+        stroke="#8AC6FB"
+        stroke-opacity="0.55"
+        stroke-width="1.5"
+        stroke-linecap="round"></path>
+    </svg>
 
-    <!-- Album art overlay -->
+    <!-- Album art overlay, only filled in once a track is chosen -->
     <div
       id="album-art"
-      class="absolute inset-0 bg-cover bg-center rounded-full transition-opacity duration-300 opacity-0"
+      class="absolute inset-0 rounded-full bg-cover bg-center opacity-0 transition-opacity duration-300"
     >
     </div>
   </button>
@@ -45,11 +76,10 @@ import { Image } from "astro:assets";
 <script>
   import { MusicPlayer } from "../scripts/MusicPlayer";
 
-  // Initialize player when page loads or navigates
   let player: MusicPlayer | null = null;
   let isTrackListVisible = false;
   let lastClickTime = 0;
-  const doubleClickDelay = 300; // milliseconds
+  const doubleClickDelay = 300;
 
   function createTrackList() {
     if (!player) return;
@@ -57,14 +87,12 @@ import { Image } from "astro:assets";
     const container = document.querySelector("#track-list > div");
     if (!container) return;
 
-    // Clear existing items
     container.innerHTML = "";
 
-    // Create new items
     player.getTracks().forEach((track, index) => {
       const item = document.createElement("button");
       item.className =
-        "w-full px-3 py-2 text-left hover:bg-[rgb(var(--text-primary))] hover:bg-opacity-10 rounded transition-colors text-sm text-[rgb(var(--text-primary))] truncate";
+        "w-full px-3 py-2 text-left rounded transition-colors text-sm text-[rgb(var(--text-primary))] hover:bg-[rgb(var(--accent-soft))] truncate";
       item.textContent = `${track.title} - ${track.artist}`;
       item.onclick = () => {
         player?.playTrack(index);
@@ -99,14 +127,10 @@ import { Image } from "astro:assets";
     const timeDiff = currentTime - lastClickTime;
 
     if (timeDiff < doubleClickDelay) {
-      // Double click - show track list
       e.preventDefault();
       toggleTrackList();
-    } else {
-      // Single click - toggle play/pause
-      if (player) {
-        player.toggleMusic();
-      }
+    } else if (player) {
+      player.toggleMusic();
     }
 
     lastClickTime = currentTime;
@@ -118,25 +142,21 @@ import { Image } from "astro:assets";
 
     toggleButton.addEventListener("click", handleClick);
 
-    // Close track list when clicking outside
     document.addEventListener("click", (e) => {
-      if (isTrackListVisible) {
-        const trackList = document.getElementById("track-list");
-        const toggleButton = document.getElementById("music-toggle");
-
-        if (
-          trackList &&
-          toggleButton &&
-          !trackList.contains(e.target as Node) &&
-          !toggleButton.contains(e.target as Node)
-        ) {
-          hideTrackList();
-        }
+      if (!isTrackListVisible) return;
+      const trackList = document.getElementById("track-list");
+      const button = document.getElementById("music-toggle");
+      if (
+        trackList &&
+        button &&
+        !trackList.contains(e.target as Node) &&
+        !button.contains(e.target as Node)
+      ) {
+        hideTrackList();
       }
     });
   }
 
-  // Initialize components
   const initComponents = () => {
     if (!player) {
       player = new MusicPlayer();
@@ -159,12 +179,12 @@ import { Image } from "astro:assets";
   }
 
   .vinyl-record {
-    position: relative;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
   }
 
-  .vinyl-record.spinning {
-    animation: spin 2s linear infinite;
+  .vinyl-record.spinning svg,
+  .vinyl-record.spinning #album-art {
+    animation: spin 3s linear infinite;
   }
 
   #album-art {
@@ -192,5 +212,12 @@ import { Image } from "astro:assets";
   #track-list > div::-webkit-scrollbar-thumb {
     background-color: rgba(var(--text-primary), 0.2);
     border-radius: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vinyl-record.spinning svg,
+    .vinyl-record.spinning #album-art {
+      animation: none;
+    }
   }
 </style>

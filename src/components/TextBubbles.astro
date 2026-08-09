@@ -1,28 +1,21 @@
 ---
-
+/*
+ * Decorative floating keyword bubbles.
+ * Rendered from AppLayout so it sits inside <body> (it used to be emitted
+ * before <html>, which produced invalid markup). It now stops when the tab is
+ * hidden and never starts when the visitor asks for reduced motion.
+ */
 ---
 
 <div
-    class="absolute inset-0 w-screen h-full overflow-hidden pointer-events-none"
+    class="fixed inset-0 overflow-hidden pointer-events-none"
     id="text-bubbles"
-    style="z-index: -1;"
+    aria-hidden="true"
+    style="z-index: 0;"
 >
     <template id="template-bubble">
         <div
-            class="bubble absolute rounded-full opacity-0 bg-purple-600/20 backdrop-blur-sm font-medium dark:text-gray-600 text-white
-      shadow-[inset_0_0_20px_rgba(147,51,234,0.3)]
-      after:rounded-full
-      after:bg-transparent
-      after:absolute
-      after:inset-px
-      after:border-r-4
-      after:border-white/50
-      after:-rotate-45
-      after:blur-sm
-      flex items-center justify-center
-      text-center
-      p-4"
-            style="bottom: -200px"
+            class="bubble absolute rounded-full opacity-0 flex items-center justify-center text-center p-4 font-medium"
         >
         </div>
     </template>
@@ -38,15 +31,29 @@
         position: absolute;
         bottom: -100px;
         will-change: transform, opacity;
+        background-color: rgba(var(--brand-400), 0.14);
+        color: rgb(var(--brand-800));
+        box-shadow:
+            inset 0 0 24px rgba(var(--brand-500), 0.18),
+            0 0 0 1px rgba(var(--brand-400), 0.18);
+        backdrop-filter: blur(2px);
+    }
+
+    :global(:root.dark) .bubble {
+        background-color: rgba(var(--brand-400), 0.1);
+        color: rgb(var(--brand-200));
+        box-shadow:
+            inset 0 0 24px rgba(var(--brand-300), 0.14),
+            0 0 0 1px rgba(var(--brand-300), 0.16);
     }
 
     @keyframes float-up {
         0% {
             transform: translateY(0);
-            opacity: 0.4;
+            opacity: 0.55;
         }
         95% {
-            opacity: 0.4;
+            opacity: 0.55;
             transform: translateY(-120vh);
         }
         100% {
@@ -63,6 +70,12 @@
             transparent
         );
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        #text-bubbles {
+            display: none;
+        }
+    }
 </style>
 <script>
     declare global {
@@ -71,8 +84,11 @@
         }
     }
 
-    // Only initialize once globally
-    if (!window.textBubblesInitialized) {
+    const prefersReduced =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!window.textBubblesInitialized && !prefersReduced) {
         window.textBubblesInitialized = true;
 
         const interests = [
@@ -90,28 +106,30 @@
             "Technology",
             "Art",
             "Music",
-            "Scripting",
-            "movies",
-            "development",
+            "Storytelling",
+            "Film",
+            "Development",
         ];
+
+        const MAX_BUBBLES = 8;
 
         function generateRandom(min = 0, max = 100) {
             return Math.floor(Math.random() * (max - min)) + min;
         }
 
+        let creationTimeout: ReturnType<typeof setTimeout> | undefined;
+        let running = false;
+
         function clearBubbles() {
             const bubbles = document.getElementById("text-bubbles");
-            if (bubbles) {
-                // Remove all children except template
-                Array.from(bubbles.children).forEach((child) => {
-                    if (child.id !== "template-bubble") {
-                        bubbles.removeChild(child);
-                    }
-                });
-            }
+            if (!bubbles) return;
+            Array.from(bubbles.children).forEach((child) => {
+                if (child.id !== "template-bubble") {
+                    bubbles.removeChild(child);
+                }
+            });
         }
 
-        let creationTimeout: ReturnType<typeof setTimeout>;
         function createBubble(
             bubbles: HTMLElement,
             template: HTMLTemplateElement,
@@ -123,80 +141,72 @@
             ) as DocumentFragment;
             const bubbleElement = bubbleNode.querySelector(
                 "div",
-            ) as HTMLDivElement;
+            ) as HTMLDivElement | null;
 
-            if (bubbleElement && interest) {
-                bubbleElement.textContent = interest;
+            if (!bubbleElement) return;
 
-                const textLength = interest.length;
-                const isMobile = window.innerWidth <= 768;
-                const scaleFactor = isMobile ? 0.6 : 1;
-                const baseSize = Math.max(textLength * 1.2, 6) * scaleFactor;
-                const sizePx = Math.min(baseSize * 10, window.innerWidth * 0.2);
+            bubbleElement.textContent = interest;
 
-                bubbleElement.style.width = sizePx + "px";
-                bubbleElement.style.height = sizePx + "px";
-                bubbleElement.style.fontSize =
-                    Math.max(sizePx * 0.15, isMobile ? 10 : 12) + "px";
+            const textLength = interest.length;
+            const isMobile = window.innerWidth <= 768;
+            const scaleFactor = isMobile ? 0.6 : 1;
+            const baseSize = Math.max(textLength * 1.2, 6) * scaleFactor;
+            const sizePx = Math.min(baseSize * 10, window.innerWidth * 0.2);
 
-                const x = generateRandom(0, window.innerWidth - sizePx);
-                bubbleElement.style.left = x + "px";
+            bubbleElement.style.width = sizePx + "px";
+            bubbleElement.style.height = sizePx + "px";
+            bubbleElement.style.fontSize =
+                Math.max(sizePx * 0.15, isMobile ? 10 : 12) + "px";
+            bubbleElement.style.left =
+                generateRandom(0, Math.max(1, window.innerWidth - sizePx)) +
+                "px";
 
-                const duration = generateRandom(15000, 20000);
-                bubbleElement.style.animationDuration = duration + "ms";
+            const duration = generateRandom(16000, 22000);
+            bubbleElement.style.animationDuration = duration + "ms";
+            bubbleElement.style.transform = "translateY(0)";
+            bubbles.appendChild(bubbleElement);
 
-                bubbleElement.style.transform = "translateY(0)";
-                bubbles.appendChild(bubbleElement);
-
-                // Remove bubble after animation ends
-                setTimeout(() => {
-                    bubbleElement.remove();
-                }, duration);
-            }
+            setTimeout(() => bubbleElement.remove(), duration);
         }
 
-        function createBubbles() {
-            clearTimeout(creationTimeout);
-
+        function tick() {
             const bubbles = document.getElementById("text-bubbles");
             const template = document.getElementById(
                 "template-bubble",
-            ) as HTMLTemplateElement;
+            ) as HTMLTemplateElement | null;
+            if (!bubbles || !template || !running) return;
 
-            if (!bubbles || !template) return;
-
-            clearBubbles();
-            bubbles.classList.remove("opacity-0");
-
-            // Create initial set of bubbles immediately
-            for (let i = 0; i < 3; i++) {
+            if (document.querySelectorAll(".bubble").length < MAX_BUBBLES) {
                 createBubble(bubbles, template);
             }
+            creationTimeout = setTimeout(tick, generateRandom(1600, 2800));
+        }
 
-            // Continuously create new bubbles with shorter intervals
-            const createNewBubble = () => {
-                if (document.querySelectorAll(".bubble").length < 10) {
-                    createBubble(bubbles, template);
-                }
-                creationTimeout = setTimeout(
-                    createNewBubble,
-                    generateRandom(1000, 2000),
-                );
-            };
+        function start() {
+            if (running) return;
+            running = true;
+            tick();
+        }
 
-            // Start continuous creation immediately
-            createNewBubble();
+        function stop() {
+            running = false;
+            clearTimeout(creationTimeout);
         }
 
         let resizeTimeout: ReturnType<typeof setTimeout>;
-
-        // Handle window resize
         window.addEventListener("resize", () => {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(createBubbles, 250);
+            resizeTimeout = setTimeout(clearBubbles, 250);
         });
 
-        // Create initial bubbles immediately
-        createBubbles();
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                stop();
+            } else {
+                start();
+            }
+        });
+
+        start();
     }
 </script>

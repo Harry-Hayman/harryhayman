@@ -64,6 +64,7 @@ export class MusicPlayer {
     try {
       if (!this.audio) {
         await this.loadAudio();
+        this.updateAlbumArt(this.getCurrentTrack().albumArt);
       }
 
       if (this.isPlaying) {
@@ -98,13 +99,9 @@ export class MusicPlayer {
   }
 
   private async initialize() {
-    try {
-      const track = this.getCurrentTrack();
-      this.updateAlbumArt(track.albumArt);
-      // Only initialize the UI, don't auto-play music
-    } catch (error) {
-      console.error('Error initializing music player:', error);
-    }
+    // Deliberately does not touch album art: fetching a ~130 KB cover on every
+    // page load for a control nobody has clicked yet is wasted bandwidth.
+    // Art is loaded the first time a track actually plays.
   }
 
   private updateAlbumArt(albumArt: string) {
