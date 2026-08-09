@@ -21,23 +21,20 @@ import { Image } from "astro:assets";
     index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
   } bg-[rgb(var(--card-bg))] border border-[rgb(var(--nav-border))]`}
 >
-  <div class="relative h-64 md:h-auto md:w-1/2 overflow-hidden">
+  <div class="duotone relative h-64 overflow-hidden md:h-auto md:w-1/2">
     <Image
       src={image.src}
       alt={image.alt}
-      class="w-full h-full object-cover lazyload transition-transform duration-500 scale-[1.01] group-hover:scale-110"
-      width={525}
-      height={350}
-      format="avif"
-      quality={45}
+      class="duotone-image h-full w-full scale-[1.01] object-cover transition-transform duration-500 group-hover:scale-105"
+      width={640}
+      height={430}
+      format="webp"
+      quality={62}
       loading="lazy"
       decoding="async"
       sizes="(max-width: 768px) 100vw, 50vw"
     />
-    <div
-      class="absolute inset-0 bg-purple-900/40 group-hover:bg-purple-900/50 transition-all duration-500"
-    >
-    </div>
+    <div class="duotone-tint absolute inset-0" aria-hidden="true"></div>
   </div>
   <div
     class="relative p-6 md:p-8 lg:p-10 md:w-1/2 md:flex md:flex-col md:justify-center"
@@ -54,3 +51,31 @@ import { Image } from "astro:assets";
     </p>
   </div>
 </div>
+
+<style>
+  /*
+   * The passion illustrations were commissioned against the old purple brand
+   * and read as magenta next to the light-blue system. Rather than replace
+   * artwork we do not own, they are rendered as a brand duotone: luminosity
+   * from the illustration, hue and saturation from the brand ramp. The result
+   * is consistent across all six cards and clearly intentional.
+   */
+  .duotone {
+    isolation: isolate;
+  }
+
+  .duotone-image {
+    filter: grayscale(1) contrast(1.06) brightness(1.02);
+  }
+
+  .duotone-tint {
+    background: linear-gradient(
+      150deg,
+      rgb(var(--brand-900)) 0%,
+      rgb(var(--brand-600)) 55%,
+      rgb(var(--brand-300)) 100%
+    );
+    mix-blend-mode: color;
+    pointer-events: none;
+  }
+</style>

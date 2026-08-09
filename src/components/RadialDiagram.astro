@@ -63,77 +63,78 @@ const getCoordinates = (index: number, radius: number) => {
   data-aos-duration="1000"
 >
   <style>
+    /*
+     * Staggered reveal without GSAP. The library plus ScrollTrigger was ~73 KB
+     * of JavaScript loaded on every page for this one component; the same
+     * effect is a CSS transition driven by the shared IntersectionObserver.
+     */
+    /* Opacity only: these nodes carry their own translate transforms for
+       positioning, so animating transform here would move them off-centre. */
     .business-logo,
-    .center-image {
+    .center-image,
+    .animated-line {
       opacity: 0;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .radial-diagram.is-revealed .business-logo,
+    .radial-diagram.is-revealed .center-image {
+      opacity: 1;
+    }
+
+    .radial-diagram.is-revealed .animated-line {
+      opacity: 0.6;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .business-logo,
+      .center-image {
+        opacity: 1;
+        transition: none;
+      }
+      .animated-line {
+        opacity: 0.6;
+        transition: none;
+      }
     }
   </style>
   <script>
-    declare const gsap: any;
+    (function () {
+      const diagram = document.querySelector(".radial-diagram");
+      if (!diagram) return;
 
-    window.addEventListener("load", () => {
-      // Initialize all business logos at once
-      const logos = document.querySelectorAll(".business-logo");
-
-      // Add a small initial delay before starting all animations
-      const initialDelay = 0.2;
-
-      // Get the connecting lines
-      const lines = document.querySelectorAll(".animated-line");
-
-      // Animate logos and lines together
-      logos.forEach((logo, index) => {
-        // Animate the logo
-        gsap.fromTo(
-          logo,
-          { scale: 0.8, opacity: 0 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 0.4,
-            delay: initialDelay + index * 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: ".radial-diagram",
-              start: "top center+=100",
-            },
-          },
-        );
-
-        // Animate the corresponding line
-        gsap.fromTo(
-          lines[index],
-          { opacity: 0, drawSVG: "0%" },
-          {
-            opacity: 0.6,
-            drawSVG: "100%",
-            duration: 0.5,
-            delay: initialDelay + index * 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: ".radial-diagram",
-              start: "top center+=100",
-            },
-          },
-        );
-      });
-
-      // Center image animation
-      gsap.fromTo(
-        ".center-image",
-        { scale: 0.9, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".radial-diagram",
-            start: "top center+=100",
-          },
+      // Stagger each satellite so the diagram assembles rather than pops.
+      diagram.querySelectorAll<HTMLElement>(".business-logo").forEach(
+        (logo, index) => {
+          logo.style.transitionDelay = 150 + index * 90 + "ms";
         },
       );
-    });
+      diagram.querySelectorAll<HTMLElement>(".animated-line").forEach(
+        (line, index) => {
+          line.style.transitionDelay = 150 + index * 90 + "ms";
+        },
+      );
+
+      const reveal = () => diagram.classList.add("is-revealed");
+
+      if (!("IntersectionObserver" in window)) {
+        reveal();
+        return;
+      }
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              reveal();
+              io.disconnect();
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      io.observe(diagram);
+    })();
   </script>
   <!-- Fixed aspect ratio container -->
   <div class="mx-auto" style="width: min(100%, 800px);">
@@ -151,6 +152,11 @@ const getCoordinates = (index: number, radius: number) => {
             .animated-line {
               animation: dash 1.5s linear infinite;
             }
+            @media (prefers-reduced-motion: reduce) {
+              .animated-line {
+                animation: none;
+              }
+            }
           </style>
           {
             businesses.map((_, index) => {
@@ -164,10 +170,10 @@ const getCoordinates = (index: number, radius: number) => {
                     y1={`${inner.y}%`}
                     x2={`${outer.x}%`}
                     y2={`${outer.y}%`}
-                    stroke="rgb(147, 51, 234)"
+                    stroke="rgb(27, 111, 191)"
                     stroke-width="2"
                     stroke-dasharray="6,6"
-                    class="animated-line opacity-60"
+                    class="animated-line"
                   />
                 </svg>
               );
@@ -181,7 +187,7 @@ const getCoordinates = (index: number, radius: number) => {
         >
           <div class="relative w-full h-full">
             <div
-              class="absolute inset-0 rounded-full overflow-hidden border-4 border-purple-600 bg-white shadow-lg"
+              class="absolute inset-0 rounded-full overflow-hidden border-4 border-brand-600 bg-white shadow-lg"
             >
               <Image
                 src={harryImage}
@@ -189,23 +195,24 @@ const getCoordinates = (index: number, radius: number) => {
                 class="w-full h-full object-contain"
                 width={150}
                 height={150}
-                format="avif"
-                quality={50}
+                format="webp"
+                quality={72}
                 loading="eager"
                 decoding="async"
                 fetchpriority="high"
               />
             </div>
           </div>
-          <!-- Harry's Name -->
+          <!-- Harry's name. Hidden on narrow screens, where it collided with
+               the satellite logos and duplicated the page heading below. -->
           <div
-            class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-max text-center"
+            class="absolute -bottom-8 left-1/2 hidden w-max -translate-x-1/2 text-center sm:block"
           >
-            <h2
-              class="text-base md:text-xl font-serif font-bold text-purple-600 whitespace-nowrap"
+            <p
+              class="whitespace-nowrap font-serif text-base font-bold text-[rgb(var(--accent))] md:text-xl"
             >
               Harry Hayman
-            </h2>
+            </p>
           </div>
         </div>
 
@@ -224,20 +231,20 @@ const getCoordinates = (index: number, radius: number) => {
                   style={`left: ${pos.x}%; top: ${pos.y}%; transform: translate(-50%, -50%);`}
                 >
                   <div class="relative w-full h-full">
-                    <div class="w-full h-full rounded-full overflow-hidden border-2 border-purple-600 bg-white shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="w-full h-full rounded-full overflow-hidden border-2 border-brand-600 bg-white shadow-lg hover:shadow-xl transition-shadow">
                       <Image
                         src={business.logo}
                         alt={business.name}
                         class="w-full h-full object-contain p-2"
                         width={60}
                         height={60}
-                        format="avif"
-                        quality={40}
+                        format="webp"
+                        quality={70}
                         loading="lazy"
                         decoding="async"
                       />
                     </div>
-                    <div class="absolute left-1/2 -translate-x-1/2 bg-purple-600 text-white px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12 shadow-lg z-30 text-xs md:text-sm whitespace-nowrap text-center">
+                    <div class="absolute left-1/2 -translate-x-1/2 bg-brand-600 text-white px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -bottom-12 shadow-lg z-30 text-xs md:text-sm whitespace-nowrap text-center">
                       {business.name}
                     </div>
                   </div>

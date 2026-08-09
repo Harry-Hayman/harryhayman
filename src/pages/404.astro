@@ -2,43 +2,32 @@
 export const prerender = true;
 
 import AppLayout from "@layouts/AppLayout.astro";
-const title = "Not found";
-const description = "Sorry, the page you are looking for does not exist.";
+const title = "Page not found | Harry Hayman";
+const description =
+  "That page does not exist. Head back to the homepage, or browse Harry Hayman's writing on Philadelphia hospitality, jazz and community.";
 ---
-
-<style is:inline>
-  main,
-  header,
-  html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    overflow-y: hidden;
-  }
-
-  main:not(.home) header {
-    display: none;
-  }
-
-  nav,
-  footer,
-  .footer {
-    display: none;
-    opacity: 0;
-  }
-</style>
 
 <AppLayout title={title} description={description}>
   <div
-    class="flex flex-col items-center justify-center h-screen text-center text-zinc-300"
+    class="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center"
   >
-    <h1 class="font-bold text-4xl mb-4 text-center">404</h1>
-    <p class="text-xl font-thin text-center">{description}</p>
-
-    <a
-      class="px-4 py-2 mt-4 text-center bg-zinc-800 text-zinc-100 rounded-md cursor-pointer hover:bg-zinc-700 transition duration-200 ease-in-out"
-      href="/"
+    <p
+      class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[rgb(var(--accent))]"
     >
-      Go back to home.
-    </a>
+      Error 404
+    </p>
+    <h1
+      class="mb-4 font-serif text-4xl font-bold text-[rgb(var(--text-primary))] sm:text-5xl"
+    >
+      This page does not exist
+    </h1>
+    <p class="mb-8 max-w-xl text-lg text-[rgb(var(--text-secondary))]">
+      The link may be out of date. Try the homepage, or browse the blog for
+      Harry's writing on Philadelphia hospitality, jazz and community.
+    </p>
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <a class="btn btn-primary" href="/">Go to the homepage</a>
+      <a class="btn btn-secondary" href="/blog">Browse the blog</a>
+    </div>
   </div>
 </AppLayout>

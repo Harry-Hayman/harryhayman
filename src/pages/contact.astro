@@ -6,13 +6,16 @@ import { Image } from "astro:assets";
 import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
 ---
 
-<AppLayout title="Contact - Harry Hayman">
-  <main class="relative">
+<AppLayout
+  title="Contact Harry Hayman | Philadelphia"
+  description="Get in touch with Harry Hayman about hospitality consulting, Philadelphia community initiatives, speaking engagements or creative collaboration."
+>
+  <div class="relative">
     {/* Hero Section */}
     <div>
       <div class="container mx-auto px-4 pt-10 pb-12">
         <h1
-          class="text-5xl font-serif font-bold text-center mb-4 text-[rgb(var(--text-primary))]"
+          class="mb-4 text-center font-serif text-3xl font-bold text-[rgb(var(--text-primary))] sm:text-4xl md:text-5xl"
         >
           Get in Touch
         </h1>
@@ -34,7 +37,11 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
             <Image
               src={harryImage}
               alt="Harry Hayman"
-              class="w-full h-[500px] object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-[1.02]"
+              class="h-[320px] w-full rounded-xl object-cover shadow-lg transition-transform duration-300 group-hover:scale-[1.02] sm:h-[420px] md:h-[500px]"
+              loading="lazy"
+              format="webp"
+              quality={68}
+              sizes="(max-width: 768px) 100vw, 600px"
               width={600}
               height={500}
             />
@@ -60,7 +67,7 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
                 href="https://www.linkedin.com/in/harrisongrahamhaymaniv/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
+                class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors"
                 aria-label="LinkedIn Profile"
               >
                 <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
@@ -73,7 +80,7 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
                 href="https://instagram.com/harryhayman"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
+                class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors"
                 aria-label="Instagram Profile"
               >
                 <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
@@ -86,7 +93,7 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
                 href="https://twitter.com/harryhayman"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
+                class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors"
                 aria-label="Twitter Profile"
               >
                 <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
@@ -120,14 +127,14 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
                   class="block text-sm font-medium text-[rgb(var(--text-primary))]"
                   for="name"
                 >
-                  Name <span class="text-purple-600">*</span>
+                  Name <span class="text-[rgb(var(--accent))]" aria-hidden="true">*</span>
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   required
-                  class="w-full px-4 py-3 rounded-lg bg-[rgb(var(--card-bg))] border border-[rgb(var(--nav-border))] text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-purple-600 transition-shadow"
+                  class="w-full min-h-[3rem] rounded-lg border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface))] px-4 py-3 text-[rgb(var(--text-primary))] placeholder:text-[rgb(var(--text-muted))] shadow-sm transition-shadow focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
                   placeholder="Your name"
                 />
               </div>
@@ -136,14 +143,14 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
                   class="block text-sm font-medium text-[rgb(var(--text-primary))]"
                   for="email"
                 >
-                  Email <span class="text-purple-600">*</span>
+                  Email <span class="text-[rgb(var(--accent))]" aria-hidden="true">*</span>
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   required
-                  class="w-full px-4 py-3 rounded-lg bg-[rgb(var(--card-bg))] border border-[rgb(var(--nav-border))] text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-purple-600 transition-shadow"
+                  class="w-full min-h-[3rem] rounded-lg border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface))] px-4 py-3 text-[rgb(var(--text-primary))] placeholder:text-[rgb(var(--text-muted))] shadow-sm transition-shadow focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -154,14 +161,14 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
                 class="block text-sm font-medium text-[rgb(var(--text-primary))]"
                 for="subject"
               >
-                Subject <span class="text-purple-600">*</span>
+                Subject <span class="text-[rgb(var(--accent))]" aria-hidden="true">*</span>
               </label>
               <input
                 type="text"
                 id="subject"
                 name="subject"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-[rgb(var(--card-bg))] border border-[rgb(var(--nav-border))] text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-purple-600 transition-shadow"
+                class="w-full min-h-[3rem] rounded-lg border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface))] px-4 py-3 text-[rgb(var(--text-primary))] placeholder:text-[rgb(var(--text-muted))] shadow-sm transition-shadow focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500"
                 placeholder="What's this about?"
               />
             </div>
@@ -171,20 +178,20 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
                 class="block text-sm font-medium text-[rgb(var(--text-primary))]"
                 for="message"
               >
-                Message <span class="text-purple-600">*</span>
+                Message <span class="text-[rgb(var(--accent))]" aria-hidden="true">*</span>
               </label>
               <textarea
                 id="message"
                 name="message"
                 rows="6"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-[rgb(var(--card-bg))] border border-[rgb(var(--nav-border))] text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-purple-600 transition-shadow resize-none"
+                class="w-full min-h-[3rem] rounded-lg border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface))] px-4 py-3 text-[rgb(var(--text-primary))] placeholder:text-[rgb(var(--text-muted))] shadow-sm transition-shadow focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
                 placeholder="Your message here..."></textarea>
             </div>
 
             <button
               type="submit"
-              class="w-full px-8 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 active:bg-purple-800 transition-colors font-medium flex items-center justify-center gap-2 group"
+              class="btn btn-primary w-full group"
             >
               Send Message
               <svg
@@ -204,7 +211,7 @@ import harryImage from "../assets/data/harryhayman images/Harry-Hayman.jpg";
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </AppLayout>
 
 <script>

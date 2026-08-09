@@ -34,8 +34,8 @@ const {
       class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
       width={600}
       height={450}
-      format="avif"
-      quality={45}
+      format="webp"
+      quality={62}
       loading="lazy"
       decoding="async"
       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -47,15 +47,32 @@ const {
     >
       {title}
     </h2>
-    <p class="text-[rgb(var(--text-primary))] mb-6">
+    <p class="text-[rgb(var(--text-secondary))] mb-6">
       {description}
     </p>
-    <div class="flex space-x-4">
-      <a
-        href={website}
-        target="_blank"
-        class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
+    <a
+      href={website}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mb-6 inline-flex items-center gap-1.5 font-medium text-[rgb(var(--accent))] hover:underline"
+    >
+      Visit {title}
+      <svg
+        class="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
       >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M13.5 6H18v4.5M17.5 6.5 10 14M16 13.5V18H6V8h4.5"></path>
+      </svg>
+    </a>
+    <div class="flex space-x-4">
+      <a href={website} target="_blank" rel="noopener noreferrer" aria-label={`${title} website`} title={`${title} website`} class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -67,11 +84,7 @@ const {
           ></path>
         </svg>
       </a>
-      <a
-        href={linkedin}
-        target="_blank"
-        class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
-      >
+      <a href={linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${title} on LinkedIn`} title={`${title} on LinkedIn`} class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -83,11 +96,7 @@ const {
           ></path>
         </svg>
       </a>
-      <a
-        href={instagram}
-        target="_blank"
-        class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
-      >
+      <a href={instagram} target="_blank" rel="noopener noreferrer" aria-label={`${title} on Instagram`} title={`${title} on Instagram`} class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -99,11 +108,7 @@ const {
           ></path>
         </svg>
       </a>
-      <a
-        href={facebook}
-        target="_blank"
-        class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
-      >
+      <a href={facebook} target="_blank" rel="noopener noreferrer" aria-label={`${title} on Facebook`} title={`${title} on Facebook`} class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -115,11 +120,7 @@ const {
           ></path>
         </svg>
       </a>
-      <a
-        href={twitter}
-        target="_blank"
-        class="text-[rgb(var(--text-primary))] hover:text-purple-600 transition-colors"
-      >
+      <a href={twitter} target="_blank" rel="noopener noreferrer" aria-label={`${title} on X`} title={`${title} on X`} class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))] transition-colors">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"

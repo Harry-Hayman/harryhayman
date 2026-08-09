@@ -2,36 +2,30 @@
 export const prerender = true;
 
 import AppLayout from "@layouts/AppLayout.astro";
-import TextBubbles from "@components/TextBubbles.astro";
 import RadialDiagram from "@components/RadialDiagram.astro";
 import VentureCard from "@components/VentureCard.astro";
 import { ventures } from "../data/ventures";
 ---
 
-<TextBubbles />
-<AppLayout title="Ventures - Harry Hayman">
-  <div class="py0 sm:py0">
-    <div class="container mx-auto px">
+<AppLayout
+  title="Ventures and Initiatives | Harry Hayman"
+  description="The ventures Harry Hayman leads in Philadelphia: Gemini Hospitality Consultants, Philadelphia Jazz Experience, Veggie Graffiti and Feed Philly Coalition."
+  textBubbles={true}
+>
+  <div class="py-8">
+    <div class="container mx-auto">
       <!-- Radial Diagram -->
       <RadialDiagram />
 
       <!-- Header -->
-      <header
-        class="max-w-3xl mx-auto text-center mb-16"
-        data-aos="fade-up"
-        data-aos-duration="400"
-        data-aos-distance="10px"
-      >
+      <header class="max-w-3xl mx-auto text-center mb-16" data-aos="fade-up">
         <h1
           class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-6 text-[rgb(var(--text-primary))]"
         >
           Ventures & Initiatives
         </h1>
         <p
-          class="text-lg sm:text-xl text-[rgb(var(--text-primary))] leading-relaxed"
-          data-aos="fade-up"
-          data-aos-delay="200"
-          data-aos-duration="300"
+          class="text-lg sm:text-xl text-[rgb(var(--text-secondary))] leading-relaxed"
         >
           Exploring innovative solutions across hospitality, culture, and
           community development.
@@ -44,8 +38,8 @@ import { ventures } from "../data/ventures";
           ventures.map((venture, index) => (
             <VentureCard
               {...venture}
-              data-aos="fade"
-              data-aos-delay={index * 100}
+              data-aos="fade-up"
+              data-aos-delay={(index % 2) * 100}
             />
           ))
         }
@@ -58,16 +52,11 @@ import { ventures } from "../data/ventures";
         >
           Get Involved
         </h2>
-        <p class="text-[rgb(var(--text-primary))] mb-8 max-w-2xl mx-auto">
+        <p class="text-[rgb(var(--text-secondary))] mb-8 max-w-2xl mx-auto">
           Interested in collaborating or learning more about our initiatives?
           Let's connect and explore opportunities together.
         </p>
-        <a
-          href="/contact"
-          class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg hover:bg-purple-700 transition-colors"
-        >
-          Get in Touch
-        </a>
+        <a href="/contact" class="btn btn-primary"> Get in touch with Harry </a>
       </div>
     </div>
   </div>
