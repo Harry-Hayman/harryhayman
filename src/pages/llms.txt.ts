@@ -34,7 +34,7 @@ ${link("Home", `${SITE}/`, "Overview of Harry Hayman's work across Philadelphia 
 ${link("About Harry Hayman", `${SITE}/about`, "Biography: early career, professional journey through the 1990s and 2000s, current ventures, speaking engagements, board roles and personal values")}
 ${link("Ventures and Initiatives", `${SITE}/ventures`, "Directory of the eight organisations Harry Hayman founded or leads, each with its website and social profiles")}
 ${link("Blog", `${SITE}/blog`, `All ${posts.length} posts, plus an index of the Philadelphia places covered on the blog`)}
-${link("Contact", `${SITE}/contact`, "Contact form and social profiles for consulting, speaking and collaboration enquiries")}
+${link("Contact", `${SITE}/contact`, "Direct email, phone and social profiles for consulting, speaking and collaboration enquiries")}
 
 ## Ventures
 
