@@ -5,29 +5,59 @@ import AppLayout from "@layouts/AppLayout.astro";
 const title = "Page not found | Harry Hayman";
 const description =
   "That page does not exist. Head back to the homepage, or browse Harry Hayman's writing on Philadelphia hospitality, jazz and community.";
+
+const routes = [
+  {
+    href: "/about",
+    label: "About Harry Hayman",
+    body: "The career, the ventures and the community work, in order.",
+  },
+  {
+    href: "/ventures",
+    label: "Ventures",
+    body: "Eight organisations Harry founded or leads in Philadelphia.",
+  },
+  {
+    href: "/blog",
+    label: "Blog",
+    body: "Restaurants, jazz nights, food security and the people building the city.",
+  },
+];
 ---
 
 <AppLayout title={title} description={description}>
-  <div
-    class="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center"
-  >
-    <p
-      class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[rgb(var(--accent))]"
-    >
-      Error 404
-    </p>
-    <h1
-      class="mb-4 font-serif text-4xl font-bold text-[rgb(var(--text-primary))] sm:text-5xl"
-    >
-      This page does not exist
-    </h1>
-    <p class="mb-8 max-w-xl text-lg text-[rgb(var(--text-secondary))]">
-      The link may be out of date. Try the homepage, or browse the blog for
-      Harry's writing on Philadelphia hospitality, jazz and community.
-    </p>
-    <div class="flex flex-col gap-3 sm:flex-row">
-      <a class="btn btn-primary" href="/">Go to the homepage</a>
-      <a class="btn btn-secondary" href="/blog">Browse the blog</a>
+  <section class="wrap flex min-h-[62vh] flex-col justify-center py-16">
+    <div class="max-w-2xl">
+      <p class="kicker">Error 404</p>
+      <h1 class="display-2 mt-5">This page does not exist</h1>
+      <p class="lede mt-5">
+        The link may be out of date. Try the homepage, or pick up one of the
+        threads below.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a class="btn btn-primary btn-lg" href="/">Go to the homepage</a>
+        <a class="btn btn-secondary btn-lg" href="/blog">Browse the blog</a>
+      </div>
     </div>
-  </div>
+
+    <ul class="mt-14 grid gap-5 md:grid-cols-3">
+      {
+        routes.map((route) => (
+          <li>
+            <a
+              href={route.href}
+              class="panel group flex h-full flex-col p-5 transition-colors hover:border-[rgb(var(--brand-400))] hover:bg-[rgb(var(--accent-soft))]"
+            >
+              <span class="heading-3 text-[rgb(var(--text-primary))] group-hover:text-[rgb(var(--accent))]">
+                {route.label}
+              </span>
+              <span class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+                {route.body}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </AppLayout>
