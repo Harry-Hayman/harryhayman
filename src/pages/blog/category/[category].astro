@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 import BlogCard from "@components/BlogCard.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = (await getCollection("blog")).filter((post) => !post.data.draft);
   const categories = [
     ...new Set(posts.map((post) => post.data.category)),
   ].filter((category): category is string => typeof category === "string");
@@ -31,30 +31,39 @@ const sortedPosts = posts.sort(
 );
 ---
 
-<AppLayout title={`${category} - Blog - Harry Hayman`}>
-  <div class="py-12 sm:py-16 max-w-4xl mx-auto">
+<AppLayout
+  title={`${category} | Harry Hayman's Blog`}
+  description={`Harry Hayman's writing on ${category.toLowerCase()} in Philadelphia: ${sortedPosts.length} posts on hospitality, culture and community.`}
+>
+  <div class="py-12 sm:py-16 max-w-5xl mx-auto">
     <!-- Header -->
     <header class="text-center mb-12">
+      <nav
+        aria-label="Breadcrumb"
+        class="mb-4 text-sm text-[rgb(var(--text-muted))]"
+      >
+        <ol class="flex flex-wrap items-center justify-center gap-1.5">
+          <li><a href="/" class="hover:text-[rgb(var(--accent))]">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li>
+            <a href="/blog" class="hover:text-[rgb(var(--accent))]">Blog</a>
+          </li>
+        </ol>
+      </nav>
       <h1
         class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
       >
         {category}
       </h1>
-      <p class="text-[rgb(var(--text-primary))] text-lg">
-        Articles and insights about {category.toLowerCase()}
+      <p class="text-[rgb(var(--text-secondary))] text-lg">
+        Harry Hayman's articles and insights about {category.toLowerCase()}.
       </p>
-      <a
-        href="/blog"
-        class="inline-block mt-4 text-[rgb(var(--text-primary))] hover:text-purple-600"
-      >
-        ← Back to all posts
-      </a>
     </header>
 
     <!-- Blog Posts Grid -->
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid gap-8 md:grid-cols-2">
       {
-        sortedPosts.map((post) => (
+        sortedPosts.map((post, index) => (
           <BlogCard
             title={post.data.title}
             description={post.data.description}
@@ -62,6 +71,7 @@ const sortedPosts = posts.sort(
             image={post.data.image}
             category={post.data.category}
             href={`/blog/${post.slug}`}
+            priority={index < 2}
           />
         ))
       }
@@ -77,5 +87,9 @@ const sortedPosts = posts.sort(
         </div>
       )
     }
+
+    <div class="mt-12 text-center">
+      <a href="/blog" class="btn btn-secondary">Back to all posts</a>
+    </div>
   </div>
 </AppLayout>
