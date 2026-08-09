@@ -6,29 +6,23 @@ interface Props extends HTMLAttributes<"a"> {
   addClass?: string;
 }
 const { text, addClass, href, ...props } = Astro.props;
-let isActive: boolean;
-if (!href) {
-  isActive = false;
-} else if (href === "/") {
-  isActive = href === Astro.url.pathname;
-} else {
-  isActive = Astro.url.pathname.includes(
-    typeof href === "string" ? href : href.href,
-  );
+
+const path = Astro.url.pathname;
+const target = typeof href === "string" ? href : href?.href;
+
+let isActive = false;
+if (target === "/") {
+  isActive = path === "/" || path === "";
+} else if (target) {
+  isActive = path === target || path.startsWith(target + "/");
 }
 ---
 
 <a
-  class:list={[
-    "px-4 py-2 text-sm font-medium relative transition-colors duration-300",
-    { "dark:text-blue-400 text-blue-600 border-b-2 border-blue-600": isActive },
-    { "dark:text-zinc-300 text-zinc-600 hover:text-blue-600 dark:hover:text-blue-400 after:absolute after:block after:content-[''] after:border-b-2 after:border-blue-600 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left after:left-0 after:right-0 after:bottom-0": !isActive },
-    addClass,
-  ]}
+  class:list={["nav-link text-sm sm:text-base", addClass]}
   aria-current={isActive ? "page" : undefined}
   href={href}
   {...props}
-  aria-label={`Go to ${text} page`}
 >
   {text}
 </a>

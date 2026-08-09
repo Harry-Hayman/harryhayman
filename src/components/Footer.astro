@@ -8,6 +8,14 @@ const currentYear = new Date().getFullYear();
 >
   <div class="container mx-auto px-4">
     <div class="text-center">
+      <nav aria-label="Site" class="mb-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+        <a href="/" class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))]">Home</a>
+        <a href="/about" class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))]">About Harry Hayman</a>
+        <a href="/ventures" class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))]">Ventures</a>
+        <a href="/blog" class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))]">Blog</a>
+        <a href="/contact" class="text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--accent))]">Contact</a>
+      </nav>
+
       <!-- Social Media Icons -->
       <div class="flex justify-center items-center gap-4 mb-6 flex-wrap">
         <a
@@ -15,7 +23,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#1877F2] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -34,7 +42,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Pinterest"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#E60023] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -53,7 +61,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#E4405F] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -72,7 +80,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Twitter/X"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#000000] dark:hover:text-[#ffffff] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -91,7 +99,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Threads"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#000000] dark:hover:text-[#ffffff] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -110,7 +118,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Bluesky"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#0085ff] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -129,7 +137,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="YouTube"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#FF0000] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -148,7 +156,7 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          class="text-[rgb(var(--text-secondary))] hover:text-[#0A66C2] transition-colors"
+          class="text-[rgb(var(--text-secondary))] transition-colors hover:text-[rgb(var(--accent))]"
         >
           <svg
             class="w-5 h-5"
@@ -163,7 +171,7 @@ const currentYear = new Date().getFullYear();
         </a>
       </div>
 
-      <p class="text-[rgb(var(--text-primary))]">
+      <p class="text-sm text-[rgb(var(--text-secondary))]">
         &copy; {currentYear}
         {author}. All rights reserved.
       </p>
