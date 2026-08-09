@@ -337,52 +337,69 @@
     font-size: 1rem;
   }
 
-  .btn-primary {
+  /* Every button restates its colour for :visited. A bare `a:visited` rule
+     outranks a single class, so without this a button that has already been
+     clicked loses its own ink and falls back to the inherited colour. That is
+     what turned the white CTA pill into a white label on a white pill. */
+  .btn-primary,
+  .btn-primary:visited {
     background-color: rgb(var(--button-primary));
     color: rgb(var(--button-on));
     box-shadow: 0 8px 20px -12px rgba(var(--brand-700), 0.9);
   }
 
-  .btn-primary:hover {
+  .btn-primary:hover,
+  .btn-primary:visited:hover {
     background-color: rgb(var(--button-hover));
+    color: rgb(var(--button-on));
     box-shadow: 0 12px 24px -12px rgba(var(--brand-700), 0.95);
   }
 
-  .btn-secondary {
+  .btn-secondary,
+  .btn-secondary:visited {
     background-color: rgb(var(--surface));
     color: rgb(var(--text-primary));
     border: 1px solid rgb(var(--rule-strong));
   }
 
-  .btn-secondary:hover {
+  .btn-secondary:hover,
+  .btn-secondary:visited:hover {
     border-color: rgb(var(--brand-400));
     color: rgb(var(--accent));
     box-shadow: var(--shadow-1);
   }
 
-  /* Used inside the inverted band, where the page tokens would vanish. */
-  .btn-on-ink {
+  /* Used inside the inverted band, where the page tokens would vanish.
+     The pill is white in both themes, so its label is always dark ink. */
+  .btn-on-ink,
+  .btn-on-ink:visited {
     background-color: rgb(var(--ink-panel-text));
     color: rgb(var(--ink-panel));
   }
 
-  .btn-on-ink:hover {
+  .btn-on-ink:hover,
+  .btn-on-ink:visited:hover {
     background-color: rgb(var(--brand-200));
+    color: rgb(var(--ink-panel));
   }
 
-  .btn-ghost-on-ink {
+  .btn-ghost-on-ink,
+  .btn-ghost-on-ink:visited {
     background-color: transparent;
     color: rgb(var(--ink-panel-text));
     border: 1px solid rgba(255, 255, 255, 0.4);
   }
 
-  .btn-ghost-on-ink:hover {
+  .btn-ghost-on-ink:hover,
+  .btn-ghost-on-ink:visited:hover {
     border-color: rgb(var(--ink-panel-text));
     background-color: rgba(255, 255, 255, 0.08);
+    color: rgb(var(--ink-panel-text));
   }
 
   /* A quiet inline "more" link with a moving arrow. */
-  .link-more {
+  .link-more,
+  .link-more:visited {
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
@@ -500,13 +517,6 @@
 
   .wordmark:hover {
     color: rgb(var(--accent));
-  }
-
-  .wordmark-rule {
-    width: 1.25rem;
-    height: 1px;
-    background-color: rgb(var(--brand-500));
-    align-self: center;
   }
 
   /* The two floating utilities share one quiet style so they read as a pair.
@@ -631,16 +641,18 @@
     box-shadow: var(--shadow-2);
   }
 
-  /* Brand duotone: luminosity from the source image, hue from the ramp.
-     One definition, used by every image that is not a real photograph of
-     Harry, so the whole site's imagery reads as one system. */
+  /* Brand tint on photography: a whisper, not a duotone.
+     The previous treatment stripped the image to greyscale and pushed the
+     whole ramp back in as hue, so people and rooms came out solid blue. The
+     photograph now keeps its own colour and the ramp only glazes it, which
+     is enough to hold the imagery together as one system. */
   .duotone {
     isolation: isolate;
     position: relative;
   }
 
   .duotone > img {
-    filter: grayscale(1) contrast(1.06) brightness(1.02);
+    filter: saturate(0.96);
   }
 
   .duotone::after {
@@ -649,6 +661,7 @@
     inset: 0;
     pointer-events: none;
     mix-blend-mode: color;
+    opacity: 0.12;
     background: linear-gradient(
       150deg,
       rgb(var(--brand-900)) 0%,
@@ -717,17 +730,15 @@
 }
 
 /* Visited links stay on-brand: the browser default violet reads as a
-   leftover of the old purple identity. */
-.prose a:visited,
-a:visited {
-  color: inherit;
-}
-
+   leftover of the old purple identity. Preflight already resets a bare
+   `a` to `color: inherit`, so only the prose colour has to be restated
+   here. A blanket `a:visited` rule would outrank every button and link
+   class on the site, which is exactly the bug this replaces. */
 .prose a:visited {
   color: rgb(var(--accent));
 }
 
-a:visited:hover {
+.prose a:visited:hover {
   color: rgb(var(--button-hover));
 }
 
