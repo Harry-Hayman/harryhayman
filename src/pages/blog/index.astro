@@ -44,112 +44,301 @@ const places = placeNames
     return match ? { name, post: match } : null;
   })
   .filter((entry): entry is { name: string; post: Post } => Boolean(entry));
+
+/*
+ * An editorial front page: one lead story, a short run of recent pieces with
+ * their imagery, then a ruled archive. The previous version rendered all 186
+ * posts as image cards, which produced a page 47,000 pixels tall.
+ */
+const lead = posts[0];
+const featured = posts.slice(1, 7);
+const archive = posts.slice(7);
+
+const archiveByYear = archive.reduce<Record<string, Post[]>>((acc, post) => {
+  const year = String(post.data.pubDate.getFullYear());
+  (acc[year] ||= []).push(post);
+  return acc;
+}, {});
+
+const archiveYears = Object.keys(archiveByYear).sort(
+  (a, b) => Number(b) - Number(a),
+);
+
+const shortDate = (date: Date) =>
+  date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 ---
 
 <AppLayout
   title="Blog | Harry Hayman on Philadelphia Hospitality and Jazz"
   description="Harry Hayman writes about Philadelphia restaurants, jazz nights, food security and community, with reviews and reflections from the city he works in."
 >
-  <div class="py-12 sm:py-16 max-w-5xl mx-auto">
-    <!-- Header -->
-    <header class="text-center mb-10">
-      <h1
-        class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-      >
-        Blog & Insights
-      </h1>
-      <p class="text-[rgb(var(--text-secondary))] text-lg max-w-2xl mx-auto">
-        Harry Hayman on Philadelphia hospitality, jazz, food security and the
-        people building the city.
-      </p>
-    </header>
+  <!-- Masthead -->
+  <section class="wrap pt-12 sm:pt-16">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="kicker">Writing</p>
+        <h1 class="display-2 mt-5">Blog &amp; Insights</h1>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="lede">
+          Harry Hayman on Philadelphia hospitality, jazz, food security and the
+          people building the city.
+        </p>
+        <p class="meta mt-3">
+          {posts.length} posts, newest first.
+        </p>
+      </div>
+    </div>
+    <hr class="rule mt-10" />
+  </section>
 
-    <!-- Places Harry has written about: crawlable, descriptive internal links -->
-    {
-      places.length > 0 && (
-        <section
-          class="card mx-auto mb-12 rounded-2xl p-6 sm:p-8"
-          aria-labelledby="places-heading"
-        >
+  <!-- Lead story -->
+  {
+    lead && (
+      <section class="wrap section-tight" aria-labelledby="lead-heading">
+        <h2 id="lead-heading" class="sr-only">
+          Latest post
+        </h2>
+        <BlogCard
+          variant="lead"
+          title={lead.data.title}
+          description={lead.data.description}
+          pubDate={lead.data.pubDate}
+          image={lead.data.image}
+          category={lead.data.category ?? undefined}
+          href={`/blog/${lead.slug}`}
+          priority={true}
+        />
+      </section>
+    )
+  }
+
+  <!-- Topics -->
+  {
+    categories.length > 0 && (
+      <section class="wrap pb-2" aria-labelledby="categories-heading">
+        <div class="panel-sunken p-5 sm:p-6">
           <h2
-            id="places-heading"
-            class="mb-2 font-serif text-xl font-bold text-[rgb(var(--text-primary))] sm:text-2xl"
+            id="categories-heading"
+            class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[rgb(var(--text-muted))]"
           >
-            Philadelphia places Harry has written about
+            Browse by topic
           </h2>
-          <p class="mb-5 text-sm text-[rgb(var(--text-secondary))]">
-            Rooms, restaurants and stages covered on this blog.
-          </p>
-          <ul class="grid gap-4 sm:grid-cols-2">
+          <div class="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <a href={`/blog/category/${category}`} class="chip">
+                {category}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Recent posts -->
+  {
+    featured.length > 0 && (
+      <section class="wrap section-tight" aria-labelledby="recent-heading">
+        <div class="section-head">
+          <div>
+            <p class="kicker">More recent</p>
+            <h2 id="recent-heading" class="heading-2 mt-3">
+              Fresh from the notebook
+            </h2>
+          </div>
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((post, index) => (
+            <div class="h-full" data-aos="fade-up" data-aos-delay={(index % 3) * 70}>
+              <BlogCard
+                title={post.data.title}
+                description={post.data.description}
+                pubDate={post.data.pubDate}
+                image={post.data.image}
+                category={post.data.category ?? undefined}
+                href={`/blog/${post.slug}`}
+                priority={index < 2}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Places Harry has written about: crawlable, descriptive internal links -->
+  {
+    places.length > 0 && (
+      <section
+        class="border-y border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))]"
+        aria-labelledby="places-heading"
+      >
+        <div class="wrap section">
+          <div class="section-head">
+            <div>
+              <p class="kicker">On the map</p>
+              <h2 id="places-heading" class="heading-2 mt-3">
+                Philadelphia places Harry has written about
+              </h2>
+            </div>
+            <p class="meta max-w-sm sm:text-right">
+              Rooms, restaurants and stages covered on this blog.
+            </p>
+          </div>
+          <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {places.map(({ name, post }) => (
               <li>
                 <a
                   href={`/blog/${post.slug}`}
-                  class="group block h-full rounded-lg border border-[rgb(var(--nav-border))] p-4 transition-colors hover:border-brand-400 hover:bg-[rgb(var(--accent-soft))]"
+                  class="panel group flex h-full flex-col p-5 transition-colors hover:border-[rgb(var(--brand-400))] hover:bg-[rgb(var(--accent-soft))]"
                 >
-                  <span class="block font-semibold text-[rgb(var(--text-primary))] group-hover:text-[rgb(var(--accent))]">
+                  <span class="heading-3 text-[rgb(var(--text-primary))] group-hover:text-[rgb(var(--accent))]">
                     {name}
                   </span>
-                  <span class="mt-1 block text-sm text-[rgb(var(--text-secondary))]">
+                  <span class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
                     {post.data.title}
                   </span>
                 </a>
               </li>
             ))}
           </ul>
-        </section>
-      )
-    }
-
-    <!-- Categories -->
-    {
-      categories.length > 0 && (
-        <section class="mb-12" aria-labelledby="categories-heading">
-          <h2
-            id="categories-heading"
-            class="mb-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-[rgb(var(--text-muted))]"
-          >
-            Browse by topic
-          </h2>
-          <div class="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
-              <a
-                href={`/blog/category/${category}`}
-                class="rounded-full border border-[rgb(var(--nav-border))] bg-[rgb(var(--card-bg))] px-3.5 py-1.5 text-sm font-medium text-[rgb(var(--text-secondary))] transition-colors hover:border-brand-400 hover:bg-[rgb(var(--accent-soft))] hover:text-[rgb(var(--accent))]"
-              >
-                {category}
-              </a>
-            ))}
-          </div>
-        </section>
-      )
-    }
-
-    <!-- Blog Posts Grid -->
-    <h2 class="sr-only">All posts</h2>
-    <div class="grid gap-8 md:grid-cols-2">
-      {
-        posts.map((post, index) => (
-          <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            pubDate={post.data.pubDate}
-            image={post.data.image}
-            category={post.data.category ?? undefined}
-            href={`/blog/${post.slug}`}
-            priority={index < 2}
-          />
-        ))
-      }
-    </div>
-
-    <!-- Empty State -->
-    {
-      posts.length === 0 && (
-        <div class="text-center py-12">
-          <p class="text-[rgb(var(--text-primary))] text-lg">No posts found.</p>
         </div>
-      )
+      </section>
+    )
+  }
+
+  <!-- Archive -->
+  {
+    archive.length > 0 && (
+      <section class="wrap section" aria-labelledby="archive-heading">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Everything else</p>
+            <h2 id="archive-heading" class="heading-2 mt-3">
+              The archive
+            </h2>
+          </div>
+          <p class="meta">{archive.length} more posts</p>
+        </div>
+
+        {archiveYears.map((year) => (
+          <div class="mb-12 last:mb-0">
+            <h3 class="archive-year">
+              <span>{year}</span>
+            </h3>
+            <ul>
+              {archiveByYear[year].map((post) => (
+                <li>
+                  <a
+                    href={`/blog/${post.slug}`}
+                    class="archive-row group"
+                  >
+                    <time
+                      class="archive-date"
+                      datetime={post.data.pubDate.toISOString()}
+                    >
+                      {shortDate(post.data.pubDate)}
+                    </time>
+                    <span class="archive-title">{post.data.title}</span>
+                    {post.data.category && (
+                      <span class="archive-cat">{post.data.category}</span>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+    )
+  }
+
+  <!-- Empty state -->
+  {
+    posts.length === 0 && (
+      <section class="wrap section text-center">
+        <p class="text-lg text-[rgb(var(--text-primary))]">No posts found.</p>
+      </section>
+    )
+  }
+
+  <style>
+    /* Year markers break the archive into readable runs. */
+    .archive-year {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.25rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: rgb(var(--accent));
     }
-  </div>
+
+    .archive-year::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: rgb(var(--nav-border));
+    }
+
+    .archive-row {
+      display: grid;
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: 0.25rem 1rem;
+      align-items: baseline;
+      padding: 0.875rem 0.5rem;
+      margin-inline: -0.5rem;
+      border-top: 1px solid rgb(var(--nav-border));
+      border-radius: var(--r-xs);
+      transition: background-color var(--dur-1) var(--ease);
+    }
+
+    .archive-row:hover {
+      background-color: rgb(var(--accent-soft));
+    }
+
+    .archive-date {
+      font-size: 0.75rem;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgb(var(--text-muted));
+    }
+
+    .archive-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: rgb(var(--text-primary));
+      transition: color var(--dur-1) var(--ease);
+    }
+
+    .archive-row:hover .archive-title {
+      color: rgb(var(--accent));
+    }
+
+    .archive-cat {
+      grid-column: 2;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgb(var(--text-muted));
+    }
+
+    @media (min-width: 768px) {
+      .archive-row {
+        grid-template-columns: 5rem minmax(0, 1fr) 10rem;
+      }
+
+      .archive-cat {
+        grid-column: 3;
+        text-align: right;
+      }
+    }
+  </style>
 </AppLayout>

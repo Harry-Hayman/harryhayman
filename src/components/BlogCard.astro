@@ -10,6 +10,8 @@ interface Props {
   category: string | undefined;
   /** Above-the-fold cards load eagerly; everything else stays lazy. */
   priority?: boolean;
+  /** "lead" is the front page's single top story, "standard" is the grid card. */
+  variant?: "lead" | "standard";
 }
 
 const {
@@ -20,65 +22,103 @@ const {
   image = undefined,
   category = undefined,
   priority = false,
+  variant = "standard",
 } = Astro.props;
+
 const formattedDate = pubDate.toLocaleDateString("en-US", {
   year: "numeric",
   month: "long",
   day: "numeric",
 });
+const isLead = variant === "lead";
 ---
 
-<article
-  class="card group relative flex h-full flex-col overflow-hidden rounded-xl transition-transform duration-300 hover:-translate-y-1"
->
-  <a href={href} class="flex h-full flex-col">
+<article class="card card-link group h-full overflow-hidden">
+  <a
+    href={href}
+    class:list={[
+      "flex h-full flex-col",
+      isLead && "md:grid md:grid-cols-2 md:items-stretch",
+    ]}
+  >
     {
       image && (
-        <div class="relative h-48 overflow-hidden sm:h-56">
+        <div
+          class:list={[
+            "relative overflow-hidden",
+            isLead ? "h-56 sm:h-72 md:h-full md:min-h-[21rem]" : "h-44 sm:h-48",
+          ]}
+        >
           <Image
             src={image}
-            alt={title}
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            width={640}
-            height={360}
+            alt=""
+            class="h-full w-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-[1.04]"
+            width={isLead ? 900 : 640}
+            height={isLead ? 600 : 360}
             format="webp"
-            quality={58}
+            quality={60}
             loading={priority ? "eager" : "lazy"}
             decoding="async"
-            sizes="(max-width: 768px) 100vw, 480px"
+            sizes={
+              isLead
+                ? "(max-width: 768px) 100vw, 560px"
+                : "(max-width: 768px) 100vw, 360px"
+            }
           />
-          {category && (
-            <span class="absolute left-4 top-4 rounded-full bg-[rgb(var(--button-primary))] px-3 py-1 text-sm font-medium text-[rgb(var(--button-on))]">
-              {category}
-            </span>
-          )}
         </div>
       )
     }
-    <div class="flex flex-1 flex-col p-6">
+    <div
+      class:list={[
+        "flex flex-1 flex-col",
+        isLead ? "justify-center p-6 sm:p-8 lg:p-10" : "p-5 sm:p-6",
+      ]}
+    >
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+        {
+          category && (
+            <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-[rgb(var(--accent))]">
+              {category}
+            </span>
+          )
+        }
+        <time class="meta text-xs" datetime={pubDate.toISOString()}>
+          {formattedDate}
+        </time>
+      </div>
+
       <h3
-        class="mb-2 font-serif text-xl font-bold text-[rgb(var(--text-primary))] transition-colors group-hover:text-[rgb(var(--accent))] sm:text-2xl"
+        class:list={[
+          "mt-3 text-[rgb(var(--text-primary))] transition-colors group-hover:text-[rgb(var(--accent))]",
+          isLead ? "heading-2" : "heading-3",
+        ]}
       >
         {title}
       </h3>
-      <p class="clamp-2 mb-4 flex-grow text-[rgb(var(--text-secondary))]">
+
+      <p
+        class:list={[
+          "mt-3 flex-grow leading-relaxed text-[rgb(var(--text-secondary))]",
+          isLead ? "clamp-3 text-base sm:text-lg" : "clamp-3 text-sm",
+        ]}
+      >
         {description}
       </p>
-      <time
-        class="text-sm text-[rgb(var(--text-muted))]"
-        datetime={pubDate.toISOString()}
-      >
-        {formattedDate}
-      </time>
+
+      <span class="link-more mt-5 text-sm">
+        Read the post
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"
+          ></path>
+        </svg>
+      </span>
     </div>
   </a>
 </article>
-
-<style>
-  .clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-</style>

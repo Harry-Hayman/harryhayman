@@ -35,44 +35,48 @@ const sortedPosts = posts.sort(
   title={`${category} | Harry Hayman's Blog`}
   description={`Harry Hayman's writing on ${category.toLowerCase()} in Philadelphia: ${sortedPosts.length} posts on hospitality, culture and community.`}
 >
-  <div class="py-12 sm:py-16 max-w-5xl mx-auto">
-    <!-- Header -->
-    <header class="text-center mb-12">
-      <nav
-        aria-label="Breadcrumb"
-        class="mb-4 text-sm text-[rgb(var(--text-muted))]"
-      >
-        <ol class="flex flex-wrap items-center justify-center gap-1.5">
-          <li><a href="/" class="hover:text-[rgb(var(--accent))]">Home</a></li>
-          <li aria-hidden="true">/</li>
-          <li>
-            <a href="/blog" class="hover:text-[rgb(var(--accent))]">Blog</a>
-          </li>
-        </ol>
-      </nav>
-      <h1
-        class="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-[rgb(var(--text-primary))]"
-      >
-        {category}
-      </h1>
-      <p class="text-[rgb(var(--text-secondary))] text-lg">
-        Harry Hayman's articles and insights about {category.toLowerCase()}.
-      </p>
-    </header>
+  <!-- Header -->
+  <section class="wrap pt-12 sm:pt-16">
+    <nav aria-label="Breadcrumb" class="mb-6 text-sm text-[rgb(var(--text-muted))]">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[rgb(var(--accent))]">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a href="/blog" class="hover:text-[rgb(var(--accent))]">Blog</a>
+        </li>
+      </ol>
+    </nav>
+    <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="kicker">Topic</p>
+        <h1 class="display-2 mt-5">{category}</h1>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="lede">
+          Harry Hayman's articles and insights about {category.toLowerCase()}.
+        </p>
+        <p class="meta mt-3">{sortedPosts.length} posts</p>
+      </div>
+    </div>
+    <hr class="rule mt-10" />
+  </section>
 
-    <!-- Blog Posts Grid -->
-    <div class="grid gap-8 md:grid-cols-2">
+  <!-- Blog Posts Grid -->
+  <section class="wrap section-tight">
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
         sortedPosts.map((post, index) => (
-          <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            pubDate={post.data.pubDate}
-            image={post.data.image}
-            category={post.data.category}
-            href={`/blog/${post.slug}`}
-            priority={index < 2}
-          />
+          <div class="h-full" data-aos="fade-up" data-aos-delay={(index % 3) * 70}>
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              image={post.data.image}
+              category={post.data.category}
+              href={`/blog/${post.slug}`}
+              priority={index < 3}
+            />
+          </div>
         ))
       }
     </div>
@@ -80,8 +84,8 @@ const sortedPosts = posts.sort(
     <!-- Empty State -->
     {
       sortedPosts.length === 0 && (
-        <div class="text-center py-12">
-          <p class="text-[rgb(var(--text-primary))] text-lg">
+        <div class="py-12 text-center">
+          <p class="text-lg text-[rgb(var(--text-primary))]">
             No posts found in this category.
           </p>
         </div>
@@ -91,5 +95,5 @@ const sortedPosts = posts.sort(
     <div class="mt-12 text-center">
       <a href="/blog" class="btn btn-secondary">Back to all posts</a>
     </div>
-  </div>
+  </section>
 </AppLayout>

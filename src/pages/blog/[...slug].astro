@@ -37,6 +37,10 @@ const formattedDate = post.data.pubDate.toLocaleDateString("en-US", {
   day: "numeric",
 });
 
+/* Derived from the body that is already on the page, not a claim about it. */
+const words = (post.body || "").split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.round(words / 220));
+
 const canonical = new URL(`/blog/${post.slug}`, Astro.site).href;
 
 const articleSchema = {
@@ -71,11 +75,11 @@ const articleSchema = {
     alt: `${post.data.title}, by Harry Hayman`,
   }}
 >
-  <article class="py-8 sm:py-12">
+  <article class="wrap py-8 sm:py-12">
     <!-- Breadcrumb: orientation for readers and crawlers -->
     <nav
       aria-label="Breadcrumb"
-      class="mx-auto mb-6 max-w-3xl text-sm text-[rgb(var(--text-muted))]"
+      class="mx-auto mb-8 max-w-3xl text-sm text-[rgb(var(--text-muted))]"
     >
       <ol class="flex flex-wrap items-center gap-1.5">
         <li><a href="/" class="hover:text-[rgb(var(--accent))]">Home</a></li>
@@ -99,44 +103,51 @@ const articleSchema = {
       </ol>
     </nav>
 
-    <header class="mx-auto mb-8 max-w-3xl text-center">
+    <header class="mx-auto mb-10 max-w-3xl">
       {
         post.data.category && (
           <a
             href={`/blog/category/${post.data.category}`}
-            class="mb-4 inline-block rounded-full bg-[rgb(var(--button-primary))] px-4 py-1 text-sm font-medium text-[rgb(var(--button-on))]"
+            class="chip chip-accent text-[0.6875rem] uppercase tracking-[0.14em]"
           >
             {post.data.category}
           </a>
         )
       }
-      <h1
-        class="mb-4 font-serif text-3xl font-bold leading-tight text-[rgb(var(--text-primary))] sm:text-4xl md:text-5xl"
-      >
+      <h1 class="display-2 mt-5 text-[rgb(var(--text-primary))]">
         {post.data.title}
       </h1>
-      <p class="text-[rgb(var(--text-secondary))]">
-        By Harry Hayman
+      <p class="lede mt-5">{post.data.description}</p>
+      <div
+        class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-[rgb(var(--nav-border))] pt-5 text-sm text-[rgb(var(--text-muted))]"
+      >
+        <span class="font-medium text-[rgb(var(--text-secondary))]"
+          >By Harry Hayman</span
+        >
         <span aria-hidden="true">&middot;</span>
         <time datetime={publishedISO}>{formattedDate}</time>
-      </p>
+        <span aria-hidden="true">&middot;</span>
+        <span>{readingMinutes} min read</span>
+      </div>
     </header>
 
     {
       post.data.image && (
         <figure class="mx-auto mb-10 max-w-3xl">
-          <Image
-            src={post.data.image}
-            alt={post.data.title}
-            width={860}
-            format="webp"
-            quality={68}
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-            sizes="(max-width: 768px) 100vw, 768px"
-            class="mx-auto h-auto max-h-[560px] w-auto max-w-full rounded-2xl object-contain"
-          />
+          <div class="overflow-hidden rounded-card border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))] shadow-2">
+            <Image
+              src={post.data.image}
+              alt={post.data.title}
+              width={860}
+              format="webp"
+              quality={68}
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              sizes="(max-width: 768px) 100vw, 768px"
+              class="mx-auto h-auto max-h-[34rem] w-auto max-w-full object-contain"
+            />
+          </div>
         </figure>
       )
     }
@@ -158,12 +169,12 @@ const articleSchema = {
           {newer ? (
             <a
               href={`/blog/${newer.slug}`}
-              class="card group flex flex-col rounded-xl p-5 transition-colors hover:border-brand-400"
+              class="card card-link group flex flex-col p-5"
             >
-              <span class="mb-1 text-xs uppercase tracking-wider text-[rgb(var(--text-muted))]">
+              <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-[rgb(var(--text-muted))]">
                 Newer post
               </span>
-              <span class="font-serif font-semibold text-[rgb(var(--text-primary))] group-hover:text-[rgb(var(--accent))]">
+              <span class="mt-2 font-serif font-bold leading-snug text-[rgb(var(--text-primary))] transition-colors group-hover:text-[rgb(var(--accent))]">
                 {newer.data.title}
               </span>
             </a>
@@ -173,12 +184,12 @@ const articleSchema = {
           {older && (
             <a
               href={`/blog/${older.slug}`}
-              class="card group flex flex-col rounded-xl p-5 transition-colors hover:border-brand-400 sm:text-right"
+              class="card card-link group flex flex-col p-5 sm:text-right"
             >
-              <span class="mb-1 text-xs uppercase tracking-wider text-[rgb(var(--text-muted))]">
+              <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-[rgb(var(--text-muted))]">
                 Older post
               </span>
-              <span class="font-serif font-semibold text-[rgb(var(--text-primary))] group-hover:text-[rgb(var(--accent))]">
+              <span class="mt-2 font-serif font-bold leading-snug text-[rgb(var(--text-primary))] transition-colors group-hover:text-[rgb(var(--accent))]">
                 {older.data.title}
               </span>
             </a>
@@ -197,7 +208,7 @@ const articleSchema = {
 
 <style is:global>
   /* Article typography. The measure is capped at 68ch and the body sits on an
-     opaque surface so the ambient gradient never crawls under the copy. */
+     opaque surface so nothing ever crawls under the copy. */
   .reading-surface .prose {
     max-width: 68ch;
   }
@@ -210,8 +221,16 @@ const articleSchema = {
     margin-bottom: 0;
   }
 
+  /* The opening paragraph carries a touch more weight, the way a printed
+     feature sets its first line apart from the rest of the column. */
+  .reading-surface .prose > p:first-of-type {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: rgb(var(--text-primary));
+  }
+
   .prose img {
-    border-radius: 0.75rem;
+    border-radius: var(--r-md);
     max-width: 100%;
     height: auto;
     object-fit: contain;
