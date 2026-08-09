@@ -1,498 +1,390 @@
 ---
+export const prerender = true;
+
 import AppLayout from "@layouts/AppLayout.astro";
 import { Image } from "astro:assets";
 import aboutImage from "../assets/data/harryhayman images/harry-hayman-hands-folding.jpg";
+
+/*
+ * Every fact below already existed on this page. The change is structural:
+ * the career is a timeline instead of four boxes of identical bullets, and
+ * the boards, talks and values sit in one card system rather than three.
+ */
+const timeline = [
+  {
+    era: "90s",
+    title: "Early beginnings",
+    items: [
+      "Attended Radnor High School",
+      "Started as a dishwasher in Washington, DC at age 17",
+      "Founded Presto! Design at age 19",
+      "Graduated from The American University with a B.A. in International Business and Finance",
+      "Accepted into Wharton School of Business",
+    ],
+  },
+  {
+    era: "00s",
+    title: "Business growth",
+    items: [
+      "Founded The Capital Management & Development Corporation",
+      "Established Road Show Management",
+      "Launched East Coast Saloons",
+      "Joined Bynum Hospitality Group",
+      "Operated McFadden's and SOUTH Jazz Club",
+    ],
+  },
+  {
+    era: "Now",
+    title: "Current ventures",
+    items: [
+      "CEO of Gemini Hospitality Consultants",
+      "Founded Harry Hayman Creative",
+      "Created Another Three Hearts Experience",
+      "Launched Veggie Graffiti",
+    ],
+  },
+];
+
+const beyond = [
+  {
+    title: "Community impact",
+    items: [
+      "Founded Feed Philly Coalition",
+      "Established The Philadelphia Jazz Experience",
+      "Initiated I Am Hungry in Philly",
+      "Sr. Fellow at The Economy League of Greater Philadelphia",
+    ],
+  },
+  {
+    title: "Educational institutions",
+    items: [
+      "Temple University, Food and Beverage Management",
+      "Drexel University, Food Upcycling Conference",
+      "Community College of Philadelphia, Workplace Diversity",
+    ],
+  },
+  {
+    title: "Boards and organisations",
+    items: [
+      "North Broad Street Renaissance Advisory Board",
+      "Alex's Lemonade Stand, Board Member",
+      "Various Philadelphia community organizations",
+    ],
+  },
+];
+
+const personal = [
+  {
+    title: "Family background",
+    items: [
+      "Born in Washington DC to Robin and Harry III",
+      "Global upbringing due to his father's banking career",
+      "Close relationship with his sister Kimberly",
+      "Established the Hayman Family Fund in memory of his brother Brad",
+    ],
+  },
+  {
+    title: "Core values",
+    items: [
+      "Strong family bonds",
+      "Community service dedication",
+      "Entrepreneurial spirit",
+      "Cultural preservation",
+      "Innovation in hospitality",
+    ],
+  },
+];
 ---
 
 <AppLayout
   title="About Harry Hayman | Philadelphia Hospitality Leader"
   description="Who is Harry Hayman? From dishwasher at 17 to CEO of Gemini Hospitality Consultants: the Philadelphia hospitality leader's career, ventures and community work."
 >
-  <div class="py-12 sm:py-16 relative overflow-hidden">
-    <div class="container mx-auto px-4">
-      <!-- Header -->
-      <header class="max-w-4xl mx-auto text-center mb-12" data-aos="fade">
-        <h1
-          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 sm:mb-8 text-[rgb(var(--text-primary))] inline-block relative after:absolute after:-bottom-3 after:left-1/2 after:h-1 after:w-24 after:-translate-x-1/2 after:rounded-full after:bg-[rgb(var(--button-primary))]"
-        >
-          About Harry Hayman
-        </h1>
-        <p
-          class="text-base sm:text-lg md:text-xl lg:text-2xl text-[rgb(var(--text-secondary))] leading-relaxed"
-        >
+  <!-- Header -->
+  <section class="wrap pt-12 sm:pt-16">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="kicker">About</p>
+        <h1 class="display-2 mt-5">About Harry Hayman</h1>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="lede">
           A dynamic leader and influential figure in Philadelphia's restaurant
           and hospitality industries, with an entrepreneurial spirit that has
           fueled numerous successful ventures.
         </p>
-      </header>
+      </div>
+    </div>
+    <hr class="rule mt-10" />
+  </section>
 
-      <!-- Direct answer for people and answer engines asking "who is he?" -->
-      <section
-        class="reading-surface mx-auto mb-16 max-w-3xl p-6 sm:p-8"
-        aria-labelledby="who-is-heading"
-      >
-        <h2
-          id="who-is-heading"
-          class="mb-4 font-serif text-2xl font-bold text-[rgb(var(--text-primary))]"
-        >
-          Who is Harry Hayman?
-        </h2>
-        <p
-          class="text-base sm:text-lg leading-relaxed text-[rgb(var(--text-primary))]"
-        >
-          Harry Hayman, in full Harrison Graham Hayman IV, is a Philadelphia
-          hospitality entrepreneur, jazz advocate and philanthropist. He is CEO
-          of Gemini Hospitality Consultants and a Senior Fellow at The Economy
-          League of Greater Philadelphia. He founded the Feed Philly Coalition,
-          The Philadelphia Jazz Experience, Harry Hayman Creative, Veggie
-          Graffiti, Another Three Hearts Experience and I Am Hungry in Philly.
-          He started in hospitality at 17 as a dishwasher in Washington, DC, and
-          has since operated Philadelphia rooms including McFadden's and SOUTH
-          Jazz Club.
-        </p>
-      </section>
-
-      <!-- Image Section -->
-      <div class="mb-20 relative">
-        <div
-          class="rounded-2xl overflow-hidden shadow-2xl transform-gpu"
-          data-aos="fade"
-          data-aos-duration="1200"
-        >
-          <div class="relative group">
+  <!-- Direct answer for people and answer engines asking "who is he?" -->
+  <section class="wrap section-tight" aria-labelledby="who-is-heading">
+    <div class="grid gap-8 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-7">
+        <div class="panel h-full p-6 sm:p-8">
+          <p class="kicker">In short</p>
+          <h2 id="who-is-heading" class="heading-2 mt-4">
+            Who is Harry Hayman?
+          </h2>
+          <p
+            class="mt-5 text-base leading-relaxed text-[rgb(var(--text-primary))] sm:text-lg"
+          >
+            Harry Hayman, in full Harrison Graham Hayman IV, is a Philadelphia
+            hospitality entrepreneur, jazz advocate and philanthropist. He is
+            CEO of Gemini Hospitality Consultants and a Senior Fellow at The
+            Economy League of Greater Philadelphia. He founded the Feed Philly
+            Coalition, The Philadelphia Jazz Experience, Harry Hayman Creative,
+            Veggie Graffiti, Another Three Hearts Experience and I Am Hungry in
+            Philly. He started in hospitality at 17 as a dishwasher in
+            Washington, DC, and has since operated Philadelphia rooms including
+            McFadden's and SOUTH Jazz Club.
+          </p>
+        </div>
+      </div>
+      <div class="lg:col-span-5">
+        <figure class="h-full">
+          <div
+            class="h-full overflow-hidden rounded-card border border-[rgb(var(--nav-border))] shadow-2"
+          >
             <Image
               src={aboutImage}
               alt="Harry Hayman"
-              class="w-full h-[250px] sm:h-[300px] md:h-[350px] object-cover object-[center_25%] transform transition-all duration-700 group-hover:scale-105"
-              width={1200}
-              height={600}
+              class="h-64 w-full object-cover object-[center_28%] sm:h-80 lg:h-full lg:min-h-[20rem]"
+              width={1000}
+              height={667}
+              format="webp"
+              quality={72}
               loading="lazy"
+              decoding="async"
+              sizes="(max-width: 1024px) 100vw, 440px"
             />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-            </div>
           </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Professional journey -->
+  <section
+    class="border-y border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))]"
+    aria-labelledby="journey-heading"
+  >
+    <div class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="kicker">The route here</p>
+          <h2 id="journey-heading" class="heading-2 mt-3">
+            Professional journey
+          </h2>
         </div>
       </div>
 
-      <!-- Professional Journey Timeline -->
-      <section class="max-w-5xl mx-auto mb-24 relative">
-        <h2
-          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))]"
-        >
-          Professional Journey
-        </h2>
-
-        <div class="relative">
-          <!-- Timeline Line -->
-          <!-- Timeline Line & Dots for Desktop -->
-          <div class="hidden md:block">
-            <div
-              class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-brand-600 to-brand-300"
-            >
-            </div>
-            <div
-              class="absolute left-1/2 transform -translate-x-1/2 top-0 w-4 h-4 bg-brand-600 rounded-full shadow"
-            >
-            </div>
-            <div
-              class="absolute left-1/2 transform -translate-x-1/2 top-1/2 w-4 h-4 bg-brand-600 rounded-full shadow"
-            >
-            </div>
-            <div
-              class="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-4 h-4 bg-brand-600 rounded-full shadow"
-            >
-            </div>
-          </div>
-
-          <!-- 1990s -->
-          <div class="relative mb-16">
-            <div class="flex flex-col md:flex-row items-start">
-              <div class="w-full md:w-1/2 md:pr-12 mb-8 md:mb-0 relative">
-                <div
-                  class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-brand-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-brand-600/10"
-                  data-aos="fade-right"
-                >
-                  <h3
-                    class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
-                  >
-                    <span
-                      class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--button-primary))] text-[rgb(var(--button-on))] text-sm font-semibold"
-                      >90s</span
-                    >
-                     Early Beginnings
-                  </h3>
-                  <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Attended Radnor High School</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span
-                        >Started as a dishwasher in Washington, DC at age 17</span
-                      >
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Founded Presto! Design at age 19</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span
-                        >Graduated from The American University (B.A. in
-                        International Business and Finance)</span
-                      >
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Accepted into Wharton School of Business</span>
-                    </li>
-                  </ul>
-                </div>
+      <ol class="timeline">
+        {
+          timeline.map((entry) => (
+            <li class="timeline-item" data-aos="fade-up">
+              <span class="timeline-era">{entry.era}</span>
+              <div class="timeline-head">
+                <h3 class="heading-3 text-[rgb(var(--text-primary))]">
+                  {entry.title}
+                </h3>
               </div>
-              <div class="md:w-1/2 md:pl-12">
-                <div
-                  class="bg-[rgb(var(--card-bg))] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-brand-600/10"
-                  data-aos="fade-left"
-                >
-                  <h3
-                    class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
-                  >
-                    <span
-                      class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--button-primary))] text-[rgb(var(--button-on))] text-sm font-semibold"
-                      >00s</span
-                    >
-                     Business Growth
-                  </h3>
-                  <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span
-                        >Founded The Capital Management & Development
-                        Corporation</span
-                      >
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform"
-                      ></span>
-                      <span>Established Road Show Management</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Launched East Coast Saloons</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Joined Bynum Hospitality Group</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Operated McFadden's and SOUTH Jazz Club</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+              <ul class="timeline-facts">
+                {entry.items.map((item) => (
+                  <li class="fact-row">{item}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
 
-          <!-- Present -->
-          <div class="relative">
-            <div class="flex flex-col md:flex-row items-start">
-              <div class="w-full md:w-1/2 md:pr-12 mb-8 md:mb-0">
-                <div
-                  class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-brand-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-brand-600/10"
-                  data-aos="fade-right"
-                >
-                  <h3
-                    class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
-                  >
-                    <span
-                      class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--button-primary))] text-[rgb(var(--button-on))] text-xs font-semibold"
-                      >Now</span
-                    >
-                     Current Ventures
-                  </h3>
-                  <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>CEO of Gemini Hospitality Consultants</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Founded Harry Hayman Creative</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Created Another Three Hearts Experience</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Launched Veggie Graffiti</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="md:w-1/2 md:pl-12">
-                <div
-                  class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-brand-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-brand-600/10"
-                  data-aos="fade-left"
-                >
-                  <h3
-                    class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
-                  >
-                    <span class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--accent-soft))] text-[rgb(var(--accent))]" aria-hidden="true"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 0 0-5.36-1.87M17 20H7m10 0v-2c0-.66-.13-1.29-.36-1.87M7 20H2v-2a3 3 0 0 1 5.36-1.87M7 20v-2c0-.66.13-1.29.36-1.87m0 0a5 5 0 0 1 9.28 0M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM7 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/></svg></span>
-                     Community Impact
-                  </h3>
-                  <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Founded Feed Philly Coalition</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Established The Philadelphia Jazz Experience</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                      ></span>
-                      <span>Initiated I Am Hungry in Philly</span>
-                    </li>
-                    <li class="flex items-center space-x-3 group">
-                      <span
-                        class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform"
-                      ></span>
-                      <span
-                        >Sr. Fellow at The Economy League of Greater
-                        Philadelphia</span
-                      >
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Speaking Engagements -->
-      <section class="max-w-4xl mx-auto mb-24">
-        <h2
-          class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold mb-8 sm:mb-12 text-center text-[rgb(var(--text-primary))]"
-        >
-          Speaking Engagements
-        </h2>
-        <div class="grid md:grid-cols-2 gap-8">
+  <!-- Beyond the ventures -->
+  <section class="wrap section" aria-labelledby="beyond-heading">
+    <div class="section-head">
+      <div>
+        <p class="kicker">Off the balance sheet</p>
+        <h2 id="beyond-heading" class="heading-2 mt-3">Beyond the ventures</h2>
+      </div>
+    </div>
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        beyond.map((block, index) => (
           <div
-            class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-brand-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-brand-600/10"
+            class="panel h-full p-6"
             data-aos="fade-up"
+            data-aos-delay={index * 70}
           >
-            <h3
-              class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
-            >
-              <span class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--accent-soft))] text-[rgb(var(--accent))]" aria-hidden="true"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14 3 9l9-5 9 5-9 5Zm0 0v7m-6-4.5V17c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-4.5"/></svg></span>
-               Educational Institutions
+            <h3 class="heading-3 text-[rgb(var(--text-primary))]">
+              {block.title}
             </h3>
-            <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-              <li class="flex items-center space-x-3 group">
-                <span
-                  class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                ></span>
-                <span>Temple University - Food and Beverage Management</span>
-              </li>
-              <li class="flex items-center space-x-3 group">
-                <span
-                  class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                ></span>
-                <span>Drexel University - Food Upcycling Conference</span>
-              </li>
-              <li class="flex items-center space-x-3 group">
-                <span
-                  class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                ></span>
-                <span
-                  >Community College of Philadelphia - Workplace Diversity</span
-                >
-              </li>
+            <ul class="mt-4">
+              {block.items.map((item) => (
+                <li class="fact-row">{item}</li>
+              ))}
             </ul>
           </div>
-          <div
-            class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-brand-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-brand-600/10"
-            data-aos="fade-up"
-          >
-            <h3
-              class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Personal life and values -->
+  <section
+    class="border-y border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))]"
+    aria-labelledby="personal-heading"
+  >
+    <div class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Away from work</p>
+          <h2 id="personal-heading" class="heading-2 mt-3">
+            Personal life and values
+          </h2>
+        </div>
+      </div>
+      <div class="grid gap-5 md:grid-cols-2">
+        {
+          personal.map((block, index) => (
+            <div
+              class="panel h-full p-6 sm:p-8"
+              data-aos="fade-up"
+              data-aos-delay={index * 70}
             >
-              <span class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--accent-soft))] text-[rgb(var(--accent))]" aria-hidden="true"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v16M13 21V10a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v11M8 8h2M8 12h2M8 16h2M16 13h1M16 17h1"/></svg></span>
-               Organizations
-            </h3>
-            <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-              <li class="flex items-center space-x-3 group">
-                <span
-                  class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                ></span>
-                <span>North Broad Street Renaissance Advisory Board</span>
-              </li>
-              <li class="flex items-center space-x-3 group">
-                <span
-                  class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                ></span>
-                <span>Alex's Lemonade Stand (Board Member)</span>
-              </li>
-              <li class="flex items-center space-x-3 group">
-                <span
-                  class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                ></span>
-                <span>Various Philadelphia community organizations</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Personal Life -->
-      <section class="max-w-4xl mx-auto mb-24">
-        <h2
-          class="text-3xl sm:text-4xl font-serif font-bold mb-12 text-center text-[rgb(var(--text-primary))]"
-        >
-          Personal Life & Values
-        </h2>
-        <div
-          class="bg-gradient-to-br from-[rgb(var(--card-bg))] to-brand-600/5 p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-brand-600/10"
-          data-aos="fade-up"
-        >
-          <div class="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3
-                class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
-              >
-                <span class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--accent-soft))] text-[rgb(var(--accent))]" aria-hidden="true"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-7-9.5A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7 3.5C19 16.65 12 21 12 21Z"/></svg></span>
-                 Family Background
+              <h3 class="heading-3 text-[rgb(var(--text-primary))]">
+                {block.title}
               </h3>
-              <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Born in Washington DC to Robin and Harry III</span>
-                </li>
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Global upbringing due to father's banking career</span>
-                </li>
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Close relationship with sister Kimberly</span>
-                </li>
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span
-                    >Established Hayman Family Fund in memory of brother Brad</span
-                  >
-                </li>
+              <ul class="mt-4">
+                {block.items.map((item) => (
+                  <li class="fact-row">{item}</li>
+                ))}
               </ul>
             </div>
-            <div>
-              <h3
-                class="text-2xl font-bold mb-4 text-[rgb(var(--text-primary))] flex items-center"
-              >
-                <span class="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--accent-soft))] text-[rgb(var(--accent))]" aria-hidden="true"><svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m12 3 2.4 5.9L21 9.7l-4.8 4.2 1.4 6.4L12 17l-5.6 3.3 1.4-6.4L3 9.7l6.6-.8L12 3Z"/></svg></span>
-                 Core Values
-              </h3>
-              <ul class="space-y-3 text-base sm:text-lg text-[rgb(var(--text-secondary))]">
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Strong family bonds</span>
-                </li>
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Community service dedication</span>
-                </li>
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Entrepreneurial spirit</span>
-                </li>
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Cultural preservation</span>
-                </li>
-                <li class="flex items-center space-x-3 group">
-                  <span
-                    class="min-w-[0.5rem] w-2 h-2 bg-brand-600 rounded-full group-hover:scale-150 transition-transform shrink-0"
-                  ></span>
-                  <span>Innovation in hospitality</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-      <!-- Call to Action -->
-      <div class="max-w-3xl mx-auto mt-16 text-center">
-        <h2
-          class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold mb-4 sm:mb-6 text-[rgb(var(--text-primary))]"
-        >
-          Join the Journey
+  <!-- Call to action -->
+  <section class="wrap section" aria-labelledby="journey-cta">
+    <div class="panel-ink px-6 py-12 sm:px-12 sm:py-16">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="kicker kicker-plain justify-center">What is next</p>
+        <h2 id="journey-cta" class="heading-2 mt-4 text-white">
+          Join the journey
         </h2>
-        <p
-          class="text-base sm:text-lg md:text-xl text-[rgb(var(--text-primary))] mb-6 sm:mb-8"
-        >
-          Connect with Harry Hayman and be part of transformative initiatives
-          shaping Philadelphia's future.
+        <p class="mt-4 text-[rgb(var(--ink-panel-muted))] sm:text-lg">
+          Connect with Harry Hayman and be part of the initiatives shaping
+          Philadelphia's future.
         </p>
-        <div class="flex justify-center gap-4">
-          <a href="/ventures" class="btn btn-primary">Explore Harry's ventures</a>
-          <a href="/contact" class="btn btn-secondary">Get in touch with Harry</a>
+        <div
+          class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
+        >
+          <a href="/ventures" class="btn btn-on-ink btn-lg">
+            Explore Harry's ventures
+          </a>
+          <a href="/contact" class="btn btn-ghost-on-ink btn-lg">
+            Get in touch with Harry
+          </a>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <style>
+    /* A single rail with era markers: one story, read top to bottom. */
+    .timeline {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 0 0 2.5rem 2.25rem;
+      border-left: 1px solid rgb(var(--nav-border));
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+      border-left-color: transparent;
+    }
+
+    .timeline-era {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 3rem;
+      height: 1.875rem;
+      padding: 0 0.625rem;
+      border-radius: var(--r-pill);
+      background-color: rgb(var(--button-primary));
+      color: rgb(var(--button-on));
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .timeline-head {
+      padding-top: 0.125rem;
+    }
+
+    .timeline-facts {
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+    }
+
+    @media (min-width: 768px) {
+      .timeline-item {
+        grid-template-columns: 16rem minmax(0, 1fr);
+        gap: 2.5rem;
+        padding-left: 3rem;
+        padding-bottom: 3rem;
+      }
+
+      .timeline-facts {
+        margin-top: 0;
+      }
+    }
+
+    /* Facts read as ruled rows, not as a bulleted list of equal dots. */
+    .fact-row {
+      position: relative;
+      padding: 0.625rem 0 0.625rem 1.125rem;
+      border-top: 1px solid rgb(var(--nav-border));
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: rgb(var(--text-secondary));
+      list-style: none;
+    }
+
+    .fact-row::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.15rem;
+      width: 0.375rem;
+      height: 0.375rem;
+      border-radius: var(--r-pill);
+      background-color: rgb(var(--brand-500));
+    }
+
+    .fact-row:last-child {
+      padding-bottom: 0;
+    }
+  </style>
 </AppLayout>
