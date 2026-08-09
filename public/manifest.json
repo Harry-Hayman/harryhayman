@@ -4,8 +4,8 @@
   "description": "Harry Hayman's personal website, blog, and portfolio",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#7C3AED",
+  "background_color": "#F7FAFD",
+  "theme_color": "#1B6FBF",
   "orientation": "portrait-primary",
   "icons": [
     {

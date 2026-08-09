@@ -4,131 +4,330 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-* {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* Brand: light blue. Every value below is contrast checked for WCAG   */
+/* AA in both light and dark themes.                                   */
+/* ------------------------------------------------------------------ */
 
 @layer base {
   :root {
-    --background: 255, 255, 255;
-    --text-primary: 0, 0, 0;
-    --text-secondary: 51, 51, 51;
+    /* Brand ramp, stored as "R, G, B" so it composes with rgb()/rgba() */
+    --brand-50: 240, 247, 255;
+    --brand-100: 221, 238, 255;
+    --brand-200: 185, 220, 255;
+    --brand-300: 138, 198, 251;
+    --brand-400: 86, 169, 242;
+    --brand-500: 46, 139, 224;
+    --brand-600: 27, 111, 191;
+    --brand-700: 21, 87, 150;
+    --brand-800: 20, 72, 117;
+    --brand-900: 20, 60, 94;
+    --brand-950: 12, 36, 56;
+
+    /* Light theme surfaces and text */
+    --background: 247, 250, 253;
+    --surface: 255, 255, 255;
+    --surface-raised: 255, 255, 255;
+    --surface-read: 255, 255, 255;
+    --nav-bg: 255, 255, 255;
+    --text-primary: 15, 23, 42;
+    --text-secondary: 51, 65, 85;
+    --text-muted: 74, 92, 114;
     --card-bg: 255, 255, 255;
-    --button-primary: 124, 58, 237;
-    --button-hover: 109, 40, 217;
-    --nav-border: 229, 231, 235;
+    --nav-border: 214, 228, 242;
+    --button-primary: 27, 111, 191;
+    --button-hover: 21, 87, 150;
+    --button-on: 255, 255, 255;
+    --accent: 27, 111, 191;
+    --accent-soft: 240, 247, 255;
+    --ring: 46, 139, 224;
+    --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
+      0 8px 24px -12px rgba(20, 60, 94, 0.18);
   }
 
   :root.dark {
-    --background: 24, 24, 27;
-    --text-primary: 255, 255, 255;
-    --text-secondary: 255, 255, 255;  /* Changed to white for better visibility */
-    --card-bg: 39, 39, 42;
-    --button-primary: 147, 51, 234;
-    --button-hover: 168, 85, 247;
-    --nav-border: 39, 39, 42;
+    --background: 12, 18, 27;
+    --surface: 20, 29, 43;
+    --surface-raised: 25, 35, 51;
+    --surface-read: 17, 25, 37;
+    --nav-bg: 12, 18, 27;
+    --text-primary: 241, 245, 249;
+    --text-secondary: 191, 205, 219;
+    --text-muted: 160, 178, 196;
+    --card-bg: 20, 29, 43;
+    --nav-border: 35, 49, 68;
+    --button-primary: 86, 169, 242;
+    --button-hover: 138, 198, 251;
+    --button-on: 8, 20, 33;
+    --accent: 138, 198, 251;
+    --accent-soft: 21, 34, 52;
+    --ring: 138, 198, 251;
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4),
+      0 10px 30px -14px rgba(0, 0, 0, 0.7);
   }
 
-  /* Apply theme to html and body */
   html,
   body {
-    color: rgb(var(--text-primary)) !important;
+    color: rgb(var(--text-primary));
     min-height: 100vh;
     margin: 0;
     padding: 0;
   }
 
-  /* Light mode background */
   body {
-    background-color: rgb(var(--background)) !important;
+    background-color: rgb(var(--background));
     transition: background-color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* Dark mode background */
-  :root.dark body {
-    background-color: rgb(24, 24, 27) !important;
+  /* Keep the scrollbar hidden the way the site always has, but never hide
+     it in a way that traps keyboard users: scrolling still works. */
+  ::-webkit-scrollbar {
+    display: none;
   }
 
-  /* Prose styles for blog content */
-  .prose {
-    color: rgb(var(--text-primary)) !important;
-    max-width: none !important;
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6,
-  .prose strong,
-  .prose b {
-    color: rgb(var(--text-primary)) !important;
+  /* A visible, on-brand focus ring everywhere. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--ring));
+    outline-offset: 2px;
+    border-radius: 0.25rem;
   }
 
-  .prose p,
-  .prose ul,
-  .prose ol,
-  .prose li,
-  .prose blockquote {
-    color: rgb(var(--text-primary)) !important;
+  ::selection {
+    background-color: rgba(var(--brand-300), 0.45);
+    color: rgb(var(--text-primary));
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Components                                                          */
+/* ------------------------------------------------------------------ */
+
+@layer components {
+  /* Skip link: only visible when focused. */
+  .skip-link {
+    position: absolute;
+    left: 0.75rem;
+    top: -3rem;
+    z-index: 200;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    background-color: rgb(var(--button-primary));
+    color: rgb(var(--button-on));
+    font-weight: 600;
+    transition: top 0.2s ease;
   }
 
-  .prose a {
-    color: rgb(var(--button-primary));
+  .skip-link:focus {
+    top: 0.75rem;
   }
 
-  .prose code {
-    color: rgb(var(--text-primary)) !important;
-    background-color: rgb(var(--card-bg));
+  /* Primary / secondary buttons: one definition, both themes. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.625rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
   }
 
-  /* Theme Classes */
-  .text-\[rgb\(var\(--text-primary\)\)\] {
-    color: rgb(var(--text-primary)) !important;
+  .btn-primary {
+    background-color: rgb(var(--button-primary));
+    color: rgb(var(--button-on));
+    box-shadow: 0 8px 20px -12px rgba(var(--brand-700), 0.9);
   }
 
-  .text-\[rgb\(var\(--text-secondary\)\)\] {
-    color: rgb(var(--text-secondary)) !important;
+  .btn-primary:hover {
+    background-color: rgb(var(--button-hover));
   }
 
-  .bg-\[rgb\(var\(--background\)\)\] {
-    background-color: rgb(var(--background)) !important;
+  .btn-secondary {
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text-primary));
+    border: 1px solid rgb(var(--nav-border));
   }
 
-  .bg-\[rgb\(var\(--card-bg\)\)\] {
-    background-color: rgb(var(--card-bg)) !important;
+  .btn-secondary:hover {
+    border-color: rgb(var(--brand-400));
+    color: rgb(var(--accent));
   }
 
-  /* Cards */
+  /* Site navigation surface. Utilities can no longer make it transparent
+     over the animated background, which was the readability problem. */
+  .site-nav {
+    background-color: rgba(var(--nav-bg), 0.9);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 1px solid rgb(var(--nav-border));
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    color: rgb(var(--text-secondary));
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: rgb(var(--brand-700));
+    background-color: rgb(var(--accent-soft));
+  }
+
+  :root.dark .nav-link:hover {
+    color: rgb(var(--brand-300));
+  }
+
+  .nav-link[aria-current='page'] {
+    color: rgb(var(--brand-700));
+    background-color: rgb(var(--accent-soft));
+    font-weight: 600;
+    box-shadow: inset 0 -2px 0 0 rgb(var(--button-primary));
+  }
+
+  :root.dark .nav-link[aria-current='page'] {
+    color: rgb(var(--brand-300));
+  }
+
+  .wordmark {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: rgb(var(--text-primary));
+  }
+
+  .wordmark:hover {
+    color: rgb(var(--accent));
+  }
+
   .card {
     background-color: rgb(var(--card-bg));
-    border-color: rgb(var(--nav-border));
+    border: 1px solid rgb(var(--nav-border));
+    box-shadow: var(--shadow-card);
   }
 
-  /* Footer */
-  footer {
-    background-color: rgb(var(--background));
-    border-top: 1px solid rgb(var(--nav-border));
-    padding: 2rem 0;
-    margin-top: auto;
+  /* The calm reading surface for article pages. */
+  .reading-surface {
+    background-color: rgb(var(--surface-read));
+    border: 1px solid rgb(var(--nav-border));
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
   }
+}
 
-  /* Navigation */
-  nav {
-    background-color: rgb(var(--background));
-    border-color: rgb(var(--nav-border));
-  }
+/* ------------------------------------------------------------------ */
+/* Long-form prose                                                     */
+/* ------------------------------------------------------------------ */
 
-  /* Container */
-  .container {
-    @apply max-w-screen-xl mx-auto px-4;
+/* Unlayered on purpose: @tailwindcss/typography registers `.prose` in the
+   components layer, which is emitted after `base`. Keeping these rules
+   outside any @layer puts them last in the output so they win on equal
+   specificity instead of being silently overridden. */
+.prose {
+  color: rgb(var(--text-primary));
+  max-width: 68ch;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+
+.prose :where(h1, h2, h3, h4, h5, h6, strong, b) {
+  color: rgb(var(--text-primary));
+}
+
+.prose :where(p, ul, ol, li) {
+  color: rgb(var(--text-primary));
+}
+
+.prose :where(h2) {
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+  line-height: 1.25;
+}
+
+.prose :where(h3) {
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+.prose a {
+  color: rgb(var(--accent));
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.prose a:hover {
+  color: rgb(var(--button-hover));
+}
+
+.prose blockquote {
+  color: rgb(var(--text-secondary));
+  background-color: rgba(var(--brand-500), 0.06);
+  border-left-color: rgb(var(--button-primary));
+  font-style: normal;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.prose code {
+  color: rgb(var(--text-primary));
+  background-color: rgba(var(--brand-500), 0.1);
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+.prose hr {
+  border-color: rgb(var(--nav-border));
+}
+
+footer {
+  background-color: rgb(var(--background));
+  border-top: 1px solid rgb(var(--nav-border));
+  padding: 2rem 0;
+  margin-top: auto;
+}
+
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion: honour the user's system preference                         */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
