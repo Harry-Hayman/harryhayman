@@ -5,15 +5,18 @@ import { author, defaultMeta } from "@data/socials";
 import navigation from "@data/navigation.json";
 import ThemeToggle from "@components/ThemeToggle.astro";
 import Bubbles from "@components/Bubbles.astro";
+import TextBubbles from "@components/TextBubbles.astro";
 import MusicPlayer from "@components/MusicPlayer.astro";
-import "@fontsource/playfair-display/400.css";
-import "@fontsource/playfair-display/500.css";
-import "@fontsource/playfair-display/600.css";
-import "@fontsource/playfair-display/700.css";
-import "@fontsource/poppins/300.css";
-import "@fontsource/poppins/400.css";
-import "@fontsource/poppins/500.css";
-import "@fontsource/poppins/600.css";
+/*
+ * Fonts: latin subsets only, and only the weights the design actually uses.
+ * The previous eight full-family imports pulled in devanagari and latin-ext
+ * for every weight, which inflated the render-blocking stylesheet.
+ */
+import "@fontsource/playfair-display/latin-400.css";
+import "@fontsource/playfair-display/latin-700.css";
+import "@fontsource/poppins/latin-400.css";
+import "@fontsource/poppins/latin-500.css";
+import "@fontsource/poppins/latin-600.css";
 import Footer from "@components/Footer.astro";
 import "@styles/global.css";
 
@@ -27,6 +30,12 @@ interface Props {
   pubDate?: Date;
   tags?: string[];
   lastmod?: Date;
+  /** Article pages get a calm background and a reading surface. */
+  article?: boolean;
+  /** Floating keyword bubbles: home and ventures only. */
+  textBubbles?: boolean;
+  /** Extra JSON-LD emitted alongside the site-wide graph. */
+  jsonLd?: Record<string, unknown> | null;
 }
 
 const {
@@ -36,13 +45,145 @@ const {
   pubDate,
   tags = defaultMeta.keywords,
   lastmod,
+  article = false,
+  textBubbles = false,
+  jsonLd = null,
 } = Astro.props;
 
+const pageTitle = title || defaultMeta.title;
 const ogImageURL = new URL(ogImage.src, Astro.site).href;
-const canonicalURL = new URL(Astro.url).href;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const date = pubDate || lastmod || new Date();
 const formattedDate = date instanceof Date ? date.toISOString() : date;
 const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
+
+const person = {
+  "@type": "Person",
+  "@id": "https://harryhayman.com/#person",
+  name: "Harry Hayman",
+  alternateName: "Harrison Graham Hayman IV",
+  url: "https://harryhayman.com",
+  image: "https://harryhayman.com/banner.png",
+  description:
+    "Philadelphia business leader, hospitality entrepreneur, and philanthropist known for work in the restaurant industry and community development through Feed Philly Coalition and The Philadelphia Jazz Experience.",
+  jobTitle: "Hospitality Entrepreneur and Community Leader",
+  worksFor: { "@id": "https://harryhayman.com/#gemini" },
+  homeLocation: {
+    "@type": "Place",
+    name: "Philadelphia, Pennsylvania",
+  },
+  founder: [
+    { "@id": "https://harryhayman.com/#gemini" },
+    {
+      "@type": "Organization",
+      name: "Philadelphia Jazz Experience",
+      url: "https://philadelphiajazzexperience.org",
+      description:
+        "Preserving and promoting Philadelphia's rich jazz heritage",
+    },
+    {
+      "@type": "Organization",
+      name: "Veggie Graffiti",
+      url: "https://veggiegraffiti.com",
+      description:
+        "Urban farming initiative combining hydroponic technology with sustainable practices",
+    },
+    {
+      "@type": "Organization",
+      name: "Feed Philly Coalition",
+      url: "https://feedphillycoalition.org",
+      description: "Community initiative addressing food insecurity",
+    },
+    {
+      "@type": "Organization",
+      name: "Harry Hayman Creative",
+      url: "https://harryhaymancreative.com/",
+      description:
+        "Creative agency specializing in branding and marketing for hospitality businesses",
+    },
+    {
+      "@type": "Organization",
+      name: "I Am Hungry in Philly",
+      url: "https://iamhungryinphilly.org",
+      description: "Connecting Philadelphia's hungry with local food resources",
+    },
+    {
+      "@type": "Organization",
+      name: "Another Three Hearts Experience",
+      url: "https://another3heartsexperience.com/",
+      description:
+        "Creating unique hospitality experiences combining culinary excellence with cultural enrichment",
+    },
+  ],
+  sameAs: [
+    "https://www.facebook.com/HaymanHG/",
+    "https://www.pinterest.com/hghayman1/",
+    "https://www.instagram.com/harryhayman4",
+    "https://x.com/HGHayman",
+    "https://www.threads.com/@harryhayman4",
+    "https://bsky.app/profile/harryhayman.bsky.social",
+    "https://www.youtube.com/@harryhayman1467/shorts",
+    "https://www.linkedin.com/in/harrisongrahamhaymaniv/",
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Philadelphia",
+    addressRegion: "PA",
+    addressCountry: "US",
+  },
+  knowsAbout: [
+    "Restaurant Management",
+    "Hospitality Industry",
+    "Community Development",
+    "Food Justice",
+    "Jazz Music",
+    "Philanthropy",
+    "Business Consulting",
+    "Urban Agriculture",
+    "Creative Marketing",
+  ],
+};
+
+const organization = {
+  "@type": "Organization",
+  "@id": "https://harryhayman.com/#gemini",
+  name: "Gemini Hospitality Consultants",
+  url: "https://harryhaymangemini.com/",
+  description:
+    "Strategic consulting services for restaurants and hospitality businesses, focusing on innovative solutions and sustainable growth.",
+  founder: { "@id": "https://harryhayman.com/#person" },
+  areaServed: {
+    "@type": "City",
+    name: "Philadelphia",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Philadelphia",
+    addressRegion: "PA",
+    addressCountry: "US",
+  },
+  sameAs: [
+    "https://www.linkedin.com/company/gemini-hospitality-consultants",
+    "https://www.instagram.com/geminihospitalityconsulting/",
+  ],
+};
+
+const website = {
+  "@type": "WebSite",
+  "@id": "https://harryhayman.com/#website",
+  url: "https://harryhayman.com",
+  name: "Harry Hayman",
+  description: defaultMeta.description,
+  inLanguage: "en-US",
+  publisher: { "@id": "https://harryhayman.com/#person" },
+};
+
+const graph = {
+  "@context": "https://schema.org",
+  "@graph": jsonLd
+    ? [person, organization, website, jsonLd]
+    : [person, organization, website],
+};
 ---
 
 <!doctype html>
@@ -50,37 +191,43 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{title || defaultMeta.title}</title>
+    <title>{pageTitle}</title>
     <link rel="canonical" href={canonicalURL} />
-    <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <!-- SEO Tags -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? "article" : "website"} />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:site_name" content={author} />
     <meta property="og:image:alt" content={ogImage.alt} />
     <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="https://harryhayman.com" />
-    <meta name="twitter:creator" content={author} />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:site" content="@HGHayman" />
+    <meta name="twitter:creator" content="@HGHayman" />
+    <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
     <meta name="twitter:image:alt" content={ogImage.alt} />
     <meta name="twitter:domain" content="harryhayman.com" />
-    <meta name="theme-color" content="#7C3AED" />
-    <meta name="msapplication-TileColor" content="#7C3AED" />
-    <meta name="apple-mobile-web-app-title" content={title} />
-    <meta name="application-name" content={title} />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#1B6FBF"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0C121B"
+    />
+    <meta name="msapplication-TileColor" content="#1B6FBF" />
+    <meta name="apple-mobile-web-app-title" content="Harry Hayman" />
+    <meta name="application-name" content="Harry Hayman" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="follow, index" />
-    {tags && tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content={author} />
-    <meta name="pubdate" content={formattedDate} />
     <meta name="date" content={formattedDate} />
     <meta name="keywords" content={keywordsString} />
 
@@ -90,11 +237,68 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="msapplication-config" content="/browserconfig.xml" />
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D67B4Z3VNH"
-    ></script>
+    <!-- Theme initialization: must stay inline and first-paint blocking -->
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem("theme");
+        } catch (e) {}
+        var prefersDark =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = stored || (prefersDark ? "dark" : "light");
+        document.documentElement.classList.toggle("dark", theme === "dark");
+        document.documentElement.style.colorScheme = theme;
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+
+    <!-- Scroll reveal: replaces the AOS library and its stylesheet -->
+    <style is:inline>
+      [data-aos] {
+        opacity: 0;
+        transition:
+          opacity 0.55s ease-out,
+          transform 0.55s ease-out;
+      }
+      [data-aos="fade-up"] {
+        transform: translateY(16px);
+      }
+      [data-aos="fade-right"] {
+        transform: translateX(-18px);
+      }
+      [data-aos="fade-left"] {
+        transform: translateX(18px);
+      }
+      [data-aos="zoom-in"] {
+        transform: scale(0.97);
+      }
+      [data-aos].is-revealed {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        [data-aos] {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+    <noscript
+      ><style>
+        [data-aos] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style></noscript
+    >
+
+    <!-- Analytics: third party, kept off the critical path -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://tracker.metricool.com" />
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -102,252 +306,60 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       }
       gtag("js", new Date());
       gtag("config", "G-D67B4Z3VNH");
-    </script>
 
-    <!-- Resource Hints for Critical Assets -->
-    <link rel="dns-prefetch" href="https://unpkg.com" />
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
-    <link rel="dns-prefetch" href="https://tracker.metricool.com" />
-    <link rel="preconnect" href="https://unpkg.com" crossorigin />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-    <link
-      rel="preconnect"
-      href="https://static.cloudflareinsights.com"
-      crossorigin
-    />
-
-    <!-- Theme initialization -->
-    <script is:inline>
       (function () {
-        // Check for system preference
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        // Use system preference or fallback to stored preference
-        const theme =
-          localStorage.getItem("theme") || (prefersDark ? "dark" : "light");
+        function loadAnalytics() {
+          var ga = document.createElement("script");
+          ga.async = true;
+          ga.src = "https://www.googletagmanager.com/gtag/js?id=G-D67B4Z3VNH";
+          document.head.appendChild(ga);
 
-        // Apply theme immediately
-        document.documentElement.classList.toggle("dark", theme === "dark");
-        document.documentElement.style.colorScheme = theme;
-        document.documentElement.dataset.theme = theme;
+          var mc = document.createElement("script");
+          mc.async = true;
+          mc.src = "https://tracker.metricool.com/resources/be.js";
+          mc.onload = function () {
+            try {
+              if (typeof beTracker !== "undefined") {
+                beTracker.t({ hash: "f9fe076de289567c484620078e1d3423" });
+              }
+            } catch (e) {}
+          };
+          mc.onerror = function () {};
+          document.head.appendChild(mc);
+        }
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadAnalytics, { timeout: 3000 });
+        } else {
+          window.addEventListener("load", function () {
+            setTimeout(loadAnalytics, 1200);
+          });
+        }
       })();
     </script>
 
-    <!-- AOS - Load non-blocking -->
-    <link
-      rel="preload"
-      href="/css/aos.css"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript><link rel="stylesheet" href="/css/aos.css" /></noscript>
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-    <script is:inline>
-      function initAOS() {
-        if (typeof AOS !== "undefined") {
-          AOS.init({
-            duration: 700,
-            easing: "ease-in-out",
-            once: false,
-            mirror: true,
-            offset: 5,
-            delay: 50,
-          });
-        }
-      }
-
-      // Try both events to ensure initialization
-      document.addEventListener("DOMContentLoaded", initAOS);
-      document.addEventListener("astro:page-load", initAOS);
-      window.addEventListener("load", initAOS);
-    </script>
-
-    <!-- GSAP - Deferred -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
-      defer></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
-      defer></script>
-    <script is:inline>
-      function initGSAP() {
-        if (
-          typeof gsap !== "undefined" &&
-          typeof ScrollTrigger !== "undefined"
-        ) {
-          gsap.registerPlugin(ScrollTrigger);
-        }
-      }
-
-      // Try both events to ensure initialization
-      document.addEventListener("DOMContentLoaded", initGSAP);
-      document.addEventListener("astro:page-load", initGSAP);
-      window.addEventListener("load", initGSAP);
-    </script>
-
-    <!-- Lazy Loading - Removed (native lazy loading used instead) -->
-
-    <!-- Metricool Tracking -->
-    <script is:inline>
-      function loadScript(callback) {
-        try {
-          var head = document.getElementsByTagName("head")[0],
-            script = document.createElement("script");
-
-          script.type = "text/javascript";
-          script.src = "https://tracker.metricool.com/resources/be.js";
-
-          // Handle successful load
-          script.onload = function () {
-            if (callback && typeof callback === "function") {
-              callback();
-            }
-          };
-
-          // Handle errors (like ad blockers)
-          script.onerror = function () {
-            // Silently fail - analytics blocked by ad blocker
-            console.debug("Analytics script blocked by ad blocker");
-          };
-
-          // For older browsers
-          script.onreadystatechange = function () {
-            if (
-              this.readyState === "complete" ||
-              this.readyState === "loaded"
-            ) {
-              if (callback && typeof callback === "function") {
-                callback();
-              }
-            }
-          };
-
-          head.appendChild(script);
-        } catch (error) {
-          // Silently handle any errors
-          console.debug("Analytics initialization failed:", error.message);
-        }
-      }
-
-      loadScript(function () {
-        try {
-          if (typeof beTracker !== "undefined") {
-            beTracker.t({ hash: "f9fe076de289567c484620078e1d3423" });
-          }
-        } catch (error) {
-          // Silently handle tracking errors
-          console.debug("Analytics tracking failed:", error.message);
-        }
-      });
-    </script>
-
-    <!-- Person Schema Markup -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Harry Hayman",
-        "alternateName": "Harrison Graham Hayman IV",
-        "url": "https://harryhayman.com",
-        "image": "https://harryhayman.com/banner.png",
-        "description": "Philadelphia business leader, hospitality entrepreneur, and philanthropist known for work in restaurant industry and community development through Feed Philly Coalition and The Philadelphia Jazz Experience.",
-        "jobTitle": "Hospitality Entrepreneur & Community Leader",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Gemini Hospitality Consultants"
-        },
-        "founder": [
-          {
-            "@type": "Organization",
-            "name": "Gemini Hospitality Consultants",
-            "url": "https://harryhaymangemini.com/",
-            "description": "Strategic consulting services for restaurants and hospitality businesses"
-          },
-          {
-            "@type": "Organization",
-            "name": "Philadelphia Jazz Experience",
-            "url": "https://philadelphiajazzexperience.org",
-            "description": "Preserving and promoting Philadelphia's rich jazz heritage"
-          },
-          {
-            "@type": "Organization",
-            "name": "Veggie Graffiti",
-            "url": "https://veggiegraffiti.com",
-            "description": "Urban farming initiative combining hydroponic technology with sustainable practices"
-          },
-          {
-            "@type": "Organization",
-            "name": "Feed Philly Coalition",
-            "url": "https://feedphillycoalition.org",
-            "description": "Community initiative addressing food insecurity"
-          },
-          {
-            "@type": "Organization",
-            "name": "Harry Hayman Creative",
-            "url": "https://harryhaymancreative.com/",
-            "description": "Creative agency specializing in branding and marketing for hospitality businesses"
-          },
-          {
-            "@type": "Organization",
-            "name": "I Am Hungry in Philly",
-            "url": "https://iamhungryinphilly.org",
-            "description": "Connecting Philadelphia's hungry with local food resources"
-          },
-          {
-            "@type": "Organization",
-            "name": "Another Three Hearts Experience",
-            "url": "https://another3heartsexperience.com/",
-            "description": "Creating unique hospitality experiences combining culinary excellence with cultural enrichment"
-          }
-        ],
-        "sameAs": [
-          "https://www.facebook.com/HaymanHG/",
-          "https://www.pinterest.com/hghayman1/",
-          "https://www.instagram.com/harryhayman4",
-          "https://x.com/HGHayman",
-          "https://www.threads.com/@harryhayman4",
-          "https://bsky.app/profile/harryhayman.bsky.social",
-          "https://www.youtube.com/@harryhayman1467/shorts",
-          "https://www.linkedin.com/in/harrisongrahamhaymaniv/"
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Philadelphia",
-          "addressRegion": "PA",
-          "addressCountry": "US"
-        },
-        "knowsAbout": [
-          "Restaurant Management",
-          "Hospitality Industry",
-          "Community Development",
-          "Food Justice",
-          "Jazz Music",
-          "Philanthropy",
-          "Business Consulting",
-          "Urban Agriculture",
-          "Creative Marketing"
-        ]
-      }
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
   </head>
-  <body>
+  <body class={article ? "reading-mode" : undefined}>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <Bubbles />
+    {textBubbles && <TextBubbles />}
     <div
       class="flex flex-col min-h-screen text-[rgb(var(--text-primary))] relative z-10"
     >
       <!-- Navigation -->
-      <nav class="sticky top-0 z-50 backdrop-blur-lg bg-transparent">
-        <div class="max-w-7xl mx-auto px-4">
-          <div class="py-3 flex justify-center">
-            <ul class="flex space-x-4 md:space-x-8">
+      <nav class="sticky top-0 z-50 site-nav" aria-label="Primary">
+        <div class="mx-auto max-w-6xl px-4">
+          <div
+            class="flex min-h-[3.5rem] items-center justify-center gap-3 sm:justify-between"
+          >
+            <a href="/" class="wordmark hidden text-lg sm:inline-block">
+              Harry Hayman
+            </a>
+            <ul class="flex items-center gap-0.5 sm:gap-1">
               {
                 navigation.map((item) => (
                   <li>
-                    <Link
-                      {...item}
-                      addClass="font-medium text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--text-primary))] text-sm md:text-base"
-                    />
+                    <Link {...item} />
                   </li>
                 ))
               }
@@ -360,7 +372,7 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       <ThemeToggle />
 
       <!-- Main Content -->
-      <main class="flex-grow">
+      <main id="main" class="flex-grow">
         <div class="px-4 md:px-6 lg:px-8 mx-auto max-w-6xl">
           <slot />
         </div>
@@ -372,5 +384,39 @@ const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
       <!-- Footer -->
       <Footer />
     </div>
+
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll("[data-aos]");
+        if (!els.length) return;
+        var reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!("IntersectionObserver" in window) || reduce) {
+          for (var i = 0; i < els.length; i++) {
+            els[i].classList.add("is-revealed");
+          }
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              var delay = entry.target.getAttribute("data-aos-delay");
+              if (delay) {
+                entry.target.style.transitionDelay =
+                  Math.min(parseInt(delay, 10) || 0, 400) + "ms";
+              }
+              entry.target.classList.add("is-revealed");
+              io.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "0px 0px -6% 0px", threshold: 0.04 },
+        );
+        for (var j = 0; j < els.length; j++) {
+          io.observe(els[j]);
+        }
+      })();
+    </script>
   </body>
 </html>
