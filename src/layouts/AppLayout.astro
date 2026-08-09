@@ -34,6 +34,8 @@ interface Props {
   article?: boolean;
   /** Floating keyword bubbles: home and ventures only. */
   textBubbles?: boolean;
+  /** Full-strength background bubbles (the homepage keeps them). */
+  bubblesFull?: boolean;
   /** Extra JSON-LD emitted alongside the site-wide graph. */
   jsonLd?: Record<string, unknown> | null;
 }
@@ -47,6 +49,7 @@ const {
   lastmod,
   article = false,
   textBubbles = false,
+  bubblesFull = false,
   jsonLd = null,
 } = Astro.props;
 
@@ -339,9 +342,9 @@ const graph = {
 
     <script type="application/ld+json" set:html={JSON.stringify(graph)} />
   </head>
-  <body class={article ? "reading-mode" : undefined}>
+  <body class:list={[article && "reading-mode", bubblesFull && "bubbles-full"]}>
     <a class="skip-link" href="#main">Skip to main content</a>
-    <Bubbles />
+    {!article && <Bubbles />}
     {textBubbles && <TextBubbles />}
     <div
       class="flex flex-col min-h-screen text-[rgb(var(--text-primary))] relative z-10"

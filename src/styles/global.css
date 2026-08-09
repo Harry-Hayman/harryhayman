@@ -280,6 +280,16 @@
   color: rgb(var(--button-hover));
 }
 
+/* Visited links stay on-brand: the browser default violet reads as a
+   leftover of the old purple identity. */
+.prose a:visited,
+a:visited {
+  color: rgb(var(--accent));
+}
+a:visited:hover {
+  color: rgb(var(--button-hover));
+}
+
 .prose blockquote {
   color: rgb(var(--text-secondary));
   background-color: rgba(var(--brand-500), 0.06);

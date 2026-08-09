@@ -16,13 +16,13 @@
 :root.dark {
   --bubble-opacity: 0.3;
   --bubble-blend: screen;
-  --gradient-intensity: 0.9;
+  --gradient-intensity: 0.22;
 }
 
 :root:not(.dark) {
   --bubble-opacity: 0.16;
   --bubble-blend: multiply;
-  --gradient-intensity: 0.7;
+  --gradient-intensity: 0.14;
 }
 
 /* Article pages: keep the brand wash on the chrome, calm it behind the text. */
@@ -210,4 +210,14 @@ body.reading-mode .bubbles-wrapper {
   .g5 {
     animation: none;
   }
+}
+
+/* The homepage keeps its floating bubbles at full presence (per Anuj);
+   every other page gets the calm wash above, articles get none. */
+body.bubbles-full {
+  --gradient-intensity: 0.85;
+}
+html.dark body.bubbles-full,
+.dark body.bubbles-full {
+  --gradient-intensity: 0.6;
 }
