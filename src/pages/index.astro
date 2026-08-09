@@ -2,92 +2,73 @@
 export const prerender = true;
 
 import AppLayout from "@layouts/AppLayout.astro";
-import { Image, getImage } from "astro:assets";
+import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import PostCard from "@components/PostCard.astro";
+import { ventures } from "../data/ventures";
 import authorImage from "../assets/data/harryhayman images/harryhayman_bg_removed.png";
-import jazzImage from "../assets/data/homepage_images/playing_jazz_instrument.jpg";
-import hospitalityImage from "../assets/data/homepage_images/hospitality.jpg";
-import philanthropyImage from "../assets/data/homepage_images/donating_food_to_hungry.jpg";
-import creativeImage from "../assets/data/homepage_images/creative_aspect.jpg";
-import sustainabilityImage from "../assets/data/homepage_images/controlled_environmental_agriculture.jpg";
-import scriptImage from "../assets/data/homepage_images/writing_script_movies.jpg";
 import skylineImage from "../assets/data/homepage_images/looking_at_philadelphia_skyline.jpg";
-
-/*
- * The hero portrait is painted into an SVG mask, so it needs a plain URL
- * rather than an <Image>. getImage() still runs it through Sharp, which turns
- * a 445 KB PNG into a small WebP instead of shipping the original.
- */
-const heroPortrait = await getImage({
-  src: authorImage,
-  width: 640,
-  height: 640,
-  format: "webp",
-  quality: 72,
-});
 
 const recentPosts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 
-const passions = [
+/* Roles and organisations, all of them already stated on the about page. */
+const credentials = [
   {
-    title: "Jazz & Music",
-    description:
-      "Harry's love for jazz music blossomed during his early career as a bartender in a jazz club. This passion led him to establish the Philadelphia Jazz Experience, preserving the city's rich jazz heritage.",
-    image: {
-      src: jazzImage,
-      alt: "A jazz musician performing on stage",
-    },
+    role: "CEO",
+    org: "Gemini Hospitality Consultants",
   },
   {
-    title: "Hospitality Innovation",
-    description:
-      "As a pioneer in Philadelphia's hospitality scene, Harry has transformed the industry through ventures like the Bynum Hospitality Group and Gemini Hospitality Consultants.",
-    image: {
-      src: hospitalityImage,
-      alt: "A hospitality team at work in a restaurant dining room",
-    },
+    role: "Senior Fellow",
+    org: "The Economy League of Greater Philadelphia",
   },
   {
-    title: "Community Service",
-    description:
-      "Through initiatives like the Feed Philly Coalition, Harry demonstrates his deep commitment to community service, extending beyond food security to support arts, education, and local development.",
-    image: {
-      src: philanthropyImage,
-      alt: "Volunteers handing out meals at a community food event",
-    },
-  },
-  {
-    title: "Creative Innovation",
-    description:
-      "Harry's creative spirit drives innovative initiatives while promoting artistic expression through his social media handle @harryhayamancreative.",
-    image: {
-      src: creativeImage,
-      alt: "A creative studio workspace with design materials",
-    },
-  },
-  {
-    title: "Storytelling Through Film",
-    description:
-      "Through Another Three Hearts Experience, Harry transforms imaginative concepts into compelling narratives, contributing to Philadelphia's vibrant arts and entertainment scene.",
-    image: {
-      src: scriptImage,
-      alt: "A film script being written at a desk",
-    },
-  },
-  {
-    title: "Environmental Innovation",
-    description:
-      "Through Veggie Graffiti and controlled environmental agriculture, Harry pioneers innovative solutions for urban farming and food security, working towards a more sustainable future for Philadelphia.",
-    image: {
-      src: sustainabilityImage,
-      alt: "Rows of leafy greens growing under lights in an indoor farm",
-    },
+    role: "Founder",
+    org: "Six Philadelphia ventures and initiatives",
   },
 ];
+
+/*
+ * The six threads that run through Harry's work. These replace the six
+ * illustrated cards that used to sit here: the artwork was generated against
+ * the old purple brand and one of the images carried a stock watermark, so
+ * the section is now built entirely from the brand's own type and rules.
+ */
+const pillars = [
+  {
+    title: "Jazz and music",
+    description:
+      "Harry's love for jazz blossomed during his early career as a bartender in a jazz club. That passion led him to establish the Philadelphia Jazz Experience, preserving the city's rich jazz heritage.",
+  },
+  {
+    title: "Hospitality innovation",
+    description:
+      "A pioneer in Philadelphia's hospitality scene, Harry has worked to transform the industry through ventures including the Bynum Hospitality Group and Gemini Hospitality Consultants.",
+  },
+  {
+    title: "Community service",
+    description:
+      "Through initiatives like the Feed Philly Coalition, Harry's commitment to community service extends beyond food security to the arts, education and local development.",
+  },
+  {
+    title: "Creative work",
+    description:
+      "Harry's creative spirit drives new initiatives while promoting artistic expression, published through Harry Hayman Creative and @harryhaymancreative.",
+  },
+  {
+    title: "Storytelling through film",
+    description:
+      "Through Another Three Hearts Experience, Harry turns imaginative concepts into narratives, contributing to Philadelphia's arts and entertainment scene.",
+  },
+  {
+    title: "Environmental innovation",
+    description:
+      "Through Veggie Graffiti and controlled environmental agriculture, Harry works on urban farming and food security for a more sustainable Philadelphia.",
+  },
+];
+
+const pad = (n: number) => String(n + 1).padStart(2, "0");
 ---
 
 <AppLayout
@@ -96,262 +77,418 @@ const passions = [
   textBubbles={true}
   bubblesFull={true}
 >
-  <div class="w-full overflow-x-hidden py-1 px-0">
-    <!-- Hero Section -->
-    <section class="min-h-[80vh] flex items-center -mt-4 sm:mt-0 relative">
-      <div class="container mx-auto">
-        <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center w-full">
-          <div class="order-2 lg:order-1 px-4">
-            <p
-              class="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[rgb(var(--accent))]"
-            >
-              Philadelphia, Pennsylvania
-            </p>
-            <h1
-              class="text-3xl sm:text-5xl md:text-5xl lg:text-7xl font-serif font-bold mb-6 leading-tight text-[rgb(var(--text-primary))]"
-            >
-              Inspiring Change Through <span class="text-[rgb(var(--accent))]"
-                >Innovation</span
-              >
-            </h1>
-            <p
-              class="text-base sm:text-lg md:text-xl text-[rgb(var(--text-secondary))] leading-relaxed mb-8 max-w-lg"
-            >
-              Harry Hayman is a hospitality entrepreneur, jazz advocate and
-              philanthropist working across Philadelphia's restaurants, music
-              rooms and community kitchens.
-            </p>
-            <div class="flex flex-wrap gap-3">
-              <a href="/ventures" class="btn btn-primary">
-                Explore Harry's ventures
-              </a>
-              <a href="/about" class="btn btn-secondary"> Read Harry's story </a>
-            </div>
-          </div>
-          <div
-            class="order-1 lg:order-2 flex justify-center lg:justify-end relative px-4"
-          >
-            <div
-              class="relative w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[320px] sm:h-[320px] md:w-[400px] md:h-[400px] lg:w-[550px] lg:h-[550px] transition-transform duration-500 hover:scale-[1.03]"
-            >
-              <div class="relative w-full h-full">
-                <div
-                  class="absolute -inset-4 xs:-inset-6 sm:-inset-8 md:-inset-12 lg:-inset-16"
-                >
-                  <svg viewBox="0 0 200 200" class="w-full h-full" role="img">
-                    <title>Harry Hayman</title>
-                    <defs>
-                      <mask id="image-mask">
-                        <path
-                          fill="white"
-                          d="M50.1,-51.5C62.8,-37.4,69.5,-18.7,71.8,2.3C74.1,23.4,72.1,46.7,59.4,62.2C46.7,77.7,23.4,85.2,0.9,84.4C-21.6,83.5,-43.2,74.1,-58.6,58.7C-74.1,43.2,-83.3,21.6,-82.6,0.7C-81.9,-20.1,-71.1,-40.3,-55.7,-54.3C-40.3,-68.3,-20.1,-76.2,-0.7,-75.5C18.7,-74.8,37.4,-65.5,50.1,-51.5Z"
-                          transform="translate(100 100)"></path>
-                      </mask>
-                    </defs>
-                    <path
-                      class="hero-blob"
-                      d="M50.1,-51.5C62.8,-37.4,69.5,-18.7,71.8,2.3C74.1,23.4,72.1,46.7,59.4,62.2C46.7,77.7,23.4,85.2,0.9,84.4C-21.6,83.5,-43.2,74.1,-58.6,58.7C-74.1,43.2,-83.3,21.6,-82.6,0.7C-81.9,-20.1,-71.1,-40.3,-55.7,-54.3C-40.3,-68.3,-20.1,-76.2,-0.7,-75.5C18.7,-74.8,37.4,-65.5,50.1,-51.5Z"
-                      transform="translate(100 100)"></path>
-                    <image
-                      href={heroPortrait.src}
-                      x="20"
-                      y="30"
-                      width="160"
-                      height="160"
-                      preserveAspectRatio="xMidYMid meet"
-                      mask="url(#image-mask)"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
+  <!-- ============================================================ -->
+  <!-- Hero: who Harry is, in one screen                            -->
+  <!-- ============================================================ -->
+  <section class="wrap pt-10 pb-4 sm:pt-16" aria-labelledby="hero-heading">
+    <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+      <div class="order-2 lg:order-1 lg:col-span-7">
+        <p class="kicker">Philadelphia, Pennsylvania</p>
+        <h1 id="hero-heading" class="display-1 mt-5">
+          Harry <span class="italic text-[rgb(var(--accent))]">Hayman</span>
+        </h1>
+        <p class="lede mt-6 max-w-[46ch]">
+          Hospitality entrepreneur, jazz advocate and philanthropist, working
+          across Philadelphia's restaurants, music rooms and community kitchens.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/ventures" class="btn btn-primary btn-lg">
+            Explore Harry's ventures
+          </a>
+          <a href="/about" class="btn btn-secondary btn-lg">
+            Read Harry's story
+          </a>
         </div>
       </div>
-    </section>
 
-    <!-- Harry's Passions -->
-    <section class="relative py-16 md:py-12" aria-labelledby="passions-heading">
-      <div class="container mx-auto px-4">
-        <h2
-          id="passions-heading"
-          class="text-3xl md:text-5xl font-serif text-center mb-16 text-[rgb(var(--text-primary))]"
-        >
-          Harry's Passions
-        </h2>
-
-        <div class="flex flex-col gap-8 mb-24">
-          {
-            passions.map((passion, index) => (
-              <PostCard
-                title={passion.title}
-                description={passion.description}
-                image={passion.image}
-                index={index}
-              />
-            ))
-          }
-        </div>
+      <!-- Portrait: a designed plate, not a floating blob -->
+      <div class="order-1 lg:order-2 lg:col-span-5">
+        <figure class="portrait-frame mx-auto max-w-[16rem] sm:max-w-[20rem]">
+          <div class="portrait-plate">
+            <span class="portrait-mark" aria-hidden="true">HH</span>
+            <Image
+              src={authorImage}
+              alt="Harry Hayman"
+              class="portrait-img"
+              width={501}
+              height={597}
+              format="webp"
+              quality={80}
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              sizes="(max-width: 640px) 60vw, 320px"
+            />
+          </div>
+          <figcaption class="portrait-caption">
+            Harrison Graham Hayman IV
+          </figcaption>
+        </figure>
       </div>
-    </section>
+    </div>
 
-    <!-- Vision for Philadelphia -->
-    <section
-      class="relative h-[40vh] sm:h-[60vh] overflow-hidden rounded-2xl"
-      aria-label="Philadelphia"
+    <!-- Credibility strip -->
+    <dl
+      class="panel mt-12 grid divide-y divide-[rgb(var(--nav-border))] sm:mt-16 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
     >
-      <div class="duotone relative h-full w-full">
+      {
+        credentials.map((item) => (
+          <div class="px-5 py-5 sm:px-6 sm:py-6">
+            <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-[rgb(var(--accent))]">
+              {item.role}
+            </dt>
+            <dd class="mt-2 text-[0.9375rem] font-medium leading-snug text-[rgb(var(--text-primary))]">
+              {item.org}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- Proof: the ventures, as an editorial index                   -->
+  <!-- ============================================================ -->
+  <section class="wrap section" aria-labelledby="ventures-heading">
+    <div class="section-head">
+      <div>
+        <p class="kicker">The work</p>
+        <h2 id="ventures-heading" class="heading-2 mt-3">
+          Eight ventures, one city
+        </h2>
+      </div>
+      <a href="/ventures" class="link-more">
+        See every venture
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"
+          ></path>
+        </svg>
+      </a>
+    </div>
+
+    <ol class="grid sm:grid-cols-2 sm:gap-x-10">
+      {
+        ventures.map((venture, index) => (
+          <li>
+            <a
+              href="/ventures"
+              class="index-row group h-full items-baseline rounded-field px-2 -mx-2"
+              data-aos="fade-up"
+              data-aos-delay={(index % 2) * 60}
+            >
+              <span class="index-num pt-0.5">{pad(index)}</span>
+              <span class="flex items-start justify-between gap-3">
+                <span class="min-w-0">
+                  <span class="block heading-3 text-[rgb(var(--text-primary))] transition-colors group-hover:text-[rgb(var(--accent))]">
+                    {venture.title}
+                  </span>
+                  <span class="mt-1 block text-sm text-[rgb(var(--text-muted))]">
+                    {venture.sector}
+                  </span>
+                </span>
+                <svg
+                  class="mt-1.5 h-4 w-4 shrink-0 text-[rgb(var(--accent))] opacity-0 transition-all duration-200 ease-editorial group-hover:translate-x-1 group-hover:opacity-100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
+                </svg>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- Why: the threads running through the work                    -->
+  <!-- ============================================================ -->
+  <section
+    class="border-y border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))]"
+    aria-labelledby="pillars-heading"
+  >
+    <div class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="kicker">What drives it</p>
+          <h2 id="pillars-heading" class="heading-2 mt-3">
+            Six threads through the work
+          </h2>
+        </div>
+      </div>
+
+      <ol class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          pillars.map((pillar, index) => (
+            <li
+              class="panel h-full rounded-card p-6 sm:p-7"
+              data-aos="fade-up"
+              data-aos-delay={(index % 3) * 70}
+            >
+              <p class="index-num">{pad(index)}</p>
+              <h3 class="heading-3 mt-3 text-[rgb(var(--text-primary))]">
+                {pillar.title}
+              </h3>
+              <p class="mt-3 text-[0.9375rem] leading-relaxed text-[rgb(var(--text-secondary))]">
+                {pillar.description}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- Philadelphia                                                 -->
+  <!-- ============================================================ -->
+  <section class="wrap section" aria-labelledby="city-heading">
+    <div class="relative overflow-hidden rounded-panel">
+      <div class="duotone relative h-[18rem] w-full sm:h-[24rem] md:h-[28rem]">
         <Image
           src={skylineImage}
           alt="The Philadelphia skyline at dusk"
-          class="duotone-image h-full w-full object-cover object-center"
-          width={1600}
-          height={900}
+          class="h-full w-full object-cover object-center"
+          width={1408}
+          height={768}
           format="webp"
           quality={62}
           loading="lazy"
           decoding="async"
           sizes="(max-width: 768px) 100vw, 1152px"
         />
-        <div class="duotone-tint absolute inset-0" aria-hidden="true"></div>
-        <div
-          class="absolute inset-0 bg-gradient-to-b from-brand-950/80 to-brand-900/60"
-        >
+      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/55 to-brand-900/25"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="absolute inset-0 flex items-end">
+        <div class="p-6 sm:p-10 md:p-14">
+          <p class="kicker text-brand-200">The city</p>
+          <h2
+            id="city-heading"
+            class="heading-2 mt-4 max-w-[18ch] text-white drop-shadow-sm"
+          >
+            Shaping Philadelphia's future, one step at a time.
+          </h2>
         </div>
       </div>
-      <div class="absolute inset-0 flex items-center">
-        <div class="container mx-auto px-4 sm:px-6 py-4 sm:py-8 text-center">
-          <div class="max-w-4xl mx-auto">
-            <h2
-              class="text-xl sm:text-4xl md:text-5xl font-serif font-bold mb-2 sm:mb-6 text-white drop-shadow leading-tight"
-            >
-              Shaping Philadelphia's future, one step at a time.
-            </h2>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Latest writing: keeps the newest posts one click from the front door -->
-    {
-      recentPosts.length > 0 && (
-        <section class="py-16 md:py-20" aria-labelledby="writing-heading">
-          <div class="mb-8 flex flex-wrap items-baseline justify-between gap-3">
-            <h2
-              id="writing-heading"
-              class="text-2xl md:text-3xl font-serif font-bold text-[rgb(var(--text-primary))]"
-            >
-              Latest from the blog
+  <!-- ============================================================ -->
+  <!-- Latest writing                                               -->
+  <!-- ============================================================ -->
+  {
+    recentPosts.length > 0 && (
+      <section class="wrap pb-4" aria-labelledby="writing-heading">
+        <div class="section-head">
+          <div>
+            <p class="kicker">From the blog</p>
+            <h2 id="writing-heading" class="heading-2 mt-3">
+              Latest writing
             </h2>
-            <a
-              href="/blog"
-              class="font-medium text-[rgb(var(--accent))] hover:underline"
-            >
-              Browse all of Harry's writing
-            </a>
           </div>
-          <ul class="grid gap-6 md:grid-cols-3">
-            {recentPosts.map((post) => (
-              <li class="card h-full rounded-xl p-6">
-                <p class="mb-2 text-xs uppercase tracking-wider text-[rgb(var(--text-muted))]">
+          <a href="/blog" class="link-more">
+            Browse all of Harry's writing
+            <svg
+              class="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+
+        <ul class="grid gap-6 md:grid-cols-3">
+          {recentPosts.map((post, index) => (
+            <li
+              class="card card-link h-full"
+              data-aos="fade-up"
+              data-aos-delay={index * 70}
+            >
+              <a href={`/blog/${post.slug}`} class="flex h-full flex-col p-6">
+                <p class="meta text-xs uppercase tracking-[0.14em]">
                   {post.data.pubDate.toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })}
                 </p>
-                <h3 class="mb-2 font-serif text-lg font-bold leading-snug">
-                  <a
-                    href={`/blog/${post.slug}`}
-                    class="text-[rgb(var(--text-primary))] hover:text-[rgb(var(--accent))]"
-                  >
-                    {post.data.title}
-                  </a>
+                <h3 class="heading-3 mt-3 text-[rgb(var(--text-primary))]">
+                  {post.data.title}
                 </h3>
-                <p class="clamp-3 text-sm text-[rgb(var(--text-secondary))]">
+                <p class="clamp-3 mt-3 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
                   {post.data.description}
                 </p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 
-    <!-- Call to Action -->
-    <section class="py-12 sm:py-16 md:py-20 text-center px-4">
-      <h2
-        class="text-2xl md:text-3xl font-serif mb-4 md:mb-6 text-[rgb(var(--text-primary))]"
-      >
-        Join the Movement
-      </h2>
-      <p
-        class="text-lg md:text-xl text-[rgb(var(--text-secondary))] mb-8 max-w-2xl mx-auto"
-      >
-        Whether you're passionate about arts, sustainability, or community
-        development, there's a place for you in our initiatives.
-      </p>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="/contact" class="btn btn-primary w-full sm:w-auto">
-          Get in touch with Harry
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+  <!-- ============================================================ -->
+  <!-- Call to action                                               -->
+  <!-- ============================================================ -->
+  <section class="wrap section" aria-labelledby="cta-heading">
+    <div class="panel-ink px-6 py-12 sm:px-12 sm:py-16">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="kicker kicker-plain justify-center">Get involved</p>
+        <h2 id="cta-heading" class="heading-2 mt-4 text-white">
+          Join the movement
+        </h2>
+        <p class="mt-4 text-[rgb(var(--ink-panel-muted))] sm:text-lg">
+          Whether you care about the arts, sustainability or community
+          development, there is a place for you in these initiatives.
+        </p>
+        <div
+          class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
+        >
+          <a href="/contact" class="btn btn-on-ink btn-lg">
+            Get in touch with Harry
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
               stroke-width="2"
-              d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </a>
-        <a href="/blog" class="btn btn-secondary w-full sm:w-auto">
-          Read Harry's stories
-        </a>
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"
+              ></path>
+            </svg>
+          </a>
+          <a href="/blog" class="btn btn-ghost-on-ink btn-lg">
+            Read Harry's stories
+          </a>
+        </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
   <style>
-    .clamp-3 {
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+    /*
+     * The hero portrait sits on a ruled brand plate with a hairline and a
+     * monogram, and the caption straddles the bottom edge. No masks, no blobs.
+     */
+    .portrait-frame {
+      position: relative;
+      margin: 0;
+      padding-bottom: 1.25rem;
     }
 
-    /* The portrait sits on a brand-tinted blob that has to work in both
-       themes: a pale disc would glare against the dark background. */
-    .hero-blob {
-      fill: rgb(var(--brand-100));
-    }
-
-    :global(:root.dark) .hero-blob {
-      fill: rgb(var(--brand-900));
-    }
-
-    /* Same brand duotone the passion cards use, so the skyline illustration
-       stops reading as lavender next to the blue system. */
-    .duotone {
-      isolation: isolate;
-    }
-
-    .duotone-image {
-      filter: grayscale(1) contrast(1.05);
-    }
-
-    .duotone-tint {
+    .portrait-plate {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border-radius: var(--r-xl);
+      border: 1px solid rgb(var(--nav-border));
       background: linear-gradient(
-        150deg,
-        rgb(var(--brand-900)) 0%,
-        rgb(var(--brand-600)) 60%,
-        rgb(var(--brand-300)) 100%
+        165deg,
+        rgb(var(--brand-100)) 0%,
+        rgb(var(--brand-200)) 100%
       );
-      mix-blend-mode: color;
+      overflow: hidden;
+      box-shadow: var(--shadow-2);
+    }
+
+    .portrait-plate::after {
+      /* A quiet ruled ground so the plate is not a flat swatch. */
+      content: '';
+      position: absolute;
+      inset: 0;
       pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(var(--brand-700), 0.11) 0 1px,
+        transparent 1px 14px
+      );
+    }
+
+    :global(:root.dark) .portrait-plate {
+      background: linear-gradient(
+        165deg,
+        rgb(var(--brand-900)) 0%,
+        rgb(var(--brand-950)) 100%
+      );
+    }
+
+    :global(:root.dark) .portrait-plate::after {
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(var(--brand-300), 0.12) 0 1px,
+        transparent 1px 14px
+      );
+    }
+
+    .portrait-mark {
+      position: absolute;
+      top: 1rem;
+      left: 1.25rem;
+      z-index: 1;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: rgba(var(--brand-700), 0.55);
+    }
+
+    :global(:root.dark) .portrait-mark {
+      color: rgba(var(--brand-200), 0.55);
+    }
+
+    .portrait-img {
+      position: absolute;
+      left: 50%;
+      bottom: -1px;
+      z-index: 2;
+      width: 92%;
+      height: auto;
+      transform: translateX(-50%);
+      filter: drop-shadow(0 16px 26px rgba(var(--brand-950), 0.3));
+    }
+
+    .portrait-caption {
+      position: absolute;
+      left: 1.25rem;
+      bottom: 0;
+      z-index: 3;
+      padding: 0.4375rem 0.875rem;
+      border-radius: var(--r-xs);
+      background-color: rgb(var(--card-bg));
+      border: 1px solid rgb(var(--nav-border));
+      box-shadow: var(--shadow-1);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgb(var(--text-secondary));
+      white-space: nowrap;
+    }
+
+    @media (max-width: 400px) {
+      .portrait-caption {
+        left: 0.75rem;
+        font-size: 0.625rem;
+        letter-spacing: 0.08em;
+      }
     }
   </style>
 </AppLayout>
