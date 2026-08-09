@@ -4,8 +4,6 @@ import { author, defaultMeta } from "@data/socials";
 
 import navigation from "@data/navigation.json";
 import ThemeToggle from "@components/ThemeToggle.astro";
-import Bubbles from "@components/Bubbles.astro";
-import TextBubbles from "@components/TextBubbles.astro";
 import MusicPlayer from "@components/MusicPlayer.astro";
 /*
  * Fonts: latin subsets only, and only the weights the design actually uses.
@@ -35,10 +33,6 @@ interface Props {
   lastmod?: Date;
   /** Article pages get a calm background and a reading surface. */
   article?: boolean;
-  /** Floating keyword bubbles: home and ventures only. */
-  textBubbles?: boolean;
-  /** Full-strength background bubbles (the homepage keeps them). */
-  bubblesFull?: boolean;
   /** Extra JSON-LD emitted alongside the site-wide graph. */
   jsonLd?: Record<string, unknown> | null;
 }
@@ -51,8 +45,6 @@ const {
   tags = defaultMeta.keywords,
   lastmod,
   article = false,
-  textBubbles = false,
-  bubblesFull = false,
   jsonLd = null,
 } = Astro.props;
 
@@ -345,10 +337,8 @@ const graph = {
 
     <script type="application/ld+json" set:html={JSON.stringify(graph)} />
   </head>
-  <body class:list={[article && "reading-mode", bubblesFull && "bubbles-full"]}>
+  <body class:list={[article && "reading-mode"]}>
     <a class="skip-link" href="#main">Skip to main content</a>
-    {!article && <Bubbles />}
-    {textBubbles && <TextBubbles />}
     <div
       class="flex flex-col min-h-screen text-[rgb(var(--text-primary))] relative z-10"
     >
@@ -359,12 +349,6 @@ const graph = {
             <a href="/" class="wordmark text-base sm:text-lg">
               <span class="sm:hidden">HH</span>
               <span class="hidden sm:inline">Harry Hayman</span>
-              <span class="wordmark-rule hidden md:block" aria-hidden="true"
-              ></span>
-              <span
-                class="hidden text-[0.75rem] font-sans font-semibold uppercase tracking-[0.18em] text-[rgb(var(--text-muted))] md:inline"
-                >Philadelphia</span
-              >
             </a>
             <ul class="flex items-center gap-0.5 sm:gap-1">
               {

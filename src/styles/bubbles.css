@@ -1,12 +1,12 @@
 /*
- * Ambient background field: the room the paper sits in.
+ * The hero field: five drifting orbs from the light-blue brand ramp, merged by
+ * an SVG goo filter so they read as one living field rather than five circles.
  *
- * Five drifting orbs built from the light-blue brand ramp, merged by an SVG
- * goo filter so they read as one living field rather than five circles.
- *
- *   homepage (.bubbles-full)  full presence, clearly floating
- *   every other page          a calm wash
- *   articles                  none at all (AppLayout never renders it)
+ * Scope: the homepage hero band and nowhere else. The component is rendered
+ * inside `.hero-band`, which clips it, so the field never runs down the rest
+ * of the homepage scroll and no other page carries it at all. The wrapper is
+ * absolutely positioned for that reason: a fixed field would follow the
+ * viewport past the band it belongs to.
  *
  * The wrapper is inert: no pointer events, no cursor tricks, and every
  * animation stops under prefers-reduced-motion.
@@ -21,9 +21,9 @@
   --gradient-4: 46, 139, 224; /* brand-500 */
   --gradient-5: 221, 238, 255; /* brand-100 */
 
-  --bubble-opacity: 0.5;
+  --bubble-opacity: 0.72;
   --bubble-blend: normal;
-  --gradient-intensity: 0.13;
+  --gradient-intensity: 0.44;
   --bubble-blur: 34px;
 }
 
@@ -34,45 +34,39 @@
   --gradient-4: 46, 139, 224; /* brand-500 */
   --gradient-5: 20, 72, 117; /* brand-800 */
 
-  --bubble-opacity: 0.62;
+  --bubble-opacity: 0.78;
   --bubble-blend: screen;
-  --gradient-intensity: 0.2;
+  --gradient-intensity: 0.5;
   --bubble-blur: 40px;
 }
 
-/* The homepage keeps its floating bubbles at full presence (per Anuj);
-   every other page gets the calm wash above, articles get none. */
-body.bubbles-full {
-  --gradient-intensity: 0.44;
-  --bubble-opacity: 0.72;
-}
-
-:root.dark body.bubbles-full {
-  --gradient-intensity: 0.5;
-  --bubble-opacity: 0.78;
-}
-
-/* Article pages: kept for safety if a reading page ever renders the field. */
-body.reading-mode .bubbles-wrapper {
-  opacity: 0.05;
-}
-
-:root.dark body.reading-mode .bubbles-wrapper {
-  opacity: 0.14;
+/* The band the field lives in. It clips the orbs and isolates the blend, so
+   the effect starts and ends with the hero. */
+.hero-band {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .bubbles-wrapper {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
   mix-blend-mode: var(--bubble-blend);
   opacity: var(--bubble-opacity);
   background-color: transparent;
-  contain: strict;
+  contain: layout paint style;
+  /* Fade the field out before the band ends, so the boundary reads as
+     atmosphere thinning rather than a cropped rectangle. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 58%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
 }
 
 .gradient-container {
