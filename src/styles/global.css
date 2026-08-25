@@ -195,27 +195,17 @@
   /* Type roles                                                        */
   /* ---------------------------------------------------------------- */
 
+  /* The kicker is the label alone. It used to carry a short leading rule
+     drawn with ::before; that dash is gone site-wide, so there is no
+     pseudo-element and no gap to reserve for one. */
   .kicker {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: rgb(var(--accent));
-  }
-
-  .kicker::before {
-    content: '';
-    width: 1.75rem;
-    height: 1px;
-    background-color: currentColor;
-    opacity: 0.6;
-  }
-
-  .kicker-plain::before {
-    content: none;
   }
 
   .display-1 {
