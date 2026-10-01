@@ -1,5 +1,3 @@
-@import './bubbles.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -40,8 +38,11 @@
     --card-bg: 255, 255, 255;
     --nav-border: 214, 228, 242;
     --rule-strong: 178, 205, 232;
-    --button-primary: 27, 111, 191;
-    --button-hover: 21, 87, 150;
+    /* The primary action is ink, not blue: a deep navy pill reads as the
+       one decisive control on a page, and blue stays the colour of links,
+       labels and focus. White on this navy is 14.9:1. */
+    --button-primary: 12, 36, 56;
+    --button-hover: 20, 60, 94;
     --button-on: 255, 255, 255;
     --accent: 27, 111, 191;
     --accent-soft: 240, 247, 255;
@@ -51,6 +52,18 @@
     --ink-panel: 12, 36, 56;
     --ink-panel-text: 255, 255, 255;
     --ink-panel-muted: 185, 220, 255;
+
+    /* Soft hero surface: brand-700 laid over white at 7% and 17%. */
+    --hero-from: 236, 242, 247;
+    --hero-to: 218, 228, 238;
+    /* The quiet second line of display type. 3.2:1 on --hero-from, which
+       clears AA for text this large. */
+    --display-soft: 114, 138, 158;
+    /* Tint behind the frosted card over the portrait. */
+    --glass-tint: 12, 36, 56;
+    /* Pinstripe ground, drawn at a few percent so it reads as paper. */
+    --hatch: 20, 60, 94;
+    --hatch-alpha: 0.032;
 
     /* Elevation: three levels, nothing heavier. */
     --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05);
@@ -66,6 +79,7 @@
     --r-md: 0.75rem;
     --r-lg: 1.125rem;
     --r-xl: 1.75rem;
+    --r-2xl: 2rem;
     --r-pill: 999px;
 
     /* Rhythm */
@@ -91,9 +105,10 @@
     --card-bg: 20, 29, 43;
     --nav-border: 39, 54, 74;
     --rule-strong: 56, 76, 101;
-    --button-primary: 86, 169, 242;
-    --button-hover: 138, 198, 251;
-    --button-on: 8, 20, 33;
+    /* Inverted for the dark ground: a pale pill with navy ink. */
+    --button-primary: 241, 245, 249;
+    --button-hover: 221, 238, 255;
+    --button-on: 12, 36, 56;
     --accent: 138, 198, 251;
     --accent-soft: 21, 34, 52;
     --ring: 138, 198, 251;
@@ -101,6 +116,14 @@
     --ink-panel: 12, 36, 56;
     --ink-panel-text: 255, 255, 255;
     --ink-panel-muted: 185, 220, 255;
+
+    --hero-from: 24, 36, 53;
+    --hero-to: 15, 26, 40;
+    /* 4.7:1 on --hero-from. */
+    --display-soft: 122, 144, 166;
+    --glass-tint: 8, 18, 30;
+    --hatch: 138, 198, 251;
+    --hatch-alpha: 0.026;
 
     --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-2: 0 2px 4px -2px rgba(0, 0, 0, 0.5),
@@ -120,9 +143,20 @@
 
   body {
     background-color: rgb(var(--background));
+    /* A fine diagonal pinstripe, the page's only texture. Articles drop it
+       (see .reading-mode) so long reads sit on a clean ground. */
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(var(--hatch), var(--hatch-alpha)) 0 1px,
+      transparent 1px 8px
+    );
     transition: background-color 0.3s ease;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  body.reading-mode {
+    background-image: none;
   }
 
   /* Keep the scrollbar hidden the way the site always has, but never hide
@@ -331,18 +365,28 @@
      outranks a single class, so without this a button that has already been
      clicked loses its own ink and falls back to the inherited colour. That is
      what turned the white CTA pill into a white label on a white pill. */
+  /* A soft top light on the ink pill, the only gloss in the system. */
   .btn-primary,
   .btn-primary:visited {
     background-color: rgb(var(--button-primary));
+    background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 60%
+    );
     color: rgb(var(--button-on));
-    box-shadow: 0 8px 20px -12px rgba(var(--brand-700), 0.9);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 8px 18px -10px rgba(var(--brand-950), 0.75);
   }
 
   .btn-primary:hover,
   .btn-primary:visited:hover {
     background-color: rgb(var(--button-hover));
     color: rgb(var(--button-on));
-    box-shadow: 0 12px 24px -12px rgba(var(--brand-700), 0.95);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 12px 22px -10px rgba(var(--brand-950), 0.85);
   }
 
   .btn-secondary,
@@ -447,10 +491,80 @@
   /* ---------------------------------------------------------------- */
 
   .site-nav {
-    background-color: rgba(var(--nav-bg), 0.88);
+    background-color: rgba(var(--background), 0.86);
     backdrop-filter: saturate(160%) blur(14px);
     -webkit-backdrop-filter: saturate(160%) blur(14px);
-    border-bottom: 1px solid rgb(var(--nav-border));
+    border-bottom: 1px solid rgba(var(--nav-border), 0.7);
+  }
+
+  /* Wordmark left, sections centred, one action right. Below 768px the
+     sections sit to the right of the wordmark, beside the action. */
+  .nav-bar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 4rem;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.125rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 768px) {
+    .nav-bar {
+      gap: 1rem;
+    }
+
+    .nav-links {
+      justify-content: center;
+      gap: 0.375rem;
+    }
+  }
+
+  .nav-cta,
+  .nav-cta:visited {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0 0.875rem;
+    border-radius: var(--r-md);
+    background-color: rgb(var(--button-primary));
+    background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 60%
+    );
+    color: rgb(var(--button-on));
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 6px 14px -9px rgba(var(--brand-950), 0.8);
+    transition:
+      background-color var(--dur-1) var(--ease),
+      transform var(--dur-1) var(--ease);
+  }
+
+  .nav-cta:hover {
+    background-color: rgb(var(--button-hover));
+    color: rgb(var(--button-on));
+    transform: translateY(-1px);
+  }
+
+  @media (min-width: 640px) {
+    .nav-cta {
+      padding: 0 1.125rem;
+      font-size: 0.9375rem;
+    }
   }
 
   .nav-link {
@@ -484,10 +598,12 @@
   }
 
   .nav-link[aria-current='page'] {
-    color: rgb(var(--brand-700));
-    background-color: rgb(var(--accent-soft));
+    color: rgb(var(--text-primary));
     font-weight: 600;
-    box-shadow: inset 0 -2px 0 0 rgb(var(--button-primary));
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.45em;
+    text-decoration-color: rgb(var(--accent));
   }
 
   :root.dark .nav-link[aria-current='page'] {

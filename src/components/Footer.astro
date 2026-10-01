@@ -1,5 +1,13 @@
 ---
 import { author } from "@data/socials";
+import VentureLogos from "@components/VentureLogos.astro";
+
+interface Props {
+  /** The ventures logo row. Off on the homepage, which has its own band. */
+  ventures?: boolean;
+}
+
+const { ventures = true } = Astro.props;
 const currentYear = new Date().getFullYear();
 
 /*
@@ -74,6 +82,16 @@ const socials = [
   class="mt-auto border-t border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))]"
 >
   <div class="wrap py-12 sm:py-16">
+    {
+      ventures && (
+        <div class="mb-10 border-b border-[rgb(var(--nav-border))] pb-10 sm:mb-12 sm:pb-12">
+          <p class="mb-6 text-center text-xs font-semibold uppercase tracking-[0.18em] text-[rgb(var(--text-muted))]">
+            The Harry Hayman ventures
+          </p>
+          <VentureLogos variant="static" />
+        </div>
+      )
+    }
     <div class="grid gap-10 md:grid-cols-12 md:gap-8">
       <!-- Identity -->
       <div class="md:col-span-5">

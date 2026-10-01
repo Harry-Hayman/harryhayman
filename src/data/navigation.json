@@ -18,6 +18,8 @@
   },
   {
     "href": "/contact",
-    "text": "Contact"
+    "text": "Contact",
+    "label": "Get in touch",
+    "cta": true
   }
 ]

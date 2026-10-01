@@ -94,11 +94,24 @@ const personal = [
     ],
   },
 ];
+
+/* This page is about one person, which is what ProfilePage markup says. The
+   person himself is the shared node in the site-wide graph. */
+const profilePage = {
+  "@type": "ProfilePage",
+  "@id": "https://harryhayman.com/about#profile",
+  url: "https://harryhayman.com/about",
+  name: "About Harry Hayman",
+  mainEntity: { "@id": "https://harryhayman.com/#person" },
+  isPartOf: { "@id": "https://harryhayman.com/#website" },
+  inLanguage: "en-US",
+};
 ---
 
 <AppLayout
   title="About Harry Hayman | Philadelphia Hospitality Leader"
   description="Who is Harry Hayman? From dishwasher at 17 to CEO of Gemini Hospitality Consultants: the Philadelphia hospitality leader's career, ventures and community work."
+  jsonLd={profilePage}
 >
   <!-- Header -->
   <section class="wrap pt-12 sm:pt-16">

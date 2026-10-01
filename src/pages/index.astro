@@ -2,32 +2,37 @@
 export const prerender = true;
 
 import AppLayout from "@layouts/AppLayout.astro";
-import Bubbles from "@components/Bubbles.astro";
+import VentureLogos from "@components/VentureLogos.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import { ventures } from "../data/ventures";
-import authorImage from "../assets/data/harryhayman images/harryhayman_bg_removed.png";
+/* Cut-out from the studio shoot, upscaled 2x. A cool black and white grade of
+   the same cut-out sits beside it (harry-hayman-portrait-bw.webp) if the hero
+   should ever match the monochrome reference exactly: swap this import. */
+import portrait from "../assets/data/harryhayman images/harry-hayman-portrait-color.webp";
 import skylineImage from "../assets/data/homepage_images/looking_at_philadelphia_skyline.jpg";
 
-const recentPosts = (await getCollection("blog"))
-  .filter((post) => !post.data.draft)
+const posts = (await getCollection("blog")).filter((post) => !post.data.draft);
+
+const recentPosts = [...posts]
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 
-/* Roles and organisations, all of them already stated on the about page. */
-const credentials = [
-  {
-    role: "CEO",
-    org: "Gemini Hospitality Consultants",
-  },
-  {
-    role: "Senior Fellow",
-    org: "The Economy League of Greater Philadelphia",
-  },
-  {
-    role: "Founder",
-    org: "Six Philadelphia ventures and initiatives",
-  },
+/*
+ * Hero figures. Each one is counted at build time or already stated on this
+ * site, never typed in: the ventures list, the blog collection (rounded down
+ * to the last fifty so the "+" stays true as posts are added), and Harry's
+ * first job on the about page timeline.
+ */
+const storyCount =
+  posts.length >= 50
+    ? `${Math.floor(posts.length / 50) * 50}+`
+    : String(posts.length);
+
+const stats = [
+  { value: String(ventures.length), label: "Ventures founded or led" },
+  { value: storyCount, label: "Stories on the blog" },
+  { value: "17", label: "Age he started, washing dishes" },
 ];
 
 /*
@@ -75,83 +80,86 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
 <AppLayout
   title="Harry Hayman | Philadelphia Hospitality, Jazz & Community"
   description="Meet Harry Hayman, the Philadelphia hospitality entrepreneur behind Gemini Hospitality Consultants, Feed Philly Coalition and the Philadelphia Jazz Experience."
+  footerVentures={false}
 >
   <!-- ============================================================ -->
-  <!-- Hero: who Harry is, in one screen                            -->
-  <!-- The floating field lives here and only here: the band clips  -->
-  <!-- it, so it never runs on down the page or onto another page.  -->
+  <!-- Hero: one soft card. Harry steps out of its top edge, the    -->
+  <!-- way into working with him rests on glass over the portrait,  -->
+  <!-- and the ventures he built run underneath.                    -->
   <!-- ============================================================ -->
-  <div class="hero-band">
-    <Bubbles />
-    <section
-      class="wrap relative z-10 pt-10 pb-12 sm:pt-16 sm:pb-16"
-      aria-labelledby="hero-heading"
-    >
-    <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
-      <div class="lg:col-span-7">
-        <p class="kicker">Philadelphia, Pennsylvania</p>
-        <h1 id="hero-heading" class="display-1 mt-5">
-          Harry <span class="italic text-[rgb(var(--accent))]">Hayman</span>
-        </h1>
-        <p class="lede mt-6 max-w-[46ch]">
-          Hospitality entrepreneur, jazz advocate and philanthropist, working
-          across Philadelphia's restaurants, music rooms and community kitchens.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/ventures" class="btn btn-primary btn-lg">
-            Explore Harry's ventures
-          </a>
-          <a href="/about" class="btn btn-secondary btn-lg">
-            Read Harry's story
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="wrap">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <h1 id="hero-heading" class="hero-title">
+            <span class="block">Harry Hayman</span>
+            <span class="hero-title-soft block">of Philadelphia</span>
+          </h1>
+          <p class="hero-lede">
+            Hospitality entrepreneur, jazz advocate and philanthropist. CEO of
+            Gemini Hospitality Consultants and a Senior Fellow at The Economy
+            League of Greater Philadelphia.
+          </p>
+          <div class="hero-actions">
+            <a href="/ventures" class="btn btn-primary">
+              Explore Harry's ventures
+            </a>
+            <a href="/about" class="btn btn-secondary">Read Harry's story</a>
+          </div>
+          <dl class="hero-stats">
+            {
+              stats.map((stat) => (
+                <div class="hero-stat">
+                  <dt>{stat.label}</dt>
+                  <dd>{stat.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+
+        <div class="hero-visual">
+          <Image
+            src={portrait}
+            alt="Harry Hayman, smiling with his arms crossed, in a plaid blazer"
+            class="hero-portrait"
+            widths={[360, 480, 640, 800, 1000, 1261]}
+            sizes="(min-width: 1160px) 640px, (min-width: 640px) 490px, 118vw"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <a href="/contact" class="hero-glass">
+            <span class="hero-glass-text">
+              <span class="hero-glass-kicker">Work with Harry</span>
+              <span class="hero-glass-title">
+                Consulting, talks and partnerships
+              </span>
+              <span class="hero-glass-body">
+                Email or call about consulting, speaking or the initiatives.
+              </span>
+            </span>
+            <span class="hero-glass-arrow" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M7 17 17 7M8.5 7H17v8.5"></path>
+              </svg>
+            </span>
           </a>
         </div>
       </div>
 
-      <!-- Portrait: a designed plate, not a floating blob -->
-      <div class="lg:col-span-5">
-        <figure class="portrait-frame">
-          <div class="portrait-plate">
-            <span class="portrait-mark" aria-hidden="true">HH</span>
-            <Image
-              src={authorImage}
-              alt="Harry Hayman"
-              class="portrait-img"
-              width={501}
-              height={597}
-              format="webp"
-              quality={80}
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-              sizes="(max-width: 640px) 68vw, 350px"
-            />
-          </div>
-          <figcaption class="portrait-caption">
-            Harrison Graham Hayman IV
-          </figcaption>
-        </figure>
+      <div class="hero-ventures">
+        <VentureLogos variant="marquee" />
       </div>
     </div>
-
-    <!-- Credibility strip -->
-    <dl
-      class="panel mt-12 grid divide-y divide-[rgb(var(--nav-border))] sm:mt-16 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
-    >
-      {
-        credentials.map((item) => (
-          <div class="px-5 py-5 sm:px-6 sm:py-6">
-            <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-[rgb(var(--accent))]">
-              {item.role}
-            </dt>
-            <dd class="mt-2 text-[0.9375rem] font-medium leading-snug text-[rgb(var(--text-primary))]">
-              {item.org}
-            </dd>
-          </div>
-        ))
-      }
-    </dl>
-    </section>
-  </div>
+  </section>
 
   <!-- ============================================================ -->
   <!-- Proof: the ventures, as an editorial index                   -->
@@ -267,13 +275,12 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
           src={skylineImage}
           alt="The Philadelphia skyline at dusk"
           class="h-full w-full object-cover object-center"
-          width={1408}
-          height={768}
+          widths={[640, 960, 1280, 1600]}
+          sizes="(max-width: 1152px) 100vw, 1152px"
           format="webp"
           quality={62}
           loading="lazy"
           decoding="async"
-          sizes="(max-width: 768px) 100vw, 1152px"
         />
       </div>
       <!-- The ramp is the type's reading surface, not decoration: measured
@@ -396,124 +403,273 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
 
   <style>
     /*
-     * The hero portrait sits on a ruled brand plate with a hairline and a
-     * monogram, and the caption straddles the bottom edge. No masks, no blobs.
+     * Hero. The card is one soft surface; the portrait is a cut-out that
+     * stands on the card's floor and rises through its top edge, so the card
+     * cannot clip it. The visual column clips only its bottom-right corner,
+     * to the card's own radius, and lets everything above the card through.
      */
-    .portrait-frame {
+    .hero {
+      --breakout: clamp(2.25rem, 4.5vw, 3.75rem);
+      padding-top: calc(var(--breakout) + clamp(1rem, 2.5vw, 2rem));
+      /* clip-path hides the cut-out where it crosses the card's sides, but
+         its box would still widen the page. clip, unlike hidden, leaves the
+         vertical axis free for the head rising above the card. */
+      overflow-x: clip;
+    }
+
+    .hero-card {
       position: relative;
-      width: 100%;
-      max-width: 17rem;
-      margin: 0 auto;
-      padding-bottom: 1.25rem;
+      isolation: isolate;
+      display: grid;
+      border-radius: var(--r-2xl);
+      background: linear-gradient(
+        100deg,
+        rgb(var(--hero-from)) 0%,
+        rgb(var(--hero-from)) 42%,
+        rgb(var(--hero-to)) 100%
+      );
     }
 
-    @media (min-width: 640px) {
-      .portrait-frame {
-        max-width: 21rem;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      /* Anchored to the right edge of its column so the hero has a hard
-         outer margin instead of drifting in the middle of the grid. */
-      .portrait-frame {
-        margin-right: 0;
-      }
-    }
-
-    .portrait-plate {
+    .hero-copy {
       position: relative;
-      aspect-ratio: 4 / 5;
-      border-radius: var(--r-xl);
-      border: 1px solid rgb(var(--nav-border));
-      background: linear-gradient(
-        165deg,
-        rgb(var(--brand-100)) 0%,
-        rgb(var(--brand-200)) 100%
-      );
-      overflow: hidden;
-      box-shadow: var(--shadow-2);
-    }
-
-    .portrait-plate::after {
-      /* A quiet ruled ground so the plate is not a flat swatch. */
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(var(--brand-700), 0.07) 0 1px,
-        transparent 1px 22px
-      );
-    }
-
-    :global(:root.dark) .portrait-plate {
-      background: linear-gradient(
-        165deg,
-        rgb(var(--brand-900)) 0%,
-        rgb(var(--brand-950)) 100%
-      );
-    }
-
-    :global(:root.dark) .portrait-plate::after {
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(var(--brand-300), 0.09) 0 1px,
-        transparent 1px 22px
-      );
-    }
-
-    .portrait-mark {
-      position: absolute;
-      top: 1rem;
-      left: 1.25rem;
-      z-index: 1;
-      font-family: 'Playfair Display', Georgia, serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-      color: rgba(var(--brand-700), 0.55);
-    }
-
-    :global(:root.dark) .portrait-mark {
-      color: rgba(var(--brand-200), 0.55);
-    }
-
-    .portrait-img {
-      position: absolute;
-      left: 50%;
-      bottom: -1px;
       z-index: 2;
-      width: 92%;
-      height: auto;
-      transform: translateX(-50%);
-      filter: drop-shadow(0 16px 26px rgba(var(--brand-950), 0.3));
+      padding: clamp(1.75rem, 4.5vw, 3rem);
+      padding-bottom: clamp(1.5rem, 4vw, 3rem);
     }
 
-    .portrait-caption {
-      position: absolute;
-      left: 1.25rem;
-      bottom: 0;
-      z-index: 3;
-      padding: 0.4375rem 0.875rem;
-      border-radius: var(--r-xs);
-      background-color: rgb(var(--card-bg));
-      border: 1px solid rgb(var(--nav-border));
-      box-shadow: var(--shadow-1);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+    .hero-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 1.6rem + 3vw, 3.875rem);
+      line-height: 1.04;
+      letter-spacing: -0.022em;
+      color: rgb(var(--text-primary));
+    }
+
+    .hero-title-soft {
+      color: rgb(var(--display-soft));
+    }
+
+    .hero-lede {
+      margin-top: clamp(1rem, 2vw, 1.375rem);
+      max-width: 46ch;
+      font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+      line-height: 1.65;
       color: rgb(var(--text-secondary));
-      white-space: nowrap;
     }
 
-    @media (max-width: 400px) {
-      .portrait-caption {
-        left: 0.75rem;
-        font-size: 0.6875rem;
-        letter-spacing: 0.08em;
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: clamp(1.5rem, 2.5vw, 1.75rem);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, max-content));
+      gap: clamp(1.25rem, 3vw, 2.25rem);
+      margin-top: clamp(1.75rem, 3.5vw, 2.25rem);
+    }
+
+    /* Figure above its label, with dt kept first in the source. Packed to
+       the top so the figures share one line however the labels wrap. */
+    .hero-stat {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+      gap: 0.375rem;
+    }
+
+    .hero-stat dd {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(1.75rem, 1.45rem + 1.1vw, 2.375rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-variant-numeric: lining-nums;
+      color: rgb(var(--text-primary));
+    }
+
+    .hero-stat dt {
+      max-width: 8.25em;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      color: rgb(var(--text-muted));
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* Portrait and glass                                                */
+    /* ---------------------------------------------------------------- */
+
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+      min-height: clamp(22rem, 108vw, 28rem);
+      /* Open above the card, closed at its sides and floor, rounded at the
+         two lower corners the stacked layout shares with the card. */
+      clip-path: inset(-20rem 0 0 0 round 0 0 var(--r-2xl) var(--r-2xl));
+    }
+
+    .hero-portrait {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      height: 100%;
+      width: auto;
+      max-width: none;
+      transform: translateX(-50%);
+      /* A cut-out needs a floor shadow, not a box shadow. */
+      filter: drop-shadow(0 18px 30px rgba(var(--brand-950), 0.18));
+    }
+
+    .hero-glass {
+      position: absolute;
+      left: clamp(0.75rem, 3vw, 1.5rem);
+      right: clamp(0.75rem, 3vw, 1.5rem);
+      bottom: clamp(0.75rem, 3vw, 1.5rem);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.125rem 1.125rem 1.125rem 1.375rem;
+      border-radius: var(--r-lg);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      /* Dense enough that white text keeps 4.5:1 even over the beard. */
+      background-color: rgba(var(--glass-tint), 0.6);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 18px 40px -24px rgba(var(--brand-950), 0.7);
+      color: #fff;
+      transition:
+        background-color var(--dur-1) var(--ease),
+        transform var(--dur-1) var(--ease);
+    }
+
+    .hero-glass:hover {
+      background-color: rgba(var(--glass-tint), 0.7);
+    }
+
+    .hero-glass:hover .hero-glass-arrow {
+      transform: translate(2px, -2px);
+    }
+
+    .hero-glass:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+
+    .hero-glass-text {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 0;
+    }
+
+    .hero-glass-kicker {
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .hero-glass-title {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .hero-glass-body {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .hero-glass-arrow {
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: var(--r-md);
+      background-color: #fff;
+      color: rgb(var(--brand-950));
+      box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.5);
+      transition: transform var(--dur-1) var(--ease);
+    }
+
+    .hero-glass-arrow svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    /* Two columns once the copy and the portrait both have room. Below this
+       the portrait would have to shrink inside its card to keep clear of the
+       figures, and the head would stop rising through the top edge, so the
+       card stacks instead. */
+    @media (min-width: 1160px) {
+      .hero-card {
+        grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+        min-height: 30rem;
+      }
+
+      .hero-copy {
+        padding-right: 0;
+        align-self: center;
+      }
+
+      .hero-visual {
+        min-height: 0;
+        clip-path: inset(-20rem 0 0 -16rem round 0 0 var(--r-2xl) 0);
+      }
+
+      /* Stands on the card's floor and rises through its top edge. The
+         card's right edge crops the far elbow, as in a portrait plate. */
+      .hero-portrait {
+        left: auto;
+        right: -13%;
+        height: calc(100% + var(--breakout));
+        transform: none;
+      }
+
+      .hero-glass {
+        left: auto;
+        right: clamp(1.5rem, 3vw, 2.5rem);
+        bottom: clamp(1.5rem, 3vw, 2.5rem);
+        width: min(21rem, 78%);
+      }
+    }
+
+    /* Stacked, with room to spare: portrait to the right, glass to the left. */
+    @media (min-width: 640px) and (max-width: 1159px) {
+      .hero-portrait {
+        left: auto;
+        right: 6%;
+        transform: none;
+      }
+
+      .hero-glass {
+        right: auto;
+        width: min(22rem, 52%);
+      }
+    }
+
+    .hero-ventures {
+      margin-top: clamp(1.75rem, 4vw, 2.75rem);
+    }
+
+    @media (max-width: 479px) {
+      .hero-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-stat dt {
+        font-size: 0.75rem;
+      }
+
+      .hero-actions .btn {
+        flex: 1 1 100%;
       }
     }
   </style>

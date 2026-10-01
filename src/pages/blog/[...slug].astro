@@ -58,18 +58,60 @@ const articleSchema = {
     post.data.tags && post.data.tags.length
       ? post.data.tags.join(", ")
       : undefined,
-  author: { "@id": "https://harryhayman.com/#person" },
+  /* Named inline as well as by reference, so a parser that reads this
+     object on its own still finds a real author. */
+  author: {
+    "@type": "Person",
+    "@id": "https://harryhayman.com/#person",
+    name: "Harry Hayman",
+    url: "https://harryhayman.com/about",
+  },
   publisher: { "@id": "https://harryhayman.com/#person" },
+  /* The generated share card: Article results need an image to qualify. */
+  image: new URL(`/image/${post.slug}.png`, Astro.site).href,
 };
+
+/* The same trail the visible breadcrumb shows, for the results page. */
+const breadcrumbSchema = {
+  "@type": "BreadcrumbList",
+  "@id": `${canonical}#breadcrumb`,
+  itemListElement: [
+    { name: "Home", item: new URL("/", Astro.site).href },
+    { name: "Blog", item: new URL("/blog", Astro.site).href },
+    ...(post.data.category
+      ? [
+          {
+            name: post.data.category,
+            item: new URL(`/blog/category/${post.data.category}`, Astro.site)
+              .href,
+          },
+        ]
+      : []),
+    { name: post.data.title },
+  ].map((crumb, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    ...crumb,
+  })),
+};
+
+/*
+ * Past about 60 characters a results page cuts the title off, and the part
+ * it cuts is the " | Harry Hayman" suffix. Results already show the site
+ * name from the WebSite markup, so a long headline goes out on its own
+ * instead of ending in an ellipsis.
+ */
+const suffixedTitle = `${post.data.title} | Harry Hayman`;
+const pageTitle = suffixedTitle.length <= 60 ? suffixedTitle : post.data.title;
 ---
 
 <AppLayout
-  title={`${post.data.title} | Harry Hayman`}
+  title={pageTitle}
   description={post.data.description}
   pubDate={post.data.pubDate}
   tags={post.data.tags}
   article={true}
-  jsonLd={articleSchema}
+  jsonLd={[articleSchema, breadcrumbSchema]}
   ogImage={{
     src: `/image/${post.slug}.png`,
     alt: `${post.data.title}, by Harry Hayman`,

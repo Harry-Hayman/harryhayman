@@ -18,7 +18,17 @@ import "@fontsource/playfair-display/latin-700-italic.css";
 import "@fontsource/poppins/latin-400.css";
 import "@fontsource/poppins/latin-500.css";
 import "@fontsource/poppins/latin-600.css";
+/*
+ * The two faces every page paints first: the serif of the wordmark and the
+ * headings, and the body sans. Preloading them lets the browser fetch both
+ * while it is still reading the head, instead of discovering them only after
+ * the stylesheet has been parsed. These resolve to the same hashed files the
+ * @font-face rules above point at, so nothing downloads twice.
+ */
+import playfairBold from "@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff2?url";
+import poppinsRegular from "@fontsource/poppins/files/poppins-latin-400-normal.woff2?url";
 import Footer from "@components/Footer.astro";
+import personPhoto from "../assets/data/harryhayman images/Harry-Hayman.jpg";
 import "@styles/global.css";
 
 interface Props {
@@ -33,8 +43,10 @@ interface Props {
   lastmod?: Date;
   /** Article pages get a calm background and a reading surface. */
   article?: boolean;
-  /** Extra JSON-LD emitted alongside the site-wide graph. */
-  jsonLd?: Record<string, unknown> | null;
+  /** Extra JSON-LD node(s) emitted alongside the site-wide graph. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
+  /** The ventures logo row in the footer. The homepage carries its own. */
+  footerVentures?: boolean;
 }
 
 const {
@@ -46,7 +58,12 @@ const {
   lastmod,
   article = false,
   jsonLd = null,
+  footerVentures = true,
 } = Astro.props;
+
+/* Contact is the one action in the bar, so it is drawn as a button. */
+const navLinks = navigation.filter((item) => !item.cta);
+const navAction = navigation.find((item) => item.cta);
 
 const pageTitle = title || defaultMeta.title;
 const ogImageURL = new URL(ogImage.src, Astro.site).href;
@@ -61,7 +78,9 @@ const person = {
   name: "Harry Hayman",
   alternateName: "Harrison Graham Hayman IV",
   url: "https://harryhayman.com",
-  image: "https://harryhayman.com/banner.png",
+  /* A photograph of Harry, not the text banner, so a knowledge panel or a
+     rich result has a face to show. */
+  image: new URL(personPhoto.src, Astro.site).href,
   description:
     "Philadelphia business leader, hospitality entrepreneur, and philanthropist known for work in the restaurant industry and community development through Feed Philly Coalition and The Philadelphia Jazz Experience.",
   jobTitle: "Hospitality Entrepreneur and Community Leader",
@@ -176,11 +195,11 @@ const website = {
   publisher: { "@id": "https://harryhayman.com/#person" },
 };
 
+const extraNodes = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
 const graph = {
   "@context": "https://schema.org",
-  "@graph": jsonLd
-    ? [person, organization, website, jsonLd]
-    : [person, organization, website],
+  "@graph": [person, organization, website, ...extraNodes],
 };
 ---
 
@@ -190,6 +209,20 @@ const graph = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{pageTitle}</title>
+    <link
+      rel="preload"
+      href={playfairBold}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={poppinsRegular}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="canonical" href={canonicalURL} />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
@@ -345,20 +378,36 @@ const graph = {
       <!-- Navigation -->
       <nav class="sticky top-0 z-50 site-nav" aria-label="Primary">
         <div class="wrap">
-          <div class="flex min-h-[3.75rem] items-center justify-between gap-2">
+          <div class="nav-bar">
             <a href="/" class="wordmark text-base sm:text-lg">
-              <span class="sm:hidden">HH</span>
-              <span class="hidden sm:inline">Harry Hayman</span>
+              <span class="sm:hidden" aria-hidden="true">HH</span>
+              <span class="sr-only sm:not-sr-only">Harry Hayman</span>
             </a>
-            <ul class="flex items-center gap-0.5 sm:gap-1">
+            <ul class="nav-links">
               {
-                navigation.map((item) => (
-                  <li class:list={[item.mobileHidden && "hidden sm:block"]}>
+                navLinks.map((item) => (
+                  <li class:list={[item.mobileHidden && "hidden md:block"]}>
                     <Link href={item.href} text={item.text} />
                   </li>
                 ))
               }
             </ul>
+            {
+              navAction && (
+                <a
+                  href={navAction.href}
+                  class="nav-cta"
+                  aria-current={
+                    Astro.url.pathname.startsWith(navAction.href)
+                      ? "page"
+                      : undefined
+                  }
+                >
+                  <span class="sm:hidden">{navAction.text}</span>
+                  <span class="hidden sm:inline">{navAction.label}</span>
+                </a>
+              )
+            }
           </div>
         </div>
       </nav>
@@ -375,7 +424,7 @@ const graph = {
       <MusicPlayer />
 
       <!-- Footer -->
-      <Footer />
+      <Footer ventures={footerVentures} />
     </div>
 
     <script is:inline>
