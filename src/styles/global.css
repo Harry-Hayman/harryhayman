@@ -3,6 +3,67 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------ */
+/* Metric-matched stand-ins for the brand fonts                        */
+/* Until Playfair Display and Poppins arrive, text is set in the       */
+/* visitor's own Georgia or Arial, rescaled so each line wraps where   */
+/* the brand font will. Without this the text reflowed on swap and the */
+/* page jumped (Lighthouse traced the remaining shift on posts to      */
+/* "web font loaded"). Values come from the font files: average glyph  */
+/* width for size-adjust, and the brand font's own vertical metrics.   */
+/* Liberation Sans and Arimo share Arial's metrics on Linux.           */
+/* ------------------------------------------------------------------ */
+
+@font-face {
+  font-family: 'Playfair Display Fallback';
+  src: local('Georgia');
+  font-weight: 400;
+  size-adjust: 101.48%;
+  ascent-override: 106.62%;
+  descent-override: 24.73%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback';
+  src: local('Georgia Bold'), local('Georgia-Bold');
+  font-weight: 700;
+  size-adjust: 89.43%;
+  ascent-override: 120.98%;
+  descent-override: 28.07%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Poppins Fallback';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Arimo');
+  font-weight: 400;
+  size-adjust: 111.56%;
+  ascent-override: 94.12%;
+  descent-override: 31.37%;
+  line-gap-override: 8.96%;
+}
+
+@font-face {
+  font-family: 'Poppins Fallback';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Arimo');
+  font-weight: 500;
+  size-adjust: 112.84%;
+  ascent-override: 93.05%;
+  descent-override: 31.02%;
+  line-gap-override: 8.86%;
+}
+
+@font-face {
+  font-family: 'Poppins Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Liberation Sans Bold'), local('Arimo Bold');
+  font-weight: 600;
+  size-adjust: 106.04%;
+  ascent-override: 99.02%;
+  descent-override: 33.01%;
+  line-gap-override: 9.43%;
+}
+
+/* ------------------------------------------------------------------ */
 /* Design tokens: "Broad Street Editorial"                             */
 /* A Philadelphia broadsheet crossed with a jazz club programme.       */
 /* Blue is ink: rules, numerals, kickers and one primary action per    */
@@ -186,7 +247,7 @@
   h1,
   h2,
   h3 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     letter-spacing: -0.015em;
   }
 }
@@ -243,7 +304,7 @@
   }
 
   .display-1 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     font-weight: 700;
     font-size: clamp(2.75rem, 1.9rem + 4.2vw, 5rem);
     line-height: 0.98;
@@ -251,7 +312,7 @@
   }
 
   .display-2 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     font-weight: 700;
     font-size: clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
     line-height: 1.06;
@@ -259,7 +320,7 @@
   }
 
   .heading-2 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     font-weight: 700;
     font-size: clamp(1.5rem, 1.25rem + 1.2vw, 2.125rem);
     line-height: 1.15;
@@ -267,7 +328,7 @@
   }
 
   .heading-3 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     font-weight: 700;
     font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.5rem);
     line-height: 1.25;
@@ -286,7 +347,7 @@
   }
 
   .index-num {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     font-weight: 700;
     font-size: 0.875rem;
     font-variant-numeric: tabular-nums;
@@ -614,7 +675,7 @@
     display: inline-flex;
     align-items: baseline;
     gap: 0.5rem;
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: rgb(var(--text-primary));

@@ -51,8 +51,8 @@ module.exports = {
         'hairline-strong': 'rgb(var(--rule-strong) / <alpha-value>)',
       },
       fontFamily: {
-        serif: ['Playfair Display', 'Georgia', 'serif'],
-        sans: ['Poppins', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Playfair Display Fallback', 'Georgia', 'serif'],
+        sans: ['Poppins', 'Poppins Fallback', 'system-ui', 'sans-serif'],
       },
       /*
        * One radius scale and one elevation scale for the whole site. Both are
@@ -92,7 +92,7 @@ module.exports = {
               },
             },
             'h1,h2,h3,h4': {
-              fontFamily: 'Playfair Display',
+              fontFamily: "'Playfair Display', 'Playfair Display Fallback', Georgia, serif",
               color: theme('colors.zinc.900'),
             },
           },
