@@ -7,12 +7,16 @@ interface Props extends HTMLAttributes<"a"> {
 }
 const { text, addClass, href, ...props } = Astro.props;
 
-const path = Astro.url.pathname;
-const target = typeof href === "string" ? href : href?.href;
+/* Compare without trailing slashes: links use the canonical `/blog/` form,
+   while the dev server reports `/blog` and production `/blog/`. */
+const trim = (value: string) => value.replace(/\/+$/, "");
+const path = trim(Astro.url.pathname);
+const rawTarget = typeof href === "string" ? href : href?.href;
+const target = rawTarget === undefined ? undefined : trim(rawTarget);
 
 let isActive = false;
-if (target === "/") {
-  isActive = path === "/" || path === "";
+if (target === "") {
+  isActive = path === "";
 } else if (target) {
   isActive = path === target || path.startsWith(target + "/");
 }

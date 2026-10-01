@@ -5,19 +5,19 @@
     "mobileHidden": true
   },
   {
-    "href": "/about",
+    "href": "/about/",
     "text": "About"
   },
   {
-    "href": "/ventures",
+    "href": "/ventures/",
     "text": "Ventures"
   },
   {
-    "href": "/blog",
+    "href": "/blog/",
     "text": "Blog"
   },
   {
-    "href": "/contact",
+    "href": "/contact/",
     "text": "Contact",
     "label": "Get in touch",
     "cta": true

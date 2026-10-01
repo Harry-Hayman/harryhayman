@@ -4,6 +4,7 @@ export const prerender = true;
 import AppLayout from "@layouts/AppLayout.astro";
 import { getCollection } from "astro:content";
 import BlogCard from "@components/BlogCard.astro";
+import { absolute, categoryPath, postPath } from "../../lib/paths";
 
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -66,11 +67,28 @@ const archiveYears = Object.keys(archiveByYear).sort(
 
 const shortDate = (date: Date) =>
   date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+
+/* The blog as a whole, with its newest posts, for search engines. */
+const blogNode = {
+  "@type": "Blog",
+  "@id": "https://harryhayman.com/blog/#blog",
+  url: "https://harryhayman.com/blog/",
+  name: "Harry Hayman's blog",
+  inLanguage: "en-US",
+  publisher: { "@id": "https://harryhayman.com/#person" },
+  blogPost: posts.slice(0, 10).map((post) => ({
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    url: absolute(postPath(post.slug)),
+    datePublished: post.data.pubDate.toISOString(),
+  })),
+};
 ---
 
 <AppLayout
   title="Blog | Harry Hayman on Philadelphia Hospitality and Jazz"
   description="Harry Hayman writes about Philadelphia restaurants, jazz nights, food security and community, with reviews and reflections from the city he works in."
+  jsonLd={blogNode}
 >
   <!-- Masthead -->
   <section class="wrap pt-12 sm:pt-16">
@@ -106,7 +124,7 @@ const shortDate = (date: Date) =>
           pubDate={lead.data.pubDate}
           image={lead.data.image}
           category={lead.data.category ?? undefined}
-          href={`/blog/${lead.slug}`}
+          href={postPath(lead.slug)}
           priority={true}
         />
       </section>
@@ -126,7 +144,7 @@ const shortDate = (date: Date) =>
           </h2>
           <div class="flex flex-wrap gap-2">
             {categories.map((category) => (
-              <a href={`/blog/category/${category}`} class="chip">
+              <a href={categoryPath(category)} class="chip">
                 {category}
               </a>
             ))}
@@ -157,7 +175,7 @@ const shortDate = (date: Date) =>
                 pubDate={post.data.pubDate}
                 image={post.data.image}
                 category={post.data.category ?? undefined}
-                href={`/blog/${post.slug}`}
+                href={postPath(post.slug)}
                 priority={index < 2}
               />
             </div>
@@ -190,7 +208,7 @@ const shortDate = (date: Date) =>
             {places.map(({ name, post }) => (
               <li>
                 <a
-                  href={`/blog/${post.slug}`}
+                  href={postPath(post.slug)}
                   class="panel group flex h-full flex-col p-5 transition-colors hover:border-[rgb(var(--brand-400))] hover:bg-[rgb(var(--accent-soft))]"
                 >
                   <span class="heading-3 text-[rgb(var(--text-primary))] group-hover:text-[rgb(var(--accent))]">
@@ -231,7 +249,7 @@ const shortDate = (date: Date) =>
               {archiveByYear[year].map((post) => (
                 <li>
                   <a
-                    href={`/blog/${post.slug}`}
+                    href={postPath(post.slug)}
                     class="archive-row group"
                   >
                     <time

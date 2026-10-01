@@ -12,6 +12,26 @@
   status = 200
   force = false
 
+# Paths from the site's earlier life that still draw visits. /home/ still
+# shows in search results as "Home old", five posts link to
+# /community-involvement/, and /projects used to be blocked in robots.txt.
+# Each returned a 404; a 301 to the nearest live page keeps those links and
+# any authority they carry.
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/community-involvement"
+  to = "/about/"
+  status = 301
+
+[[redirects]]
+  from = "/projects"
+  to = "/ventures/"
+  status = 301
+
 # Security headers.
 # The CSP is deliberately Report-Only for now: the site loads Google Analytics
 # and Metricool, and the Keystatic Cloud admin runs on the same origin, so the

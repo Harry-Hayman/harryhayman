@@ -1,4 +1,5 @@
 import { getCollection } from "astro:content";
+import { absolute, categoryPath, postPath } from "../lib/paths";
 
 export const prerender = true;
 
@@ -7,7 +8,10 @@ const SITE = "https://harryhayman.com";
 /** One markdown link line in llms.txt format: `- [name](url): description` */
 function link(name: string, url: string, description: string) {
   const clean = description.replace(/\s+/g, " ").trim();
-  return `- [${name}](${url}): ${clean}`;
+  /* A few post descriptions run to thousands of characters; one line each. */
+  const short =
+    clean.length > 200 ? `${clean.slice(0, 199).replace(/\s+\S*$/, "")}…` : clean;
+  return `- [${name}](${url}): ${short}`;
 }
 
 export async function GET() {
@@ -31,10 +35,10 @@ Harry Hayman started in hospitality at 17 as a dishwasher in Washington, DC, fou
 ## Core pages
 
 ${link("Home", `${SITE}/`, "Overview of Harry Hayman's work across Philadelphia hospitality, jazz and community initiatives")}
-${link("About Harry Hayman", `${SITE}/about`, "Biography: early career, professional journey through the 1990s and 2000s, current ventures, speaking engagements, board roles and personal values")}
-${link("Ventures and Initiatives", `${SITE}/ventures`, "Directory of the eight organisations Harry Hayman founded or leads, each with its website and social profiles")}
-${link("Blog", `${SITE}/blog`, `All ${posts.length} posts, plus an index of the Philadelphia places covered on the blog`)}
-${link("Contact", `${SITE}/contact`, "Direct email, phone and social profiles for consulting, speaking and collaboration enquiries")}
+${link("About Harry Hayman", `${SITE}/about/`, "Biography: early career, professional journey through the 1990s and 2000s, current ventures, speaking engagements, board roles and personal values")}
+${link("Ventures and Initiatives", `${SITE}/ventures/`, "Directory of the eight organisations Harry Hayman founded or leads, each with its website and social profiles")}
+${link("Blog", `${SITE}/blog/`, `All ${posts.length} posts, plus an index of the Philadelphia places covered on the blog`)}
+${link("Contact", `${SITE}/contact/`, "Direct email, phone and social profiles for consulting, speaking and collaboration enquiries")}
 
 ## Ventures
 
@@ -43,7 +47,7 @@ ${link("Philadelphia Jazz Experience", "https://philadelphiajazzexperience.org",
 ${link("Feed Philly Coalition", "https://feedphillycoalition.org", "Community initiative addressing food insecurity through partnerships with local restaurants and organisations")}
 ${link("Veggie Graffiti", "https://veggiegraffiti.com", "Urban farming initiative combining hydroponic technology with sustainable practices")}
 ${link("Harry Hayman Creative", "https://harryhaymancreative.com/", "Creative agency for branding, marketing and digital work with hospitality and lifestyle businesses")}
-${link("I Am Hungry in Philly", "https://iamhungryinphilly.org", "Connecting Philadelphia's food-insecure residents with local food resources and support services")}
+${link("I Am Hungry In Philadelphia", "https://iamhungryinphilly.com/", "Documentary film exploring hunger in Philadelphia, produced by Harry Hayman")}
 ${link("Another Three Hearts Experience", "https://another3heartsexperience.com/", "Film and hospitality experiences combining culinary excellence with cultural enrichment")}
 
 ## Blog topics
@@ -52,7 +56,7 @@ ${categories
   .map((category) =>
     link(
       category,
-      `${SITE}/blog/category/${encodeURIComponent(category)}`,
+      absolute(categoryPath(category)),
       `Posts filed under ${category}`,
     ),
   )
@@ -62,7 +66,7 @@ ${categories
 
 ${recent
   .map((post) =>
-    link(post.data.title, `${SITE}/blog/${post.slug}`, post.data.description),
+    link(post.data.title, absolute(postPath(post.slug)), post.data.description),
   )
   .join("\n")}
 
@@ -74,7 +78,7 @@ ${link("X", "https://x.com/HGHayman", "Short posts and links")}
 ${link("Facebook", "https://www.facebook.com/HaymanHG/", "Public page")}
 ${link("Threads", "https://www.threads.com/@harryhayman4", "Short posts")}
 ${link("Bluesky", "https://bsky.app/profile/harryhayman.bsky.social", "Short posts")}
-${link("YouTube", "https://www.youtube.com/@harryhayman1467/shorts", "Short video")}
+${link("YouTube", "https://www.youtube.com/@harryhayman1467", "Short video")}
 ${link("Pinterest", "https://www.pinterest.com/hghayman1/", "Visual collections")}
 
 ## Optional
@@ -82,7 +86,7 @@ ${link("Pinterest", "https://www.pinterest.com/hghayman1/", "Visual collections"
 ${link("Sitemap", `${SITE}/sitemap-index.xml`, "Machine readable index of every page on the site")}
 ${rest
   .map((post) =>
-    link(post.data.title, `${SITE}/blog/${post.slug}`, post.data.description),
+    link(post.data.title, absolute(postPath(post.slug)), post.data.description),
   )
   .join("\n")}
 `;

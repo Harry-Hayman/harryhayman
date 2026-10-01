@@ -6,6 +6,7 @@ import VentureLogos from "@components/VentureLogos.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import { ventures } from "../data/ventures";
+import { postPath } from "../lib/paths";
 /* Cut-out from the studio shoot, upscaled 2x. A cool black and white grade of
    the same cut-out sits beside it (harry-hayman-portrait-bw.webp) if the hero
    should ever match the monochrome reference exactly: swap this import. */
@@ -101,10 +102,10 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
             League of Greater Philadelphia.
           </p>
           <div class="hero-actions">
-            <a href="/ventures" class="btn btn-primary">
+            <a href="/ventures/" class="btn btn-primary">
               Explore Harry's ventures
             </a>
-            <a href="/about" class="btn btn-secondary">Read Harry's story</a>
+            <a href="/about/" class="btn btn-secondary">Read Harry's story</a>
           </div>
           <dl class="hero-stats">
             {
@@ -124,12 +125,12 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
             alt="Harry Hayman, smiling with his arms crossed, in a plaid blazer"
             class="hero-portrait"
             widths={[360, 480, 640, 800, 1000, 1261]}
-            sizes="(min-width: 1160px) 640px, (min-width: 640px) 490px, 118vw"
+            sizes="(min-width: 1160px) 680px, (min-width: 640px) 490px, 118vw"
             loading="eager"
             fetchpriority="high"
             decoding="async"
           />
-          <a href="/contact" class="hero-glass">
+          <a href="/contact/" class="hero-glass">
             <span class="hero-glass-text">
               <span class="hero-glass-kicker">Work with Harry</span>
               <span class="hero-glass-title">
@@ -172,7 +173,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
           Eight ventures, one city
         </h2>
       </div>
-      <a href="/ventures" class="link-more">
+      <a href="/ventures/" class="link-more">
         See every venture
         <svg
           class="h-4 w-4"
@@ -193,7 +194,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
         ventures.map((venture, index) => (
           <li>
             <a
-              href="/ventures"
+              href="/ventures/"
               class="index-row group h-full items-baseline rounded-field px-2 -mx-2"
               data-aos="fade-up"
               data-aos-delay={(index % 2) * 60}
@@ -318,7 +319,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
               Latest writing
             </h2>
           </div>
-          <a href="/blog" class="link-more">
+          <a href="/blog/" class="link-more">
             Browse all of Harry's writing
             <svg
               class="h-4 w-4"
@@ -340,7 +341,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
               data-aos="fade-up"
               data-aos-delay={index * 70}
             >
-              <a href={`/blog/${post.slug}`} class="flex h-full flex-col p-6">
+              <a href={postPath(post.slug)} class="flex h-full flex-col p-6">
                 <p class="meta text-xs uppercase tracking-[0.14em]">
                   {post.data.pubDate.toLocaleDateString("en-US", {
                     year: "numeric",
@@ -379,7 +380,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
         <div
           class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
         >
-          <a href="/contact" class="btn btn-on-ink btn-lg">
+          <a href="/contact/" class="btn btn-on-ink btn-lg">
             Get in touch with Harry
             <svg
               class="h-5 w-5"
@@ -393,7 +394,7 @@ const pad = (n: number) => String(n + 1).padStart(2, "0");
               ></path>
             </svg>
           </a>
-          <a href="/blog" class="btn btn-ghost-on-ink btn-lg">
+          <a href="/blog/" class="btn btn-ghost-on-ink btn-lg">
             Read Harry's stories
           </a>
         </div>

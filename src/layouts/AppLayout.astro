@@ -29,6 +29,7 @@ import playfairBold from "@fontsource/playfair-display/files/playfair-display-la
 import poppinsRegular from "@fontsource/poppins/files/poppins-latin-400-normal.woff2?url";
 import Footer from "@components/Footer.astro";
 import personPhoto from "../assets/data/harryhayman images/Harry-Hayman.jpg";
+import geminiLogo from "../assets/data/entity_logos/gemini-hospitality-consultants.png";
 import "@styles/global.css";
 
 interface Props {
@@ -47,11 +48,13 @@ interface Props {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
   /** The ventures logo row in the footer. The homepage carries its own. */
   footerVentures?: boolean;
+  /** Keep this page out of search results (its links are still followed). */
+  noindex?: boolean;
 }
 
 const {
   title,
-  description = defaultMeta.description,
+  description: rawDescription = defaultMeta.description,
   ogImage = defaultMeta.ogImage,
   pubDate,
   tags = defaultMeta.keywords,
@@ -59,15 +62,39 @@ const {
   article = false,
   jsonLd = null,
   footerVentures = true,
+  noindex = false,
 } = Astro.props;
 
 /* Contact is the one action in the bar, so it is drawn as a button. */
 const navLinks = navigation.filter((item) => !item.cta);
 const navAction = navigation.find((item) => item.cta);
 
+/*
+ * Results pages show about 155 characters of a description. Some posts carry
+ * far more (one carried an entire article), which bloats every meta tag and
+ * gets cut mid-word anyway, so anything longer is trimmed at a word boundary.
+ */
+const DESCRIPTION_MAX = 160;
+const collapsed = rawDescription.replace(/\s+/g, " ").trim();
+const description =
+  collapsed.length <= DESCRIPTION_MAX
+    ? collapsed
+    : `${collapsed.slice(0, DESCRIPTION_MAX - 1).replace(/[\s,;:.]+\S*$/, "")}…`;
+
 const pageTitle = title || defaultMeta.title;
 const ogImageURL = new URL(ogImage.src, Astro.site).href;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+/* The site banner and every generated post card are drawn at 1200x630.
+   Declaring it lets social previews lay the card out before fetching it. */
+const ogIsCard =
+  ogImage.src === "/banner.png" || ogImage.src.startsWith("/image/");
+/* Netlify serves pages with a trailing slash; the canonical says the same in
+   every environment, dev included. Files (feeds, images) keep their name. */
+const pathname = Astro.url.pathname;
+const canonicalPath =
+  pathname.endsWith("/") || /\.[a-z0-9]+$/i.test(pathname)
+    ? pathname
+    : `${pathname}/`;
+const canonicalURL = new URL(canonicalPath, Astro.site).href;
 const date = pubDate || lastmod || new Date();
 const formattedDate = date instanceof Date ? date.toISOString() : date;
 const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
@@ -120,18 +147,15 @@ const person = {
     },
     {
       "@type": "Organization",
-      name: "I Am Hungry in Philly",
-      url: "https://iamhungryinphilly.org",
-      description: "Connecting Philadelphia's hungry with local food resources",
-    },
-    {
-      "@type": "Organization",
       name: "Another Three Hearts Experience",
       url: "https://another3heartsexperience.com/",
       description:
         "Creating unique hospitality experiences combining culinary excellence with cultural enrichment",
     },
   ],
+  /* I Am Hungry in Philadelphia is a documentary Harry produced, not an
+     organisation he founded, so it is its own node below. Its old .org
+     address no longer resolves; the film lives at iamhungryinphilly.com. */
   sameAs: [
     "https://www.facebook.com/HaymanHG/",
     "https://www.pinterest.com/hghayman1/",
@@ -139,7 +163,7 @@ const person = {
     "https://x.com/HGHayman",
     "https://www.threads.com/@harryhayman4",
     "https://bsky.app/profile/harryhayman.bsky.social",
-    "https://www.youtube.com/@harryhayman1467/shorts",
+    "https://www.youtube.com/@harryhayman1467",
     "https://www.linkedin.com/in/harrisongrahamhaymaniv/",
   ],
   address: {
@@ -166,6 +190,7 @@ const organization = {
   "@id": "https://harryhayman.com/#gemini",
   name: "Gemini Hospitality Consultants",
   url: "https://harryhaymangemini.com/",
+  logo: new URL(geminiLogo.src, Astro.site).href,
   description:
     "Strategic consulting services for restaurants and hospitality businesses, focusing on innovative solutions and sustainable growth.",
   founder: { "@id": "https://harryhayman.com/#person" },
@@ -195,11 +220,21 @@ const website = {
   publisher: { "@id": "https://harryhayman.com/#person" },
 };
 
+const documentary = {
+  "@type": "Movie",
+  "@id": "https://harryhayman.com/#i-am-hungry-in-philadelphia",
+  name: "I Am Hungry In Philadelphia",
+  url: "https://iamhungryinphilly.com/",
+  description:
+    "A documentary film exploring hunger in Philadelphia, produced by Harry Hayman.",
+  producer: { "@id": "https://harryhayman.com/#person" },
+};
+
 const extraNodes = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
 const graph = {
   "@context": "https://schema.org",
-  "@graph": [person, organization, website, ...extraNodes],
+  "@graph": [person, organization, website, documentary, ...extraNodes],
 };
 ---
 
@@ -232,6 +267,14 @@ const graph = {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
+    {
+      ogIsCard && (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </>
+      )
+    }
     <meta property="og:site_name" content={author} />
     <meta property="og:image:alt" content={ogImage.alt} />
     <meta property="og:locale" content="en_US" />
@@ -257,7 +300,12 @@ const graph = {
     <meta name="apple-mobile-web-app-title" content="Harry Hayman" />
     <meta name="application-name" content="Harry Hayman" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta
+      name="robots"
+      content={noindex
+        ? "noindex, follow"
+        : "index, follow, max-image-preview:large"}
+    />
     <meta name="author" content={author} />
     <meta name="date" content={formattedDate} />
     <meta name="keywords" content={keywordsString} />
@@ -268,6 +316,12 @@ const graph = {
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Harry Hayman"
+      href="/rss.xml"
+    />
 
     <!-- Theme initialization: must stay inline and first-paint blocking -->
     <script is:inline>
@@ -398,7 +452,9 @@ const graph = {
                   href={navAction.href}
                   class="nav-cta"
                   aria-current={
-                    Astro.url.pathname.startsWith(navAction.href)
+                    `${Astro.url.pathname.replace(/\/+$/, "")}/`.startsWith(
+                      navAction.href,
+                    )
                       ? "page"
                       : undefined
                   }

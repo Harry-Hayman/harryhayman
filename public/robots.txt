@@ -3,7 +3,6 @@
 # the per-bot copies that used to sit here only repeated it.
 User-agent: *
 Allow: /
-Disallow: /projects
 # The Keystatic content editor and its API are for editing, not for search.
 Disallow: /keystatic
 Disallow: /api/keystatic

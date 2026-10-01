@@ -8,24 +8,26 @@ const description =
 
 const routes = [
   {
-    href: "/about",
+    href: "/about/",
     label: "About Harry Hayman",
     body: "The career, the ventures and the community work, in order.",
   },
   {
-    href: "/ventures",
+    href: "/ventures/",
     label: "Ventures",
     body: "Eight organisations Harry founded or leads in Philadelphia.",
   },
   {
-    href: "/blog",
+    href: "/blog/",
     label: "Blog",
     body: "Restaurants, jazz nights, food security and the people building the city.",
   },
 ];
+/* noindex: the template is also reachable at /404/ with a 200 status, and
+   the error page itself should never appear in results. */
 ---
 
-<AppLayout title={title} description={description}>
+<AppLayout title={title} description={description} noindex>
   <section class="wrap flex min-h-[62vh] flex-col justify-center py-16">
     <div class="max-w-2xl">
       <p class="kicker">Error 404</p>
@@ -36,7 +38,7 @@ const routes = [
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a class="btn btn-primary btn-lg" href="/">Go to the homepage</a>
-        <a class="btn btn-secondary btn-lg" href="/blog">Browse the blog</a>
+        <a class="btn btn-secondary btn-lg" href="/blog/">Browse the blog</a>
       </div>
     </div>
 
