@@ -4,6 +4,7 @@ export const prerender = true;
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import AppLayout from "@layouts/AppLayout.astro";
+import { absolute, categoryPath, postPath } from "../../lib/paths";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).sort(
@@ -41,7 +42,17 @@ const formattedDate = post.data.pubDate.toLocaleDateString("en-US", {
 const words = (post.body || "").split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.round(words / 220));
 
-const canonical = new URL(`/blog/${post.slug}`, Astro.site).href;
+const canonical = absolute(postPath(post.slug));
+
+/* The hero's frame is sized from the image's own proportions, so the page
+   reserves its space before the picture arrives. With width and height both
+   left to auto, the frame was empty until load and the whole article jumped
+   (CLS 0.41 on mobile). */
+const hero = post.data.image;
+const heroRatio = hero ? (hero.width / hero.height).toFixed(4) : null;
+const heroWidths = hero
+  ? [480, 720, 960, 1440].filter((w) => w <= hero.width)
+  : [];
 
 const articleSchema = {
   "@type": "BlogPosting",
@@ -58,18 +69,61 @@ const articleSchema = {
     post.data.tags && post.data.tags.length
       ? post.data.tags.join(", ")
       : undefined,
-  author: { "@id": "https://harryhayman.com/#person" },
+  /* Named inline as well as by reference, so a parser that reads this
+     object on its own still finds a real author. */
+  author: {
+    "@type": "Person",
+    "@id": "https://harryhayman.com/#person",
+    name: "Harry Hayman",
+    url: "https://harryhayman.com/about",
+  },
   publisher: { "@id": "https://harryhayman.com/#person" },
+  /* The generated share card: Article results need an image to qualify. */
+  image: new URL(`/image/${post.slug}.png`, Astro.site).href,
+  wordCount: words,
 };
+
+/* The same trail the visible breadcrumb shows, for the results page. */
+const breadcrumbSchema = {
+  "@type": "BreadcrumbList",
+  "@id": `${canonical}#breadcrumb`,
+  itemListElement: [
+    { name: "Home", item: absolute("/") },
+    { name: "Blog", item: absolute("/blog/") },
+    ...(post.data.category
+      ? [{ name: post.data.category, item: absolute(categoryPath(post.data.category)) }]
+      : []),
+    { name: post.data.title },
+  ].map((crumb, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    ...crumb,
+  })),
+};
+
+/*
+ * Past about 60 characters a results page cuts the title off, and the part
+ * it cuts is the " | Harry Hayman" suffix. Results already show the site
+ * name from the WebSite markup, so a long headline goes out on its own
+ * instead of ending in an ellipsis, and a headline that already names Harry
+ * does not name him twice. A post can carry a shorter `seoTitle` for results
+ * pages; the full title stays as the headline on the page.
+ */
+const searchTitle = post.data.seoTitle || post.data.title;
+const suffixedTitle = `${searchTitle} | Harry Hayman`;
+const pageTitle =
+  !/harry hayman/i.test(searchTitle) && suffixedTitle.length <= 60
+    ? suffixedTitle
+    : searchTitle;
 ---
 
 <AppLayout
-  title={`${post.data.title} | Harry Hayman`}
+  title={pageTitle}
   description={post.data.description}
   pubDate={post.data.pubDate}
   tags={post.data.tags}
   article={true}
-  jsonLd={articleSchema}
+  jsonLd={[articleSchema, breadcrumbSchema]}
   ogImage={{
     src: `/image/${post.slug}.png`,
     alt: `${post.data.title}, by Harry Hayman`,
@@ -84,14 +138,14 @@ const articleSchema = {
       <ol class="flex flex-wrap items-center gap-1.5">
         <li><a href="/" class="hover:text-[rgb(var(--accent))]">Home</a></li>
         <li aria-hidden="true">/</li>
-        <li><a href="/blog" class="hover:text-[rgb(var(--accent))]">Blog</a></li>
+        <li><a href="/blog/" class="hover:text-[rgb(var(--accent))]">Blog</a></li>
         {
           post.data.category && (
             <>
               <li aria-hidden="true">/</li>
               <li>
                 <a
-                  href={`/blog/category/${post.data.category}`}
+                  href={categoryPath(post.data.category)}
                   class="hover:text-[rgb(var(--accent))]"
                 >
                   {post.data.category}
@@ -107,7 +161,7 @@ const articleSchema = {
       {
         post.data.category && (
           <a
-            href={`/blog/category/${post.data.category}`}
+            href={categoryPath(post.data.category)}
             class="chip chip-accent text-[0.75rem] uppercase tracking-[0.14em]"
           >
             {post.data.category}
@@ -121,9 +175,9 @@ const articleSchema = {
       <div
         class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-[rgb(var(--nav-border))] pt-5 text-sm text-[rgb(var(--text-muted))]"
       >
-        <span class="font-medium text-[rgb(var(--text-secondary))]"
-          >By Harry Hayman</span
-        >
+        <span class="font-medium text-[rgb(var(--text-secondary))]">
+          By <a href="/about/" rel="author" class="underline decoration-[rgb(var(--rule-strong))] underline-offset-4 hover:text-[rgb(var(--accent))]">Harry Hayman</a>
+        </span>
         <span aria-hidden="true">&middot;</span>
         <time datetime={publishedISO}>{formattedDate}</time>
         <span aria-hidden="true">&middot;</span>
@@ -135,22 +189,25 @@ const articleSchema = {
          hero into a thin image floating in a mat wider than itself; a
          landscape hero still fills the whole column. -->
     {
-      post.data.image && (
-        <figure class="mx-auto mb-10 max-w-3xl text-center lg:max-w-[54rem]">
-          <span class="inline-block max-w-full overflow-hidden rounded-card border border-[rgb(var(--nav-border))] bg-[rgb(var(--surface-sunken))] align-top shadow-2">
+      hero && (
+        <figure
+          class="mx-auto mb-10 max-w-3xl lg:max-w-[54rem]"
+          style={`--hero-ar: ${heroRatio}`}
+        >
+          <div class="post-hero-frame">
             <Image
-              src={post.data.image}
+              src={hero}
               alt={post.data.title}
-              width={960}
+              widths={heroWidths.length ? heroWidths : [hero.width]}
               format="webp"
               quality={68}
               loading="eager"
               decoding="async"
               fetchpriority="high"
               sizes="(max-width: 1024px) 100vw, 864px"
-              class="block h-auto max-h-[34rem] w-auto max-w-full object-contain lg:max-h-[38rem]"
+              class="post-hero-img"
             />
-          </span>
+          </div>
         </figure>
       )
     }
@@ -173,7 +230,7 @@ const articleSchema = {
         >
           {newer ? (
             <a
-              href={`/blog/${newer.slug}`}
+              href={postPath(newer.slug)}
               class="card card-link group flex flex-col p-5"
             >
               <span class="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-[rgb(var(--text-muted))]">
@@ -188,7 +245,7 @@ const articleSchema = {
           )}
           {older && (
             <a
-              href={`/blog/${older.slug}`}
+              href={postPath(older.slug)}
               class="card card-link group flex flex-col p-5 sm:text-right"
             >
               <span class="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-[rgb(var(--text-muted))]">
@@ -204,7 +261,7 @@ const articleSchema = {
     }
 
     <div class="mx-auto mt-10 max-w-3xl text-center lg:max-w-[54rem]">
-      <a href="/blog" class="btn btn-secondary">
+      <a href="/blog/" class="btn btn-secondary">
         Back to all of Harry's writing
       </a>
     </div>
@@ -226,6 +283,34 @@ const articleSchema = {
     .reading-surface .prose {
       max-width: 48rem;
     }
+  }
+
+  /* Hero frame: the picture's own proportions, never taller than the
+     viewport can comfortably show, centred, so a portrait hero is not
+     stretched across the column. */
+  .post-hero-frame {
+    --hero-max-h: 34rem;
+    width: min(100%, calc(var(--hero-max-h) * var(--hero-ar)));
+    aspect-ratio: var(--hero-ar);
+    margin-inline: auto;
+    overflow: hidden;
+    border-radius: var(--r-lg);
+    border: 1px solid rgb(var(--nav-border));
+    background-color: rgb(var(--surface-sunken));
+    box-shadow: var(--shadow-2);
+  }
+
+  @media (min-width: 1024px) {
+    .post-hero-frame {
+      --hero-max-h: 38rem;
+    }
+  }
+
+  .post-hero-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .reading-surface .prose > :first-child {

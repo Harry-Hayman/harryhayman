@@ -1,0 +1,341 @@
+---
+import { Image } from "astro:assets";
+import feedPhilly from "../assets/data/entity_logos/feed-philly-coalition.png";
+import jazzExperience from "../assets/data/entity_logos/philadelphia-jazz-experience.png";
+import gemini from "../assets/data/entity_logos/gemini-hospitality-consultants.png";
+import iAmHungry from "../assets/data/entity_logos/i-am-hungry-in-philly.png";
+import creative from "../assets/data/entity_logos/harry-hayman-creative.png";
+import threeHearts from "../assets/data/entity_logos/another-three-hearts-experience.png";
+import concreteGreens from "../assets/data/entity_logos/concrete-greens.png";
+
+/*
+ * The family of ventures under Harry's name, as one strip of logos.
+ *
+ * "marquee" is the homepage band under the hero: it drifts sideways, pauses on
+ * hover or focus, and has a real pause button because moving content that runs
+ * for more than five seconds needs one (WCAG 2.2.2). "static" is the quiet row
+ * the footer uses on every other page.
+ *
+ * The logos are not links. Several of the ventures' own websites currently
+ * fail to load, and a strip where some logos go somewhere and others do not is
+ * worse than one honest link to the ventures page underneath.
+ *
+ * `kind` decides the lockup. A wordmark already says its name, so it stands
+ * alone with the name as alt text. A mark (an icon with no legible name at
+ * this size) gets its name set beside it, and the image itself is decorative.
+ */
+interface Props {
+  variant?: "marquee" | "static";
+}
+
+const { variant = "marquee" } = Astro.props;
+
+type Kind = "wordmark" | "mark";
+
+const ventures: {
+  name: string;
+  logo: ImageMetadata;
+  kind: Kind;
+  /** Rendered height in px. Optical, not equal: each mark is tuned by eye. */
+  height: number;
+}[] = [
+  { name: "Feed Philly Coalition", logo: feedPhilly, kind: "wordmark", height: 34 },
+  { name: "Philadelphia Jazz Experience", logo: jazzExperience, kind: "mark", height: 40 },
+  { name: "Gemini Hospitality Consultants", logo: gemini, kind: "wordmark", height: 30 },
+  { name: "I Am Hungry in Philly", logo: iAmHungry, kind: "wordmark", height: 44 },
+  { name: "Harry Hayman Creative", logo: creative, kind: "mark", height: 40 },
+  { name: "Another 3 Hearts", logo: threeHearts, kind: "mark", height: 36 },
+  { name: "Concrete Greens", logo: concreteGreens, kind: "mark", height: 30 },
+];
+
+/* The footer row is a quieter echo of the homepage band. */
+const scale = variant === "static" ? 0.82 : 1;
+
+const sized = ventures.map((v) => {
+  const height = Math.round(v.height * scale);
+  return {
+    ...v,
+    height,
+    width: Math.round((v.logo.width / v.logo.height) * height),
+  };
+});
+
+const copies = variant === "marquee" ? [false, true] : [false];
+---
+
+<div class="vlogos" data-variant={variant}>
+  <div class="vlogos-viewport">
+    <div class="vlogos-rail">
+      {
+        copies.map((isClone) => (
+          <ul
+            class="vlogos-track"
+            aria-label={isClone ? undefined : "Ventures founded or led by Harry Hayman"}
+            aria-hidden={isClone ? "true" : undefined}
+          >
+            {sized.map((v) => (
+              <li class="vlogo" data-kind={v.kind}>
+                <Image
+                  src={v.logo}
+                  alt={v.kind === "wordmark" && !isClone ? v.name : ""}
+                  width={v.width}
+                  height={v.height}
+                  densities={[1, 2]}
+                  loading="lazy"
+                  decoding="async"
+                  class="vlogo-img"
+                  style={`height:${v.height}px`}
+                />
+                {v.kind === "mark" && <span class="vlogo-name">{v.name}</span>}
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+
+  {
+    variant === "marquee" && (
+      <button
+        type="button"
+        class="vlogos-toggle"
+        aria-pressed="false"
+        hidden
+      >
+        <svg class="vlogos-icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5.5v13M16 5.5v13" />
+        </svg>
+        <svg class="vlogos-icon-play" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5.5v13l10-6.5z" />
+        </svg>
+        <span class="sr-only">Pause the moving logos</span>
+      </button>
+    )
+  }
+</div>
+
+<script>
+  /*
+   * Progressive enhancement: without JavaScript the strip still pauses on
+   * hover and focus, and reduced-motion users never see it move at all. The
+   * button only appears once it can actually do something.
+   */
+  document.querySelectorAll<HTMLElement>('.vlogos[data-variant="marquee"]').forEach((strip) => {
+    const button = strip.querySelector<HTMLButtonElement>(".vlogos-toggle");
+    const label = button?.querySelector(".sr-only");
+    if (!button || !label) return;
+    button.hidden = false;
+    button.addEventListener("click", () => {
+      const paused = button.getAttribute("aria-pressed") !== "true";
+      button.setAttribute("aria-pressed", String(paused));
+      strip.toggleAttribute("data-paused", paused);
+      label.textContent = paused ? "Play the moving logos" : "Pause the moving logos";
+    });
+  });
+</script>
+
+<style>
+  .vlogos {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .vlogos-viewport {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .vlogos-track {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .vlogo {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 3rem;
+  }
+
+  .vlogo-img {
+    display: block;
+    width: auto;
+    max-width: none;
+    filter: grayscale(1) contrast(1.15);
+    opacity: 0.82;
+    transition:
+      filter var(--dur-1) var(--ease),
+      opacity var(--dur-1) var(--ease);
+  }
+
+  .vlogo-name {
+    max-width: 9.5em;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: rgb(var(--text-secondary));
+  }
+
+  .vlogo:hover .vlogo-img {
+    filter: none;
+    opacity: 1;
+  }
+
+  /* Grey on dark would sink black wordmarks into the page, so the dark theme
+     inverts the greyscale logos instead, and keeps them inverted on hover. */
+  :global(:root.dark) .vlogo-img {
+    filter: grayscale(1) invert(1);
+    opacity: 0.8;
+  }
+
+  :global(:root.dark) .vlogo:hover .vlogo-img {
+    filter: grayscale(1) invert(1);
+    opacity: 1;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Marquee                                                           */
+  /* ---------------------------------------------------------------- */
+
+  [data-variant="marquee"] .vlogos-viewport {
+    overflow: hidden;
+    padding-block: 0.25rem;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 7%,
+      #000 93%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 7%,
+      #000 93%,
+      transparent 100%
+    );
+  }
+
+  [data-variant="marquee"] .vlogos-rail {
+    display: flex;
+    width: max-content;
+    animation: vlogos-drift 46s linear infinite;
+  }
+
+  /* Each copy carries its own trailing gap so the loop has no seam. */
+  [data-variant="marquee"] .vlogos-track {
+    padding-right: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .vlogos:hover .vlogos-rail,
+  .vlogos:focus-within .vlogos-rail,
+  .vlogos[data-paused] .vlogos-rail {
+    animation-play-state: paused;
+  }
+
+  @keyframes vlogos-drift {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .vlogos-toggle {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--r-pill);
+    color: rgb(var(--text-muted));
+    transition:
+      color var(--dur-1) var(--ease),
+      background-color var(--dur-1) var(--ease);
+  }
+
+  .vlogos-toggle[hidden] {
+    display: none;
+  }
+
+  .vlogos-toggle:hover {
+    color: rgb(var(--text-primary));
+    background-color: rgb(var(--accent-soft));
+  }
+
+  .vlogos-toggle svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .vlogos-toggle .vlogos-icon-play {
+    display: none;
+    fill: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .vlogos-toggle[aria-pressed="true"] .vlogos-icon-pause {
+    display: none;
+  }
+
+  .vlogos-toggle[aria-pressed="true"] .vlogos-icon-play {
+    display: block;
+  }
+
+  /* Reduced motion: the strip becomes a still, wrapping row. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-variant="marquee"] .vlogos-rail {
+      width: auto;
+      animation: none;
+    }
+
+    [data-variant="marquee"] .vlogos-viewport {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    [data-variant="marquee"] .vlogos-track {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 1rem;
+      padding-right: 0;
+    }
+
+    [data-variant="marquee"] .vlogos-track[aria-hidden="true"],
+    .vlogos-toggle {
+      display: none;
+    }
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Static row (footer)                                               */
+  /* ---------------------------------------------------------------- */
+
+  [data-variant="static"] .vlogos-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: clamp(1.75rem, 4vw, 3rem);
+    row-gap: 1rem;
+  }
+
+  [data-variant="static"] .vlogo-name {
+    font-size: 0.8125rem;
+  }
+</style>

@@ -4,6 +4,9 @@ const blog = defineCollection({
   schema: ({ image }) => z.object({
     postSlug: z.string().optional(), // For Keystatic slug field
     title: z.string(),
+    // Optional shorter title for results pages only (about 60 characters).
+    // The full `title` stays as the headline on the page.
+    seoTitle: z.string().optional(),
     description: z.string(),
     pubDate: z.date(),
     updatedDate: z.date().optional(),

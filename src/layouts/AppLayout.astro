@@ -18,7 +18,18 @@ import "@fontsource/playfair-display/latin-700-italic.css";
 import "@fontsource/poppins/latin-400.css";
 import "@fontsource/poppins/latin-500.css";
 import "@fontsource/poppins/latin-600.css";
+/*
+ * The two faces every page paints first: the serif of the wordmark and the
+ * headings, and the body sans. Preloading them lets the browser fetch both
+ * while it is still reading the head, instead of discovering them only after
+ * the stylesheet has been parsed. These resolve to the same hashed files the
+ * @font-face rules above point at, so nothing downloads twice.
+ */
+import playfairBold from "@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff2?url";
+import poppinsRegular from "@fontsource/poppins/files/poppins-latin-400-normal.woff2?url";
 import Footer from "@components/Footer.astro";
+import personPhoto from "../assets/data/harryhayman images/Harry-Hayman.jpg";
+import geminiLogo from "../assets/data/entity_logos/gemini-hospitality-consultants.png";
 import "@styles/global.css";
 
 interface Props {
@@ -33,24 +44,57 @@ interface Props {
   lastmod?: Date;
   /** Article pages get a calm background and a reading surface. */
   article?: boolean;
-  /** Extra JSON-LD emitted alongside the site-wide graph. */
-  jsonLd?: Record<string, unknown> | null;
+  /** Extra JSON-LD node(s) emitted alongside the site-wide graph. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
+  /** The ventures logo row in the footer. The homepage carries its own. */
+  footerVentures?: boolean;
+  /** Keep this page out of search results (its links are still followed). */
+  noindex?: boolean;
 }
 
 const {
   title,
-  description = defaultMeta.description,
+  description: rawDescription = defaultMeta.description,
   ogImage = defaultMeta.ogImage,
   pubDate,
   tags = defaultMeta.keywords,
   lastmod,
   article = false,
   jsonLd = null,
+  footerVentures = true,
+  noindex = false,
 } = Astro.props;
+
+/* Contact is the one action in the bar, so it is drawn as a button. */
+const navLinks = navigation.filter((item) => !item.cta);
+const navAction = navigation.find((item) => item.cta);
+
+/*
+ * Results pages show about 155 characters of a description. Some posts carry
+ * far more (one carried an entire article), which bloats every meta tag and
+ * gets cut mid-word anyway, so anything longer is trimmed at a word boundary.
+ */
+const DESCRIPTION_MAX = 160;
+const collapsed = rawDescription.replace(/\s+/g, " ").trim();
+const description =
+  collapsed.length <= DESCRIPTION_MAX
+    ? collapsed
+    : `${collapsed.slice(0, DESCRIPTION_MAX - 1).replace(/[\s,;:.]+\S*$/, "")}…`;
 
 const pageTitle = title || defaultMeta.title;
 const ogImageURL = new URL(ogImage.src, Astro.site).href;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+/* The site banner and every generated post card are drawn at 1200x630.
+   Declaring it lets social previews lay the card out before fetching it. */
+const ogIsCard =
+  ogImage.src === "/banner.png" || ogImage.src.startsWith("/image/");
+/* Netlify serves pages with a trailing slash; the canonical says the same in
+   every environment, dev included. Files (feeds, images) keep their name. */
+const pathname = Astro.url.pathname;
+const canonicalPath =
+  pathname.endsWith("/") || /\.[a-z0-9]+$/i.test(pathname)
+    ? pathname
+    : `${pathname}/`;
+const canonicalURL = new URL(canonicalPath, Astro.site).href;
 const date = pubDate || lastmod || new Date();
 const formattedDate = date instanceof Date ? date.toISOString() : date;
 const keywordsString = Array.isArray(tags) ? tags.join(", ") : tags;
@@ -61,7 +105,9 @@ const person = {
   name: "Harry Hayman",
   alternateName: "Harrison Graham Hayman IV",
   url: "https://harryhayman.com",
-  image: "https://harryhayman.com/banner.png",
+  /* A photograph of Harry, not the text banner, so a knowledge panel or a
+     rich result has a face to show. */
+  image: new URL(personPhoto.src, Astro.site).href,
   description:
     "Philadelphia business leader, hospitality entrepreneur, and philanthropist known for work in the restaurant industry and community development through Feed Philly Coalition and The Philadelphia Jazz Experience.",
   jobTitle: "Hospitality Entrepreneur and Community Leader",
@@ -101,18 +147,15 @@ const person = {
     },
     {
       "@type": "Organization",
-      name: "I Am Hungry in Philly",
-      url: "https://iamhungryinphilly.org",
-      description: "Connecting Philadelphia's hungry with local food resources",
-    },
-    {
-      "@type": "Organization",
       name: "Another Three Hearts Experience",
       url: "https://another3heartsexperience.com/",
       description:
         "Creating unique hospitality experiences combining culinary excellence with cultural enrichment",
     },
   ],
+  /* I Am Hungry in Philadelphia is a documentary Harry produced, not an
+     organisation he founded, so it is its own node below. Its old .org
+     address no longer resolves; the film lives at iamhungryinphilly.com. */
   sameAs: [
     "https://www.facebook.com/HaymanHG/",
     "https://www.pinterest.com/hghayman1/",
@@ -120,7 +163,7 @@ const person = {
     "https://x.com/HGHayman",
     "https://www.threads.com/@harryhayman4",
     "https://bsky.app/profile/harryhayman.bsky.social",
-    "https://www.youtube.com/@harryhayman1467/shorts",
+    "https://www.youtube.com/@harryhayman1467",
     "https://www.linkedin.com/in/harrisongrahamhaymaniv/",
   ],
   address: {
@@ -147,6 +190,7 @@ const organization = {
   "@id": "https://harryhayman.com/#gemini",
   name: "Gemini Hospitality Consultants",
   url: "https://harryhaymangemini.com/",
+  logo: new URL(geminiLogo.src, Astro.site).href,
   description:
     "Strategic consulting services for restaurants and hospitality businesses, focusing on innovative solutions and sustainable growth.",
   founder: { "@id": "https://harryhayman.com/#person" },
@@ -176,11 +220,21 @@ const website = {
   publisher: { "@id": "https://harryhayman.com/#person" },
 };
 
+const documentary = {
+  "@type": "Movie",
+  "@id": "https://harryhayman.com/#i-am-hungry-in-philadelphia",
+  name: "I Am Hungry In Philadelphia",
+  url: "https://iamhungryinphilly.com/",
+  description:
+    "A documentary film exploring hunger in Philadelphia, produced by Harry Hayman.",
+  producer: { "@id": "https://harryhayman.com/#person" },
+};
+
+const extraNodes = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
 const graph = {
   "@context": "https://schema.org",
-  "@graph": jsonLd
-    ? [person, organization, website, jsonLd]
-    : [person, organization, website],
+  "@graph": [person, organization, website, documentary, ...extraNodes],
 };
 ---
 
@@ -190,6 +244,20 @@ const graph = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{pageTitle}</title>
+    <link
+      rel="preload"
+      href={playfairBold}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={poppinsRegular}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="canonical" href={canonicalURL} />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
@@ -199,6 +267,14 @@ const graph = {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
+    {
+      ogIsCard && (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </>
+      )
+    }
     <meta property="og:site_name" content={author} />
     <meta property="og:image:alt" content={ogImage.alt} />
     <meta property="og:locale" content="en_US" />
@@ -224,7 +300,12 @@ const graph = {
     <meta name="apple-mobile-web-app-title" content="Harry Hayman" />
     <meta name="application-name" content="Harry Hayman" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta
+      name="robots"
+      content={noindex
+        ? "noindex, follow"
+        : "index, follow, max-image-preview:large"}
+    />
     <meta name="author" content={author} />
     <meta name="date" content={formattedDate} />
     <meta name="keywords" content={keywordsString} />
@@ -235,6 +316,12 @@ const graph = {
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Harry Hayman"
+      href="/rss.xml"
+    />
 
     <!-- Theme initialization: must stay inline and first-paint blocking -->
     <script is:inline>
@@ -345,20 +432,38 @@ const graph = {
       <!-- Navigation -->
       <nav class="sticky top-0 z-50 site-nav" aria-label="Primary">
         <div class="wrap">
-          <div class="flex min-h-[3.75rem] items-center justify-between gap-2">
+          <div class="nav-bar">
             <a href="/" class="wordmark text-base sm:text-lg">
-              <span class="sm:hidden">HH</span>
-              <span class="hidden sm:inline">Harry Hayman</span>
+              <span class="sm:hidden" aria-hidden="true">HH</span>
+              <span class="sr-only sm:not-sr-only">Harry Hayman</span>
             </a>
-            <ul class="flex items-center gap-0.5 sm:gap-1">
+            <ul class="nav-links">
               {
-                navigation.map((item) => (
-                  <li class:list={[item.mobileHidden && "hidden sm:block"]}>
+                navLinks.map((item) => (
+                  <li class:list={[item.mobileHidden && "hidden md:block"]}>
                     <Link href={item.href} text={item.text} />
                   </li>
                 ))
               }
             </ul>
+            {
+              navAction && (
+                <a
+                  href={navAction.href}
+                  class="nav-cta"
+                  aria-current={
+                    `${Astro.url.pathname.replace(/\/+$/, "")}/`.startsWith(
+                      navAction.href,
+                    )
+                      ? "page"
+                      : undefined
+                  }
+                >
+                  <span class="sm:hidden">{navAction.text}</span>
+                  <span class="hidden sm:inline">{navAction.label}</span>
+                </a>
+              )
+            }
           </div>
         </div>
       </nav>
@@ -375,7 +480,7 @@ const graph = {
       <MusicPlayer />
 
       <!-- Footer -->
-      <Footer />
+      <Footer ventures={footerVentures} />
     </div>
 
     <script is:inline>

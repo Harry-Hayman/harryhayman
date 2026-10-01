@@ -1,35 +1,10 @@
-# Allow all crawlers including Google, Bing, Brave, DuckDuckGo, etc.
+# Every crawler: search engines, social previews and AI assistants alike.
+# One group is enough. A bot with no group of its own follows this one, and
+# the per-bot copies that used to sit here only repeated it.
 User-agent: *
 Allow: /
-Disallow: /projects
-
-# Specific crawlers
-User-agent: Googlebot
-Allow: /
-Disallow: /projects
-
-User-agent: Bingbot
-Allow: /
-Disallow: /projects
-
-User-agent: BraveSearchBot
-Allow: /
-Disallow: /projects
-
-User-agent: DuckDuckBot
-Allow: /
-Disallow: /projects
-
-User-agent: YandexBot
-Allow: /
-Disallow: /projects
-
-User-agent: facebookexternalhit
-Allow: /
-Disallow: /projects
-
-User-agent: Twitterbot
-Allow: /
-Disallow: /projects
+# The Keystatic content editor and its API are for editing, not for search.
+Disallow: /keystatic
+Disallow: /api/keystatic
 
 Sitemap: https://harryhayman.com/sitemap-index.xml

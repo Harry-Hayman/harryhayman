@@ -4,19 +4,31 @@ export const prerender = true;
 import AppLayout from "@layouts/AppLayout.astro";
 import { getCollection } from "astro:content";
 import BlogCard from "@components/BlogCard.astro";
+import { absolute, categoryPath, categorySlug, postPath } from "../../../lib/paths";
 
+/*
+ * One archive per category, served at its lowercase name. The capitalised
+ * paths these pages used to be built at were 301'd to lowercase by Netlify,
+ * so the sitemap and every category link pointed at a redirect and each
+ * page declared the redirecting URL as its own canonical. Names that differ
+ * only by case share one archive.
+ */
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).filter((post) => !post.data.draft);
-  const categories = [
-    ...new Set(posts.map((post) => post.data.category)),
-  ].filter((category): category is string => typeof category === "string");
+  const groups = new Map<string, { name: string; posts: typeof posts }>();
 
-  return categories.map((category) => ({
-    params: { category },
-    props: {
-      posts: posts.filter((post) => post.data.category === category),
-      category,
-    },
+  for (const post of posts) {
+    const name = post.data.category;
+    if (typeof name !== "string" || !name.trim()) continue;
+    const key = categorySlug(name);
+    const group = groups.get(key) ?? { name: name.trim(), posts: [] };
+    group.posts.push(post);
+    groups.set(key, group);
+  }
+
+  return [...groups.entries()].map(([key, group]) => ({
+    params: { category: key },
+    props: { posts: group.posts, category: group.name },
   }));
 }
 
@@ -29,11 +41,31 @@ const { posts, category } = Astro.props;
 const sortedPosts = posts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+/*
+ * An archive that lists one or two posts is a thin copy of those posts.
+ * It stays reachable for readers, but asks search engines not to index it
+ * (the sitemap leaves it out for the same reason) until the topic grows.
+ */
+const THIN_ARCHIVE = 3;
+const thin = sortedPosts.length < THIN_ARCHIVE;
+
+const collectionPage = {
+  "@type": "CollectionPage",
+  "@id": `${absolute(categoryPath(category))}#collection`,
+  url: absolute(categoryPath(category)),
+  name: `Harry Hayman on ${category}`,
+  isPartOf: { "@id": "https://harryhayman.com/#website" },
+  about: category,
+  inLanguage: "en-US",
+};
 ---
 
 <AppLayout
-  title={`${category} | Harry Hayman's Blog`}
-  description={`Harry Hayman's writing on ${category.toLowerCase()} in Philadelphia: ${sortedPosts.length} posts on hospitality, culture and community.`}
+  title={`Harry Hayman on ${category} | Philadelphia Blog`}
+  description={`Harry Hayman's writing on ${category.toLowerCase()} in Philadelphia: ${sortedPosts.length} ${sortedPosts.length === 1 ? "post" : "posts"} on hospitality, culture and community.`}
+  noindex={thin}
+  jsonLd={collectionPage}
 >
   <!-- Header -->
   <section class="wrap pt-12 sm:pt-16">
@@ -42,7 +74,7 @@ const sortedPosts = posts.sort(
         <li><a href="/" class="hover:text-[rgb(var(--accent))]">Home</a></li>
         <li aria-hidden="true">/</li>
         <li>
-          <a href="/blog" class="hover:text-[rgb(var(--accent))]">Blog</a>
+          <a href="/blog/" class="hover:text-[rgb(var(--accent))]">Blog</a>
         </li>
       </ol>
     </nav>
@@ -73,7 +105,7 @@ const sortedPosts = posts.sort(
               pubDate={post.data.pubDate}
               image={post.data.image}
               category={post.data.category}
-              href={`/blog/${post.slug}`}
+              href={postPath(post.slug)}
               priority={index < 3}
             />
           </div>
@@ -93,7 +125,7 @@ const sortedPosts = posts.sort(
     }
 
     <div class="mt-12 text-center">
-      <a href="/blog" class="btn btn-secondary">Back to all posts</a>
+      <a href="/blog/" class="btn btn-secondary">Back to all posts</a>
     </div>
   </section>
 </AppLayout>
