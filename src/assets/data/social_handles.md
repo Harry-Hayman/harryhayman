@@ -22,7 +22,7 @@
 - **Facebook**: [Harry Hayman](https://facebook.com/harryhayman)
 
 ### Gemini Hospitality Consultants
-- **Website**: [geminihospitality.com](https://harryhaymangemini.com/)
+- **Website**: [geministrategicconsultants.com](https://geministrategicconsultants.com/)
 - **LinkedIn**: [Gemini Hospitality Consultants](https://www.linkedin.com/company/gemini-hospitality-consultants)
 - **Instagram**: [@geminihospitality](https://www.instagram.com/geminihospitalityconsulting/)
 - **Facebook**: [Gemini Hospitality Consultants](https://www.facebook.com/geminiconsultants)

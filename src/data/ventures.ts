@@ -33,7 +33,7 @@ export const ventures: Venture[] = [
     description: "Strategic consulting services for restaurants and hospitality businesses, focusing on innovative solutions and sustainable growth.",
     image: hospitalityImage,
     kind: "photo",
-    website: "https://harryhaymangemini.com/",
+    website: "https://geministrategicconsultants.com/",
     linkedin: "https://www.linkedin.com/company/gemini-hospitality-consultants",
     instagram: "https://www.instagram.com/geminihospitalityconsulting/",
     facebook: "https://www.facebook.com/geminiconsultants",

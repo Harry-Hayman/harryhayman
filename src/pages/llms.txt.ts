@@ -42,7 +42,7 @@ ${link("Contact", `${SITE}/contact/`, "Direct email, phone and social profiles f
 
 ## Ventures
 
-${link("Gemini Hospitality Consultants", "https://harryhaymangemini.com/", "Strategic consulting for restaurants and hospitality businesses; Harry Hayman is CEO")}
+${link("Gemini Hospitality Consultants", "https://geministrategicconsultants.com/", "Strategic consulting for restaurants and hospitality businesses; Harry Hayman is CEO")}
 ${link("Philadelphia Jazz Experience", "https://philadelphiajazzexperience.org", "Preserving and promoting Philadelphia's jazz heritage through education, performance and community engagement")}
 ${link("Feed Philly Coalition", "https://feedphillycoalition.org", "Community initiative addressing food insecurity through partnerships with local restaurants and organisations")}
 ${link("Veggie Graffiti", "https://veggiegraffiti.com", "Urban farming initiative combining hydroponic technology with sustainable practices")}
