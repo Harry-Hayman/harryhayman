@@ -218,6 +218,30 @@ const website = {
   description: defaultMeta.description,
   inLanguage: "en-US",
   publisher: { "@id": "https://harryhayman.com/#person" },
+  creator: { "@id": "https://anujpaudel.com/#person" },
+};
+
+/*
+ * Who built the site, as the footer credit says. The @id is the Person that
+ * anujpaudel.com publishes, so search and answer engines can join the two.
+ */
+const siteCreator = {
+  "@type": "Person",
+  "@id": "https://anujpaudel.com/#person",
+  name: "Anuj Paudel",
+  url: "https://anujpaudel.com/",
+  jobTitle: "AI Automation Specialist",
+  knowsAbout: ["AI automation", "Graphic design", "Animation", "Video editing", "App development", "Website development"],
+  worksFor: {
+    "@type": "Organization",
+    "@id": "https://appynox.com/#organization",
+    name: "Appynox",
+    url: "https://appynox.com/",
+  },
+  sameAs: [
+    "https://www.linkedin.com/in/anujpaude1",
+    "https://github.com/anujpaude1",
+  ],
 };
 
 const documentary = {
@@ -234,7 +258,7 @@ const extraNodes = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
 const graph = {
   "@context": "https://schema.org",
-  "@graph": [person, organization, website, documentary, ...extraNodes],
+  "@graph": [person, organization, website, siteCreator, documentary, ...extraNodes],
 };
 ---
 

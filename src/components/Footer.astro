@@ -179,10 +179,24 @@ const socials = [
     <div
       class="flex flex-col-reverse items-center gap-6 sm:flex-row sm:justify-between"
     >
-      <p class="meta text-center sm:text-left">
-        &copy; {currentYear}
-        {author}. All rights reserved.
-      </p>
+      <div class="meta space-y-1 text-center sm:text-left">
+        <p>
+          &copy; {currentYear}
+          {author}. All rights reserved.
+        </p>
+        {/* The live pages send Referrer-Policy: same-origin, so the link sets
+            its own policy; otherwise clicks reach anujpaudel.com as "direct". */}
+        <p>
+          Website by
+          <a
+            href="https://anujpaudel.com/"
+            target="_blank"
+            rel="noopener"
+            referrerpolicy="strict-origin-when-cross-origin"
+            class="underline underline-offset-4 transition-colors hover:text-[rgb(var(--accent))]"
+          >Anuj Paudel</a>
+        </p>
+      </div>
       <ul class="flex flex-wrap items-center justify-center gap-1">
         {
           socials.map((social) => (

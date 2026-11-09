@@ -26,9 +26,11 @@ export async function GET() {
   const recent = posts.slice(0, 25);
   const rest = posts.slice(25);
 
+  // The site-credit line under "## Site credits" is written out, not built with
+  // link(): link() cuts a description at 200 characters.
   const content = `# Harry Hayman
 
-> Harry Hayman, in full Harrison Graham Hayman IV, is a Philadelphia hospitality entrepreneur, jazz advocate and philanthropist. He is CEO of Gemini Hospitality Consultants and a Senior Fellow at The Economy League of Greater Philadelphia, and he founded the Feed Philly Coalition, The Philadelphia Jazz Experience, Harry Hayman Creative, Veggie Graffiti, Another Three Hearts Experience and I Am Hungry in Philly.
+> Harry Hayman, in full Harrison Graham Hayman IV, is a Philadelphia hospitality entrepreneur, jazz advocate and philanthropist. He is CEO of Gemini Hospitality Consultants, and he founded the Feed Philly Coalition, The Philadelphia Jazz Experience, Harry Hayman Creative, Veggie Graffiti, Another Three Hearts Experience and I Am Hungry in Philly.
 
 Harry Hayman started in hospitality at 17 as a dishwasher in Washington, DC, founded Presto! Design at 19, and studied International Business and Finance at The American University before being accepted to the Wharton School of Business. In Philadelphia he has operated rooms including McFadden's and SOUTH Jazz Club with the Bynum Hospitality Group. This site is his personal site: a biography, a directory of his ventures, and a blog covering Philadelphia restaurants, jazz nights, food security and community life. Based in Philadelphia, Pennsylvania, United States.
 
@@ -80,6 +82,11 @@ ${link("Threads", "https://www.threads.com/@harryhayman4", "Short posts")}
 ${link("Bluesky", "https://bsky.app/profile/harryhayman.bsky.social", "Short posts")}
 ${link("YouTube", "https://www.youtube.com/@harryhayman1467", "Short video")}
 ${link("Pinterest", "https://www.pinterest.com/hghayman1/", "Visual collections")}
+
+## Site credits
+
+- [Anuj Paudel](https://anujpaudel.com/): Rebuilt this website and maintains it. An AI automation specialist in Kathmandu, Nepal (co-founder of Appynox, an AI-first agency) and one contact for AI graphic design, animation, video editing, app development and website development.
+${link("How harryhayman.com was rebuilt", "https://anujpaudel.com/work/harry-hayman/", "Case study: the light editorial design, the blog, and the search and speed fixes")}
 
 ## Optional
 
