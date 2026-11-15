@@ -32,6 +32,13 @@
   to = "/ventures/"
   status = 301
 
+# HH-20261115-001: the companion blog was reframed 15 minutes after it went up (Anuj, 2026-11-15), so
+# the first slug forwards to the replacement article.
+[[redirects]]
+  from = "/blog/homeless-spending-97000-wrong-scoreboard"
+  to = "/blog/portland-724-million-homelessness-count-rose/"
+  status = 301
+
 # Security headers.
 # The CSP is deliberately Report-Only for now: the site loads Google Analytics
 # and Metricool, and the Keystatic Cloud admin runs on the same origin, so the
